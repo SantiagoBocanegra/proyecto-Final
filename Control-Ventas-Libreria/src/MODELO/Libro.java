@@ -77,6 +77,19 @@ public class Libro implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
     private Collection<Ordenitemprestamo> ordenitemprestamoCollection;
 
+    public Libro(Integer isbn, byte[] portada, String titulo, String sipnosis, String autor, String editorial, Date fechaPublicacion, String estadolibro, Double precio) {
+        this.isbn = isbn;
+        this.portada = portada;
+        this.titulo = titulo;
+        this.sipnosis = sipnosis;
+        this.autor = autor;
+        this.editorial = editorial;
+        this.fechaPublicacion = fechaPublicacion;
+        this.estadolibro = estadolibro;
+        this.precio = precio;
+    }
+
+    
     public Libro() {
     }
 
