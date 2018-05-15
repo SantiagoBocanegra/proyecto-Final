@@ -94,6 +94,20 @@ public class Cliente implements Serializable {
         this.cedula = cedula;
     }
 
+    public Cliente(String nombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, String cedula, String direccion, String telefono, String pais, String ciudad, String correo, Date fechaRegistro) {
+        this.nombre = nombre;
+        this.segundoNombre = segundoNombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.cedula = cedula;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.pais = pais;
+        this.ciudad = ciudad;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+    }
+    
     public Integer getId() {
         return id;
     }

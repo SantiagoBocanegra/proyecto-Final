@@ -1,21 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ funciones de esta clase
+1 fecha -> retorna la fecha actual del sistema 
  */
 package MODELO_CONTROLADOR;
 
 import MODELO.Libro;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
  * @author ayenni42
  */
 public class funciones {
-    
-    public static void main (String[] arg) {
-        MC_Libro controlador = new MC_Libro();
-        Libro libro = new Libro(1,null,"nuevo libro","sipnosis del libro nuvo","sin autor","sin editorial",null,"fisico",100.000);
-        System.out.print("nuevo libro: "+controlador.nuevoLibro(libro));
-    } 
+    //OBTENER LA FECHA ACTUAL 
+    public static Date fecha() {
+        Date fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyy/MM/dd");
+        String fechaS = formatoFecha.format(fecha);
+        try {
+            fecha = formatoFecha.parse(fechaS);
+        } catch (ParseException ex) {
+            System.out.println("ERROR funciones.fecha: \n" + ex.getMessage());
+        }
+        return fecha;
+    }
 }
