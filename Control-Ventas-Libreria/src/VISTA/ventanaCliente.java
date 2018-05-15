@@ -6,14 +6,12 @@ mostrarDatosVentana -> recibe un objeto cliente y llena los campos de la ventana
 package VISTA;
 
 import MODELO.Cliente;
+import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JSpinnerDateEditor;
 import java.awt.Color;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +22,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     /**
      * Creates new form ventanaCliente
      */
-    public ventanaCliente(java.awt.Frame parent, boolean modal) {
+    public ventanaCliente(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         entId.setBackground(Color.WHITE);
@@ -253,10 +251,20 @@ public class ventanaCliente extends javax.swing.JDialog {
         barraProgreso.setBounds(10, 372, 400, 30);
 
         btnGuargar.setText("GUAR");
+        btnGuargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuargarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuargar);
         btnGuargar.setBounds(495, 332, 70, 70);
 
         btnEditar.setText("EDIT");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEditar);
         btnEditar.setBounds(420, 332, 70, 70);
 
@@ -279,6 +287,34 @@ public class ventanaCliente extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarActionPerformed
+        MC_Cliente control = new MC_Cliente();
+        Cliente cliente =  obtenerElementosVentana();
+        
+        if (JOptionPane.showConfirmDialog(this, "Guardar Cliente", "Alerta", 1, 2, null) == 0) {
+            if (control.nuevoCliente(cliente)) {
+                JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion",1, null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error Al Guardar El Cliente", "Error",0, null);
+            }
+        }
+    }//GEN-LAST:event_btnGuargarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        MC_Cliente control = new MC_Cliente();
+        Cliente cliente = obtenerElementosVentana();
+        int id = Integer.parseInt(entId.getText());
+        cliente.setId(id);
+        
+        if (JOptionPane.showConfirmDialog(this, "Editar Cliente", "Alerta", 1, 2, null) == 0) {
+            if (control.editarCliente(cliente)) {
+                JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion",1, null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error Al Editar El Cliente", "Error",0, null);
+            }
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,9 +346,9 @@ public class ventanaCliente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaCliente dialog = new ventanaCliente(new javax.swing.JFrame(), true);
+                ventanaCliente dialog = new ventanaCliente(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
+                    @Override 
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
