@@ -22,7 +22,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     /**
      * Creates new form ventanaCliente
      */
-    public ventanaCliente(java.awt.Dialog parent, boolean modal) {
+    public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         entId.setBackground(Color.WHITE);
@@ -160,93 +160,114 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(4, 4, 165, 215);
 
-        jLabel2.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setText("ID");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(230, 13, 19, 30);
 
-        jLabel3.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setText("PRIMER NOMBRE");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(174, 48, 145, 30);
+        jLabel3.setBounds(174, 48, 150, 30);
 
-        jLabel4.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel4.setText("APELLIDO PATERNO");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(174, 118, 165, 30);
+        jLabel4.setBounds(174, 118, 177, 30);
 
-        jLabel5.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel5.setText("APELLIDO MATERNO");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(174, 152, 169, 30);
+        jLabel5.setBounds(174, 152, 182, 30);
 
-        jLabel6.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel6.setText("SEGUNDO NOMBRE");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(174, 83, 153, 30);
+        jLabel6.setBounds(174, 83, 168, 30);
 
-        jLabel8.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel8.setText("CEDULA");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(174, 187, 65, 30);
+        jLabel8.setBounds(174, 187, 72, 30);
 
-        jLabel9.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel9.setText("DIRECCION ");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(250, 227, 96, 30);
+        jLabel9.setBounds(250, 227, 103, 30);
 
-        jLabel10.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("PAIS");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(10, 227, 38, 30);
+        jLabel10.setBounds(10, 227, 39, 30);
 
-        jLabel11.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel11.setText("TELEFONO");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(250, 262, 85, 30);
+        jLabel11.setBounds(250, 262, 100, 30);
 
-        jLabel12.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel12.setText("CORREO");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(10, 297, 67, 30);
+        jLabel12.setBounds(10, 297, 73, 30);
 
-        jLabel13.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel13.setText("FECHA REGISTRO");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(10, 332, 143, 30);
+        jLabel13.setBounds(10, 332, 152, 30);
 
-        jLabel14.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel14.setText("CIUDAD");
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(10, 262, 63, 30);
+        jLabel14.setBounds(10, 262, 69, 30);
 
+        entId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         entId.setEnabled(false);
         jPanel1.add(entId);
         entId.setBounds(260, 13, 150, 30);
+
+        entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entPrimerNombre);
-        entPrimerNombre.setBounds(350, 48, 200, 30);
+        entPrimerNombre.setBounds(360, 48, 200, 30);
+
+        entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entSegundoNombre);
-        entSegundoNombre.setBounds(350, 82, 200, 30);
+        entSegundoNombre.setBounds(360, 82, 200, 30);
+
+        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entApellidoPaterno);
-        entApellidoPaterno.setBounds(350, 118, 200, 30);
+        entApellidoPaterno.setBounds(360, 118, 200, 30);
+
+        entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entApellidoMaterno);
-        entApellidoMaterno.setBounds(350, 152, 200, 30);
+        entApellidoMaterno.setBounds(360, 152, 200, 30);
+
+        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entCedula);
         entCedula.setBounds(250, 187, 200, 30);
+
+        entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entDireccion);
-        entDireccion.setBounds(350, 227, 200, 30);
+        entDireccion.setBounds(360, 227, 200, 30);
+
+        entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entTelefono);
-        entTelefono.setBounds(350, 262, 200, 30);
+        entTelefono.setBounds(360, 262, 200, 30);
+
+        entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entCorreo);
-        entCorreo.setBounds(85, 297, 465, 30);
+        entCorreo.setBounds(85, 297, 475, 30);
+
+        entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entCiudad);
         entCiudad.setBounds(85, 262, 160, 30);
+
+        entPais.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entPais);
         entPais.setBounds(85, 227, 160, 30);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(4, 222, 565, 10);
         jPanel1.add(entFecha);
-        entFecha.setBounds(160, 332, 200, 30);
+        entFecha.setBounds(165, 332, 200, 30);
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 372, 400, 30);
 

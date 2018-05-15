@@ -4,10 +4,15 @@
  */
 package MODELO_CONTROLADOR;
 
-import MODELO.Libro;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -25,5 +30,18 @@ public class funciones {
             System.out.println("ERROR funciones.fecha: \n" + ex.getMessage());
         }
         return fecha;
+    }
+    
+    // CONVERTIR UN VECTOR DE BYTEA A UNA IMAGEN
+    public static Image byte_jpg(byte[] arreglo) {
+        Image imagen = null;
+        try {
+            BufferedImage bufer = ImageIO.read(new ByteArrayInputStream(arreglo));
+            ImageIcon imagenI = new ImageIcon(bufer);
+            imagen = imagenI.getImage(); //getScaledInstance(100, 100,java.awt.Image.SCALE_SMOOTH);
+        } catch (Exception e) {
+            System.out.println("ERROR funciones.byte_jpg: \n" + e.getMessage());
+        }
+        return imagen;
     }
 }

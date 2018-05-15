@@ -5,23 +5,45 @@
  */
 package VISTA;
 
+import MODELO.Empleado;
+import MODELO.Permiso;
+import MODELO.RolUsuario;
+import MODELO.Usuario;
+import MODELO_CONTROLADOR.MC_Usuario;
+import MODELO_CONTROLADOR.funciones;
 import java.awt.Color;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
- *
- * @author ayenni42
+                            Funciones De La Clase ventanaUuario
+ obtenerElementosVentana -> obtener los String de las caja de texto de la ventana 
+ * mostrarElementos -> poner informacion de usuario en las cajas de texto de la ventana
  */
 public class ventanaUsuario extends javax.swing.JDialog {
-
+    //Informacion Obtenida De Un Empleado Desde Otra Ventana
+    private Empleado empleado;
     /**
-     * Creates new form ventanaUsuario
+     * variable para identificar errores al momento de obtener los elementos de la caja de texto
+     * 0 = no hay errores en los datos
+     * 1 = campos obligatoros vacios
+     * 2 = confirmacion de contraseña incorrecta
      */
-    public ventanaUsuario(java.awt.Frame parent, boolean modal) {
+    private int caso = 0;
+    // id -> identifica  a la tabla usuario para validar permisos
+    private int id = 1;
+    
+    public ventanaUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         entPimerNombre.setBackground(Color.WHITE);
         entApellidoPaterno.setBackground(Color.WHITE);
         entCedula.setBackground(Color.WHITE);
+        entEstadoUsuario.setSelected(true);
+        this.setSize(620,500);
     }
 
     /**
@@ -33,7 +55,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        estadoUsuario = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         fotoEmpleado = new javax.swing.JLabel();
         entApellidoPaterno = new javax.swing.JTextField();
@@ -47,8 +68,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         entPimerNombre = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        entEstadoUsuarioInactivo = new javax.swing.JRadioButton();
-        etnEstadoUsuarioActivo = new javax.swing.JRadioButton();
+        entEstadoUsuario = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         cajaRolesUsuario = new javax.swing.JComboBox<>();
@@ -60,6 +80,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Usuario");
+        getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         jPanel1.setLayout(null);
@@ -122,17 +144,10 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel9);
         jLabel9.setBounds(10, 329, 140, 30);
 
-        estadoUsuario.add(entEstadoUsuarioInactivo);
-        entEstadoUsuarioInactivo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        entEstadoUsuarioInactivo.setText("Inactivo");
-        jPanel1.add(entEstadoUsuarioInactivo);
-        entEstadoUsuarioInactivo.setBounds(280, 295, 90, 30);
-
-        estadoUsuario.add(etnEstadoUsuarioActivo);
-        etnEstadoUsuarioActivo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        etnEstadoUsuarioActivo.setText("Activo");
-        jPanel1.add(etnEstadoUsuarioActivo);
-        etnEstadoUsuarioActivo.setBounds(180, 294, 80, 30);
+        entEstadoUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entEstadoUsuario.setText("Activo");
+        jPanel1.add(entEstadoUsuario);
+        entEstadoUsuario.setBounds(180, 294, 80, 30);
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("Informacion Del Empleado ");
@@ -142,7 +157,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jSeparator1.setBounds(173, 165, 420, 10);
 
         cajaRolesUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Roles Del Usuario" }));
+        cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Roles Por Defecto" }));
         jPanel1.add(cajaRolesUsuario);
         cajaRolesUsuario.setBounds(155, 329, 370, 30);
 
@@ -156,10 +171,20 @@ public class ventanaUsuario extends javax.swing.JDialog {
         btnVer.setBounds(530, 319, 50, 50);
 
         btnGuardar.setText("Guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(455, 374, 70, 70);
 
         btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEditar);
         btnEditar.setBounds(380, 374, 70, 70);
 
@@ -171,26 +196,108 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(entContraseña);
         entContraseña.setBounds(100, 224, 480, 30);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(3, 3, 599, 456);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        switch ( caso ) {
+            case 0:
+                MC_Usuario control = new  MC_Usuario();
+                Usuario usuario = obtenerElementosVentana();
+                if (JOptionPane.showConfirmDialog(this, "Guardar Usuario", "Escudo", 1, 2, null) == 0){
+                    if (control.nuevoUsuario(usuario)) {
+                        JOptionPane.showMessageDialog(this, "Registro De Usuario Exitoso ", "Informacion", 1, null);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error Al Registrar El Usuario", "Error", 0, null);
+                    }
+                }
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Los Campos Usuario, Contraseña y  Confirmar Contraseña Son Obligatorios", "Error", 0, null);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Confirmacion De Contraseña Incorrecta", "Error", 0, null);
+                break;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        switch ( caso ) {
+            case 0:
+                MC_Usuario control = new  MC_Usuario();
+                Usuario usuario = obtenerElementosVentana();
+                if (JOptionPane.showConfirmDialog(this, "Editar Usuario", "Escudo", 1, 2, null) == 0){
+                    if (control.ediatrUsuario(usuario)) {
+                        JOptionPane.showMessageDialog(this, "Usuario Editado  Exitosamente ", "Informacion", 1, null);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error Al Editar El Usuario", "Error", 0, null);
+                    }
+                }
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Los Campos Usuario, Contraseña y  Confirmar Contraseña Son Obligatorios", "Error", 0, null);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Confirmacion De Contraseña Incorrecta", "Error", 0, null);
+                break; 
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    public Usuario obtenerElementosVentana () {
+        String Usuario = entUsuario.getText();
+        String contraseña = entContraseña.getText();
+        String confirmarContraseña = entConfirmarContraseña.getText();
+        boolean estadoUsuario = entEstadoUsuario.isSelected();
+        if  (Usuario.isEmpty() || contraseña.isEmpty() || contraseña.isEmpty()){
+            caso = 1;
+        }
+        if (contraseña.equals(confirmarContraseña)){
+            caso = 2;
+        }
+        Usuario usuario  = new Usuario(Usuario, contraseña, estadoUsuario, empleado);
+        return usuario;
+    }
+    
+    public void mostrarElementos(Usuario usuario) {
+        Empleado emp = usuario.getEmpleadoId();
+        List<RolUsuario> rolesUsuario = new ArrayList<>();
+        
+        if (emp.getFoto().length > 0) {
+            Image imagen = funciones.byte_jpg(emp.getFoto()).getScaledInstance(fotoEmpleado.getWidth(), fotoEmpleado.getHeight(), Image.SCALE_DEFAULT);
+            fotoEmpleado.setIcon(new ImageIcon(imagen));
+        }
+        if (emp.getNombre().isEmpty()) {
+            entPimerNombre.setText("Sin Nombre");
+        } else {
+            entPimerNombre.setText(emp.getNombre());
+        }
+        if (emp.getApellidoPaterno().isEmpty()) {
+            entApellidoPaterno.setText("Sin Apellido Paterno");
+        } else {
+            entApellidoPaterno.setText(emp.getApellidoPaterno());
+        }
+        entCedula.setText(emp.getCedula());
+        entUsuario.setText(usuario.getUsuario());
+        entContraseña.setText(usuario.getContraseña());
+        entEstadoUsuario.setSelected(usuario.getEstado());
+        for (RolUsuario roles : rolesUsuario) {
+            Permiso permiso = roles.getPermiso();
+            String rolesDelUsuario = roles.getTiporol()+","+permiso.getId();
+            cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { rolesDelUsuario }));
+        }
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+  
     /**
      * @param args the command line arguments
      */
@@ -221,7 +328,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaUsuario dialog = new ventanaUsuario(new javax.swing.JFrame(), true);
+                ventanaUsuario dialog = new ventanaUsuario(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -242,11 +349,9 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private javax.swing.JTextField entCedula;
     private javax.swing.JPasswordField entConfirmarContraseña;
     private javax.swing.JPasswordField entContraseña;
-    private javax.swing.JRadioButton entEstadoUsuarioInactivo;
+    private javax.swing.JRadioButton entEstadoUsuario;
     private javax.swing.JTextField entPimerNombre;
     private javax.swing.JTextField entUsuario;
-    private javax.swing.ButtonGroup estadoUsuario;
-    private javax.swing.JRadioButton etnEstadoUsuarioActivo;
     private javax.swing.JLabel fotoEmpleado;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
