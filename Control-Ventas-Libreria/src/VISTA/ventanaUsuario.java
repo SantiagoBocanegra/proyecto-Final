@@ -83,6 +83,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         setTitle("Usuario");
         getContentPane().setLayout(null);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         jPanel1.setLayout(null);
 

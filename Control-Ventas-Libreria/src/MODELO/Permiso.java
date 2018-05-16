@@ -64,6 +64,14 @@ public class Permiso implements Serializable {
         this.id = id;
     }
 
+    public Permiso(String nombretabla, Boolean actualizar, Boolean editar, Boolean ver) {
+        this.nombretabla = nombretabla;
+        this.actualizar = actualizar;
+        this.editar = editar;
+        this.ver = ver;
+    }
+    
+
     public Integer getId() {
         return id;
     }

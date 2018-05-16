@@ -60,6 +60,11 @@ public class RolUsuario implements Serializable {
         this.rolUsuarioPK = new RolUsuarioPK(usuarioId, permisoId);
     }
 
+    public RolUsuario(String tiporol, Date fechacreacion) {
+        this.tiporol = tiporol;
+        this.fechacreacion = fechacreacion;
+    }
+    
     public RolUsuarioPK getRolUsuarioPK() {
         return rolUsuarioPK;
     }
