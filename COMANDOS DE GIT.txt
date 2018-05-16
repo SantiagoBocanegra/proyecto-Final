@@ -1,0 +1,9 @@
+git tag -a 'numero de version -> v0.0' -m 'comentario en ""'
+git push + origen + version de la etiqueta
+git add -a adiccionar todo al commit
+git commit -m "comentario" agregar al repositorio local
+git push agregar al repositorio remoto
+git branch ver ramas existentes
+git branch + nombre de la rama Crear nueva rama
+git checkout + nombre de la rama Cambiar de rama
+git branch -d + nombre de la rama Eliminar una rama
