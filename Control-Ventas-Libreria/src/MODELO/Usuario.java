@@ -53,7 +53,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
     private Collection<RolUsuario> rolUsuarioCollection;
 
     public Usuario() {
@@ -63,10 +63,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public Usuario(String usuario, String contraseña, Boolean estado, Empleado empleadoId) {
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -74,7 +70,10 @@ public class Usuario implements Serializable {
         this.empleadoId = empleadoId;
     }
 
-    
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

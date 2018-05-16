@@ -6,7 +6,6 @@
 package VISTA;
 
 import MODELO.Empleado;
-import MODELO.Permiso;
 import MODELO.RolUsuario;
 import MODELO.Usuario;
 import MODELO_CONTROLADOR.MC_Usuario;
@@ -25,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class ventanaUsuario extends javax.swing.JDialog {
     //Informacion Obtenida De Un Empleado Desde Otra Ventana
-    private Empleado empleado;
+    private Empleado empleado = new Empleado(1);
     /**
      * variable para identificar errores al momento de obtener los elementos de la caja de texto
      * 0 = no hay errores en los datos
@@ -33,8 +32,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
      * 2 = confirmacion de contraseña incorrecta
      */
     private int caso = 0;
-    // id -> identifica  a la tabla usuario para validar permisos
-    private int id = 1;
+    // nombreTabla -> identifica  a la tabla usuario para validar permisos
+    private String  nombreTabla = "Usuario";
     
     public ventanaUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -285,8 +284,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entContraseña.setText(usuario.getContraseña());
         entEstadoUsuario.setSelected(usuario.getEstado());
         for (RolUsuario roles : rolesUsuario) {
-            Permiso permiso = roles.getPermiso();
-            String rolesDelUsuario = roles.getTiporol()+","+permiso.getId();
+            String rolesDelUsuario = roles.getId()+","+roles.getNombrerol();
             cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { rolesDelUsuario }));
         }
     }

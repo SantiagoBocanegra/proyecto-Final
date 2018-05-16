@@ -6,15 +6,12 @@
 package CONTROLADOR;
 
 import CONTROLADOR.exceptions.NonexistentEntityException;
-import CONTROLADOR.exceptions.PreexistingEntityException;
+import MODELO.RolUsuario;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import MODELO.Permiso;
-import MODELO.RolUsuario;
-import MODELO.RolUsuarioPK;
 import MODELO.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -35,41 +32,22 @@ public class RolUsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(RolUsuario rolUsuario) throws PreexistingEntityException, Exception {
-        if (rolUsuario.getRolUsuarioPK() == null) {
-            rolUsuario.setRolUsuarioPK(new RolUsuarioPK());
-        }
-        rolUsuario.getRolUsuarioPK().setUsuarioId(rolUsuario.getUsuario().getId());
-        rolUsuario.getRolUsuarioPK().setPermisoId(rolUsuario.getPermiso().getId());
+    public void create(RolUsuario rolUsuario) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Permiso permiso = rolUsuario.getPermiso();
-            if (permiso != null) {
-                permiso = em.getReference(permiso.getClass(), permiso.getId());
-                rolUsuario.setPermiso(permiso);
-            }
-            Usuario usuario = rolUsuario.getUsuario();
-            if (usuario != null) {
-                usuario = em.getReference(usuario.getClass(), usuario.getId());
-                rolUsuario.setUsuario(usuario);
+            Usuario usuarioId = rolUsuario.getUsuarioId();
+            if (usuarioId != null) {
+                usuarioId = em.getReference(usuarioId.getClass(), usuarioId.getId());
+                rolUsuario.setUsuarioId(usuarioId);
             }
             em.persist(rolUsuario);
-            if (permiso != null) {
-                permiso.getRolUsuarioCollection().add(rolUsuario);
-                permiso = em.merge(permiso);
-            }
-            if (usuario != null) {
-                usuario.getRolUsuarioCollection().add(rolUsuario);
-                usuario = em.merge(usuario);
+            if (usuarioId != null) {
+                usuarioId.getRolUsuarioCollection().add(rolUsuario);
+                usuarioId = em.merge(usuarioId);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findRolUsuario(rolUsuario.getRolUsuarioPK()) != null) {
-                throw new PreexistingEntityException("RolUsuario " + rolUsuario + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -78,47 +56,31 @@ public class RolUsuarioJpaController implements Serializable {
     }
 
     public void edit(RolUsuario rolUsuario) throws NonexistentEntityException, Exception {
-        rolUsuario.getRolUsuarioPK().setUsuarioId(rolUsuario.getUsuario().getId());
-        rolUsuario.getRolUsuarioPK().setPermisoId(rolUsuario.getPermiso().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            RolUsuario persistentRolUsuario = em.find(RolUsuario.class, rolUsuario.getRolUsuarioPK());
-            Permiso permisoOld = persistentRolUsuario.getPermiso();
-            Permiso permisoNew = rolUsuario.getPermiso();
-            Usuario usuarioOld = persistentRolUsuario.getUsuario();
-            Usuario usuarioNew = rolUsuario.getUsuario();
-            if (permisoNew != null) {
-                permisoNew = em.getReference(permisoNew.getClass(), permisoNew.getId());
-                rolUsuario.setPermiso(permisoNew);
-            }
-            if (usuarioNew != null) {
-                usuarioNew = em.getReference(usuarioNew.getClass(), usuarioNew.getId());
-                rolUsuario.setUsuario(usuarioNew);
+            RolUsuario persistentRolUsuario = em.find(RolUsuario.class, rolUsuario.getId());
+            Usuario usuarioIdOld = persistentRolUsuario.getUsuarioId();
+            Usuario usuarioIdNew = rolUsuario.getUsuarioId();
+            if (usuarioIdNew != null) {
+                usuarioIdNew = em.getReference(usuarioIdNew.getClass(), usuarioIdNew.getId());
+                rolUsuario.setUsuarioId(usuarioIdNew);
             }
             rolUsuario = em.merge(rolUsuario);
-            if (permisoOld != null && !permisoOld.equals(permisoNew)) {
-                permisoOld.getRolUsuarioCollection().remove(rolUsuario);
-                permisoOld = em.merge(permisoOld);
+            if (usuarioIdOld != null && !usuarioIdOld.equals(usuarioIdNew)) {
+                usuarioIdOld.getRolUsuarioCollection().remove(rolUsuario);
+                usuarioIdOld = em.merge(usuarioIdOld);
             }
-            if (permisoNew != null && !permisoNew.equals(permisoOld)) {
-                permisoNew.getRolUsuarioCollection().add(rolUsuario);
-                permisoNew = em.merge(permisoNew);
-            }
-            if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
-                usuarioOld.getRolUsuarioCollection().remove(rolUsuario);
-                usuarioOld = em.merge(usuarioOld);
-            }
-            if (usuarioNew != null && !usuarioNew.equals(usuarioOld)) {
-                usuarioNew.getRolUsuarioCollection().add(rolUsuario);
-                usuarioNew = em.merge(usuarioNew);
+            if (usuarioIdNew != null && !usuarioIdNew.equals(usuarioIdOld)) {
+                usuarioIdNew.getRolUsuarioCollection().add(rolUsuario);
+                usuarioIdNew = em.merge(usuarioIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                RolUsuarioPK id = rolUsuario.getRolUsuarioPK();
+                Integer id = rolUsuario.getId();
                 if (findRolUsuario(id) == null) {
                     throw new NonexistentEntityException("The rolUsuario with id " + id + " no longer exists.");
                 }
@@ -131,7 +93,7 @@ public class RolUsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(RolUsuarioPK id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,19 +101,14 @@ public class RolUsuarioJpaController implements Serializable {
             RolUsuario rolUsuario;
             try {
                 rolUsuario = em.getReference(RolUsuario.class, id);
-                rolUsuario.getRolUsuarioPK();
+                rolUsuario.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The rolUsuario with id " + id + " no longer exists.", enfe);
             }
-            Permiso permiso = rolUsuario.getPermiso();
-            if (permiso != null) {
-                permiso.getRolUsuarioCollection().remove(rolUsuario);
-                permiso = em.merge(permiso);
-            }
-            Usuario usuario = rolUsuario.getUsuario();
-            if (usuario != null) {
-                usuario.getRolUsuarioCollection().remove(rolUsuario);
-                usuario = em.merge(usuario);
+            Usuario usuarioId = rolUsuario.getUsuarioId();
+            if (usuarioId != null) {
+                usuarioId.getRolUsuarioCollection().remove(rolUsuario);
+                usuarioId = em.merge(usuarioId);
             }
             em.remove(rolUsuario);
             em.getTransaction().commit();
@@ -186,7 +143,7 @@ public class RolUsuarioJpaController implements Serializable {
         }
     }
 
-    public RolUsuario findRolUsuario(RolUsuarioPK id) {
+    public RolUsuario findRolUsuario(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(RolUsuario.class, id);

@@ -7,9 +7,12 @@ package MODELO;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,57 +31,87 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolUsuario.findAll", query = "SELECT r FROM RolUsuario r")
-    , @NamedQuery(name = "RolUsuario.findByUsuarioId", query = "SELECT r FROM RolUsuario r WHERE r.rolUsuarioPK.usuarioId = :usuarioId")
-    , @NamedQuery(name = "RolUsuario.findByPermisoId", query = "SELECT r FROM RolUsuario r WHERE r.rolUsuarioPK.permisoId = :permisoId")
-    , @NamedQuery(name = "RolUsuario.findByTiporol", query = "SELECT r FROM RolUsuario r WHERE r.tiporol = :tiporol")
-    , @NamedQuery(name = "RolUsuario.findByFechacreacion", query = "SELECT r FROM RolUsuario r WHERE r.fechacreacion = :fechacreacion")})
+    , @NamedQuery(name = "RolUsuario.findById", query = "SELECT r FROM RolUsuario r WHERE r.id = :id")
+    , @NamedQuery(name = "RolUsuario.findByNombrerol", query = "SELECT r FROM RolUsuario r WHERE r.nombrerol = :nombrerol")
+    , @NamedQuery(name = "RolUsuario.findByFechacreacion", query = "SELECT r FROM RolUsuario r WHERE r.fechacreacion = :fechacreacion")
+    , @NamedQuery(name = "RolUsuario.findByNombretabla", query = "SELECT r FROM RolUsuario r WHERE r.nombretabla = :nombretabla")
+    , @NamedQuery(name = "RolUsuario.findByVer", query = "SELECT r FROM RolUsuario r WHERE r.ver = :ver")
+    , @NamedQuery(name = "RolUsuario.findByInsertar", query = "SELECT r FROM RolUsuario r WHERE r.insertar = :insertar")
+    , @NamedQuery(name = "RolUsuario.findByEditar", query = "SELECT r FROM RolUsuario r WHERE r.editar = :editar")
+    , @NamedQuery(name = "RolUsuario.findByBorrar", query = "SELECT r FROM RolUsuario r WHERE r.borrar = :borrar")})
 public class RolUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected RolUsuarioPK rolUsuarioPK;
-    @Column(name = "tiporol")
-    private String tiporol;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "nombrerol")
+    private String nombrerol;
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
-    @JoinColumn(name = "permiso_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Column(name = "nombretabla")
+    private String nombretabla;
+    @Column(name = "ver")
+    private Boolean ver;
+    @Column(name = "insertar")
+    private Boolean insertar;
+    @Column(name = "editar")
+    private Boolean editar;
+    @Column(name = "borrar")
+    private Boolean borrar;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Permiso permiso;
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
+    private Usuario usuarioId;
 
     public RolUsuario() {
     }
 
-    public RolUsuario(RolUsuarioPK rolUsuarioPK) {
-        this.rolUsuarioPK = rolUsuarioPK;
+    public RolUsuario(Integer id) {
+        this.id = id;
     }
 
-    public RolUsuario(int usuarioId, int permisoId) {
-        this.rolUsuarioPK = new RolUsuarioPK(usuarioId, permisoId);
-    }
-
-    public RolUsuario(String tiporol, Date fechacreacion) {
-        this.tiporol = tiporol;
+    public RolUsuario(String nombrerol, Date fechacreacion, Usuario usuarioId) {
+        this.nombrerol = nombrerol;
         this.fechacreacion = fechacreacion;
+        this.usuarioId = usuarioId;
+    }
+
+    public RolUsuario(String nombretabla, Boolean ver, Boolean insertar, Boolean editar, Boolean borrar) {
+        this.nombretabla = nombretabla;
+        this.ver = ver;
+        this.insertar = insertar;
+        this.editar = editar;
+        this.borrar = borrar;
     }
     
-    public RolUsuarioPK getRolUsuarioPK() {
-        return rolUsuarioPK;
+    public RolUsuario(String nombrerol, Date fechacreacion, String nombretabla, Boolean ver, Boolean insertar, Boolean editar, Boolean borrar, Usuario usuarioId) {
+        this.nombrerol = nombrerol;
+        this.fechacreacion = fechacreacion;
+        this.nombretabla = nombretabla;
+        this.ver = ver;
+        this.insertar = insertar;
+        this.editar = editar;
+        this.borrar = borrar;
+        this.usuarioId = usuarioId;
     }
 
-    public void setRolUsuarioPK(RolUsuarioPK rolUsuarioPK) {
-        this.rolUsuarioPK = rolUsuarioPK;
+    public Integer getId() {
+        return id;
     }
 
-    public String getTiporol() {
-        return tiporol;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setTiporol(String tiporol) {
-        this.tiporol = tiporol;
+    public String getNombrerol() {
+        return nombrerol;
+    }
+
+    public void setNombrerol(String nombrerol) {
+        this.nombrerol = nombrerol;
     }
 
     public Date getFechacreacion() {
@@ -89,26 +122,58 @@ public class RolUsuario implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public Permiso getPermiso() {
-        return permiso;
+    public String getNombretabla() {
+        return nombretabla;
     }
 
-    public void setPermiso(Permiso permiso) {
-        this.permiso = permiso;
+    public void setNombretabla(String nombretabla) {
+        this.nombretabla = nombretabla;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Boolean getVer() {
+        return ver;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setVer(Boolean ver) {
+        this.ver = ver;
+    }
+
+    public Boolean getInsertar() {
+        return insertar;
+    }
+
+    public void setInsertar(Boolean insertar) {
+        this.insertar = insertar;
+    }
+
+    public Boolean getEditar() {
+        return editar;
+    }
+
+    public void setEditar(Boolean editar) {
+        this.editar = editar;
+    }
+
+    public Boolean getBorrar() {
+        return borrar;
+    }
+
+    public void setBorrar(Boolean borrar) {
+        this.borrar = borrar;
+    }
+
+    public Usuario getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Usuario usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rolUsuarioPK != null ? rolUsuarioPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -119,7 +184,7 @@ public class RolUsuario implements Serializable {
             return false;
         }
         RolUsuario other = (RolUsuario) object;
-        if ((this.rolUsuarioPK == null && other.rolUsuarioPK != null) || (this.rolUsuarioPK != null && !this.rolUsuarioPK.equals(other.rolUsuarioPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -127,7 +192,7 @@ public class RolUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "MODELO.RolUsuario[ rolUsuarioPK=" + rolUsuarioPK + " ]";
+        return "MODELO.RolUsuario[ id=" + id + " ]";
     }
     
 }

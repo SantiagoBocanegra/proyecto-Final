@@ -10,7 +10,6 @@ package MODELO_CONTROLADOR;
 
 import CONTROLADOR.RolUsuarioJpaController;
 import MODELO.RolUsuario;
-import MODELO.RolUsuarioPK;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -68,12 +67,12 @@ public class MC_RolUsuario {
     }
     
     //FUNCION NUMERO 3
-    public RolUsuario buscarRolUsuario ( RolUsuarioPK  rolUsuarioPK) {
+    public RolUsuario buscarRolUsuario ( int  idRolUsuario) {
         RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);
         RolUsuario rolUsuario = new RolUsuario();
         try {
             emt.begin();
-            rolUsuario = servicio.findRolUsuario(rolUsuarioPK);
+            rolUsuario = servicio.findRolUsuario(idRolUsuario);
             emt.commit();
         } catch (Exception e) {
             emt.rollback();

@@ -39,8 +39,8 @@ public class OrdenitemprestamoJpaController implements Serializable {
         if (ordenitemprestamo.getOrdenitemprestamoPK() == null) {
             ordenitemprestamo.setOrdenitemprestamoPK(new OrdenitemprestamoPK());
         }
-        ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
         ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
+        ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class OrdenitemprestamoJpaController implements Serializable {
     }
 
     public void edit(Ordenitemprestamo ordenitemprestamo) throws NonexistentEntityException, Exception {
-        ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
         ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
+        ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
         EntityManager em = null;
         try {
             em = getEntityManager();

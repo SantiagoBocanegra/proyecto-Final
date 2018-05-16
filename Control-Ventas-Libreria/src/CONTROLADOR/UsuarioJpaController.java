@@ -51,7 +51,7 @@ public class UsuarioJpaController implements Serializable {
             }
             Collection<RolUsuario> attachedRolUsuarioCollection = new ArrayList<RolUsuario>();
             for (RolUsuario rolUsuarioCollectionRolUsuarioToAttach : usuario.getRolUsuarioCollection()) {
-                rolUsuarioCollectionRolUsuarioToAttach = em.getReference(rolUsuarioCollectionRolUsuarioToAttach.getClass(), rolUsuarioCollectionRolUsuarioToAttach.getRolUsuarioPK());
+                rolUsuarioCollectionRolUsuarioToAttach = em.getReference(rolUsuarioCollectionRolUsuarioToAttach.getClass(), rolUsuarioCollectionRolUsuarioToAttach.getId());
                 attachedRolUsuarioCollection.add(rolUsuarioCollectionRolUsuarioToAttach);
             }
             usuario.setRolUsuarioCollection(attachedRolUsuarioCollection);
@@ -61,12 +61,12 @@ public class UsuarioJpaController implements Serializable {
                 empleadoId = em.merge(empleadoId);
             }
             for (RolUsuario rolUsuarioCollectionRolUsuario : usuario.getRolUsuarioCollection()) {
-                Usuario oldUsuarioOfRolUsuarioCollectionRolUsuario = rolUsuarioCollectionRolUsuario.getUsuario();
-                rolUsuarioCollectionRolUsuario.setUsuario(usuario);
+                Usuario oldUsuarioIdOfRolUsuarioCollectionRolUsuario = rolUsuarioCollectionRolUsuario.getUsuarioId();
+                rolUsuarioCollectionRolUsuario.setUsuarioId(usuario);
                 rolUsuarioCollectionRolUsuario = em.merge(rolUsuarioCollectionRolUsuario);
-                if (oldUsuarioOfRolUsuarioCollectionRolUsuario != null) {
-                    oldUsuarioOfRolUsuarioCollectionRolUsuario.getRolUsuarioCollection().remove(rolUsuarioCollectionRolUsuario);
-                    oldUsuarioOfRolUsuarioCollectionRolUsuario = em.merge(oldUsuarioOfRolUsuarioCollectionRolUsuario);
+                if (oldUsuarioIdOfRolUsuarioCollectionRolUsuario != null) {
+                    oldUsuarioIdOfRolUsuarioCollectionRolUsuario.getRolUsuarioCollection().remove(rolUsuarioCollectionRolUsuario);
+                    oldUsuarioIdOfRolUsuarioCollectionRolUsuario = em.merge(oldUsuarioIdOfRolUsuarioCollectionRolUsuario);
                 }
             }
             em.getTransaction().commit();
@@ -93,7 +93,7 @@ public class UsuarioJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain RolUsuario " + rolUsuarioCollectionOldRolUsuario + " since its usuario field is not nullable.");
+                    illegalOrphanMessages.add("You must retain RolUsuario " + rolUsuarioCollectionOldRolUsuario + " since its usuarioId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -105,7 +105,7 @@ public class UsuarioJpaController implements Serializable {
             }
             Collection<RolUsuario> attachedRolUsuarioCollectionNew = new ArrayList<RolUsuario>();
             for (RolUsuario rolUsuarioCollectionNewRolUsuarioToAttach : rolUsuarioCollectionNew) {
-                rolUsuarioCollectionNewRolUsuarioToAttach = em.getReference(rolUsuarioCollectionNewRolUsuarioToAttach.getClass(), rolUsuarioCollectionNewRolUsuarioToAttach.getRolUsuarioPK());
+                rolUsuarioCollectionNewRolUsuarioToAttach = em.getReference(rolUsuarioCollectionNewRolUsuarioToAttach.getClass(), rolUsuarioCollectionNewRolUsuarioToAttach.getId());
                 attachedRolUsuarioCollectionNew.add(rolUsuarioCollectionNewRolUsuarioToAttach);
             }
             rolUsuarioCollectionNew = attachedRolUsuarioCollectionNew;
@@ -121,12 +121,12 @@ public class UsuarioJpaController implements Serializable {
             }
             for (RolUsuario rolUsuarioCollectionNewRolUsuario : rolUsuarioCollectionNew) {
                 if (!rolUsuarioCollectionOld.contains(rolUsuarioCollectionNewRolUsuario)) {
-                    Usuario oldUsuarioOfRolUsuarioCollectionNewRolUsuario = rolUsuarioCollectionNewRolUsuario.getUsuario();
-                    rolUsuarioCollectionNewRolUsuario.setUsuario(usuario);
+                    Usuario oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario = rolUsuarioCollectionNewRolUsuario.getUsuarioId();
+                    rolUsuarioCollectionNewRolUsuario.setUsuarioId(usuario);
                     rolUsuarioCollectionNewRolUsuario = em.merge(rolUsuarioCollectionNewRolUsuario);
-                    if (oldUsuarioOfRolUsuarioCollectionNewRolUsuario != null && !oldUsuarioOfRolUsuarioCollectionNewRolUsuario.equals(usuario)) {
-                        oldUsuarioOfRolUsuarioCollectionNewRolUsuario.getRolUsuarioCollection().remove(rolUsuarioCollectionNewRolUsuario);
-                        oldUsuarioOfRolUsuarioCollectionNewRolUsuario = em.merge(oldUsuarioOfRolUsuarioCollectionNewRolUsuario);
+                    if (oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario != null && !oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario.equals(usuario)) {
+                        oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario.getRolUsuarioCollection().remove(rolUsuarioCollectionNewRolUsuario);
+                        oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario = em.merge(oldUsuarioIdOfRolUsuarioCollectionNewRolUsuario);
                     }
                 }
             }
@@ -165,7 +165,7 @@ public class UsuarioJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the RolUsuario " + rolUsuarioCollectionOrphanCheckRolUsuario + " in its rolUsuarioCollection field has a non-nullable usuario field.");
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the RolUsuario " + rolUsuarioCollectionOrphanCheckRolUsuario + " in its rolUsuarioCollection field has a non-nullable usuarioId field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

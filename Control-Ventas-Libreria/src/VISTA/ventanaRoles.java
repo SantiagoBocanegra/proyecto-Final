@@ -5,13 +5,21 @@
  */
 package VISTA;
 
-import MODELO.Permiso;
 import MODELO.RolUsuario;
+import MODELO.Usuario;
+import MODELO_CONTROLADOR.MC_RolUsuario;
+import MODELO_CONTROLADOR.funciones;
+import com.toedter.calendar.JCalendar;
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *                      Funciones De La  ventanaRoles
  * obtenerElementos -> obtener la informacion de la caja de texto de la ventana 
+ * obtenerElementosPermisos -> obtener los permisos que se le otorgo al rol del usuario
  */
 public class ventanaRoles extends javax.swing.JDialog {
 /**
@@ -19,20 +27,19 @@ public class ventanaRoles extends javax.swing.JDialog {
  * 0 = No Hay Problemas 
  * 1 = Nombre De Rol Vacio 
  */
-    int caso = 0;
-    //Permisos De Roles 
-    Permiso Cliente = new Permiso();
-    Permiso Empleado = new Permiso();
-    Permiso Usuario = new Permiso();
-    Permiso Libro = new Permiso();
-    Permiso OrdenCompra = new Permiso();
-    Permiso OrdenPrestamo = new Permiso();
-    Permiso Roles = new Permiso();
-    Permiso Genero = new Permiso();
+    private int caso = 0;
+    //Usuario Para El Campo De Usuario Id De La Clase RoleUsuario
+    private Usuario usuario = new Usuario();
     
     public ventanaRoles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setSize(552, 575);
+        entUsuario.setBackground(Color.WHITE);
+        JCalendar calendario = entFechaRegistro.getJCalendar();
+        calendario.setWeekOfYearVisible(false);
+        calendario.setMaxDayCharacters(2);
+        entFechaRegistro.setDate(funciones.fecha());
     }
 
     /**
@@ -74,27 +81,31 @@ public class ventanaRoles extends javax.swing.JDialog {
         btnOrdenPrestamo = new javax.swing.JRadioButton();
         btnOrdenPrestamoInsertar = new javax.swing.JRadioButton();
         btnOrdenPrestamoEditar = new javax.swing.JRadioButton();
-        btnOrdenCompraVer = new javax.swing.JRadioButton();
+        btnOrdenPrestamoVer = new javax.swing.JRadioButton();
         jSeparator7 = new javax.swing.JSeparator();
         fondoUsuario = new javax.swing.JPanel();
         btnUsuario = new javax.swing.JRadioButton();
         btnUsuarioInsertar = new javax.swing.JRadioButton();
         btnUsuarioEditar = new javax.swing.JRadioButton();
+        btnUsuarioVer = new javax.swing.JRadioButton();
         jSeparator3 = new javax.swing.JSeparator();
         fondoRoles = new javax.swing.JPanel();
         btnRoles = new javax.swing.JRadioButton();
         btnRolesInsertar = new javax.swing.JRadioButton();
         btnRolesEditar = new javax.swing.JRadioButton();
+        btnRolesVer = new javax.swing.JRadioButton();
         jSeparator4 = new javax.swing.JSeparator();
         fondoGenero = new javax.swing.JPanel();
         btnGenero = new javax.swing.JRadioButton();
         btnGeneroInsertar = new javax.swing.JRadioButton();
         btnGeneroEditar = new javax.swing.JRadioButton();
+        btnGeneroVer = new javax.swing.JRadioButton();
         jSeparator8 = new javax.swing.JSeparator();
         fondoOrdenCompra = new javax.swing.JPanel();
         btnOrdenCompra = new javax.swing.JRadioButton();
         btnOrdenCompraInsertar = new javax.swing.JRadioButton();
         btnOrdenCompraEditar = new javax.swing.JRadioButton();
+        btnOrdenCompraVer = new javax.swing.JRadioButton();
         jSeparator6 = new javax.swing.JSeparator();
         foto = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
@@ -111,11 +122,12 @@ public class ventanaRoles extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel6.setText("Usuario");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(170, 20, 70, 30);
+        jLabel6.setBounds(190, 20, 70, 30);
 
         entUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entUsuario.setEnabled(false);
         jPanel1.add(entUsuario);
-        entUsuario.setBounds(240, 20, 285, 30);
+        entUsuario.setBounds(250, 20, 195, 30);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel7.setText("Rol");
@@ -124,42 +136,44 @@ public class ventanaRoles extends javax.swing.JDialog {
 
         entRol.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entRol);
-        entRol.setBounds(240, 60, 285, 30);
+        entRol.setBounds(220, 60, 225, 30);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel8.setText("Fecha Registro ");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(170, 100, 130, 30);
+        jLabel8.setBounds(190, 100, 120, 30);
+
+        entFechaRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(entFechaRegistro);
-        entFechaRegistro.setBounds(290, 100, 235, 30);
+        entFechaRegistro.setBounds(300, 100, 145, 30);
 
         fondoPermisos.setBackground(new java.awt.Color(204, 204, 204));
         fondoPermisos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)), "Permisos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 24))); // NOI18N
         fondoPermisos.setLayout(null);
 
-        fondoEmpleado.setBackground(new java.awt.Color(153, 153, 153));
+        fondoEmpleado.setBackground(new java.awt.Color(204, 204, 204));
         fondoEmpleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         fondoEmpleado.setLayout(null);
 
-        btnEmpleado.setBackground(new java.awt.Color(153, 153, 153));
+        btnEmpleado.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnEmpleado.setText("Empleado");
         fondoEmpleado.add(btnEmpleado);
         btnEmpleado.setBounds(5, 5, 100, 30);
 
-        btnEmpleadoInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnEmpleadoInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleadoInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnEmpleadoInsertar.setText("Insertar");
         fondoEmpleado.add(btnEmpleadoInsertar);
         btnEmpleadoInsertar.setBounds(5, 45, 80, 30);
 
-        btnEmpleadoEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnEmpleadoEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleadoEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnEmpleadoEditar.setText("Editar");
         fondoEmpleado.add(btnEmpleadoEditar);
         btnEmpleadoEditar.setBounds(5, 80, 80, 30);
 
-        btnEmpleadoVer.setBackground(new java.awt.Color(153, 153, 153));
+        btnEmpleadoVer.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleadoVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnEmpleadoVer.setText("Ver");
         fondoEmpleado.add(btnEmpleadoVer);
@@ -170,62 +184,62 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoPermisos.add(fondoEmpleado);
         fondoEmpleado.setBounds(10, 30, 120, 155);
 
-        fondoCliente.setBackground(new java.awt.Color(153, 153, 153));
+        fondoCliente.setBackground(new java.awt.Color(204, 204, 204));
         fondoCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         fondoCliente.setLayout(null);
 
-        btnCliente.setBackground(new java.awt.Color(153, 153, 153));
+        btnCliente.setBackground(new java.awt.Color(204, 204, 204));
         btnCliente.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnCliente.setText("Cliente");
         fondoCliente.add(btnCliente);
         btnCliente.setBounds(5, 5, 80, 30);
 
-        btnClienteInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnClienteInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnClienteInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnClienteInsertar.setText("Insertar");
         fondoCliente.add(btnClienteInsertar);
         btnClienteInsertar.setBounds(5, 45, 80, 30);
 
-        btnClienteEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnClienteEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnClienteEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnClienteEditar.setText("Editar");
         fondoCliente.add(btnClienteEditar);
         btnClienteEditar.setBounds(5, 80, 80, 30);
 
-        btnClienteVer.setBackground(new java.awt.Color(153, 153, 153));
+        btnClienteVer.setBackground(new java.awt.Color(204, 204, 204));
         btnClienteVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnClienteVer.setText("Ver");
         fondoCliente.add(btnClienteVer);
         btnClienteVer.setBounds(5, 115, 80, 30);
         fondoCliente.add(jSeparator1);
-        jSeparator1.setBounds(5, 40, 110, 10);
+        jSeparator1.setBounds(5, 40, 110, 2);
 
         fondoPermisos.add(fondoCliente);
         fondoCliente.setBounds(135, 30, 120, 155);
 
-        fondoLibro.setBackground(new java.awt.Color(153, 153, 153));
+        fondoLibro.setBackground(new java.awt.Color(204, 204, 204));
         fondoLibro.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         fondoLibro.setLayout(null);
 
-        btnLibro.setBackground(new java.awt.Color(153, 153, 153));
+        btnLibro.setBackground(new java.awt.Color(204, 204, 204));
         btnLibro.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnLibro.setText("Libros");
         fondoLibro.add(btnLibro);
         btnLibro.setBounds(5, 5, 80, 30);
 
-        btnLibroInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnLibroInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnLibroInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnLibroInsertar.setText("Insertar");
         fondoLibro.add(btnLibroInsertar);
         btnLibroInsertar.setBounds(5, 45, 80, 30);
 
-        btnLibroEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnLibroEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnLibroEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnLibroEditar.setText("Editar");
         fondoLibro.add(btnLibroEditar);
         btnLibroEditar.setBounds(5, 80, 80, 30);
 
-        btnLibroVer.setBackground(new java.awt.Color(153, 153, 153));
+        btnLibroVer.setBackground(new java.awt.Color(204, 204, 204));
         btnLibroVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnLibroVer.setText("Ver");
         fondoLibro.add(btnLibroVer);
@@ -236,255 +250,228 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoPermisos.add(fondoLibro);
         fondoLibro.setBounds(260, 30, 90, 155);
 
-        fondoOrdenPrestamo.setBackground(new java.awt.Color(153, 153, 153));
+        fondoOrdenPrestamo.setBackground(new java.awt.Color(204, 204, 204));
         fondoOrdenPrestamo.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         fondoOrdenPrestamo.setLayout(null);
 
-        btnOrdenPrestamo.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenPrestamo.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenPrestamo.setText("Orden Prestamo");
         fondoOrdenPrestamo.add(btnOrdenPrestamo);
         btnOrdenPrestamo.setBounds(5, 5, 143, 30);
 
-        btnOrdenPrestamoInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenPrestamoInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenPrestamoInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenPrestamoInsertar.setText("Insertar");
         fondoOrdenPrestamo.add(btnOrdenPrestamoInsertar);
         btnOrdenPrestamoInsertar.setBounds(5, 45, 80, 30);
 
-        btnOrdenPrestamoEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenPrestamoEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenPrestamoEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenPrestamoEditar.setText("Editar");
         fondoOrdenPrestamo.add(btnOrdenPrestamoEditar);
         btnOrdenPrestamoEditar.setBounds(5, 80, 80, 30);
 
-        btnOrdenCompraVer.setBackground(new java.awt.Color(153, 153, 153));
-        btnOrdenCompraVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnOrdenCompraVer.setText("Ver");
-        fondoOrdenPrestamo.add(btnOrdenCompraVer);
-        btnOrdenCompraVer.setBounds(5, 115, 80, 30);
+        btnOrdenPrestamoVer.setBackground(new java.awt.Color(204, 204, 204));
+        btnOrdenPrestamoVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnOrdenPrestamoVer.setText("Ver");
+        fondoOrdenPrestamo.add(btnOrdenPrestamoVer);
+        btnOrdenPrestamoVer.setBounds(5, 115, 80, 30);
         fondoOrdenPrestamo.add(jSeparator7);
         jSeparator7.setBounds(5, 40, 110, 2);
 
         fondoPermisos.add(fondoOrdenPrestamo);
         fondoOrdenPrestamo.setBounds(355, 30, 150, 155);
 
-        fondoUsuario.setBackground(new java.awt.Color(153, 153, 153));
+        fondoUsuario.setBackground(new java.awt.Color(204, 204, 204));
         fondoUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoUsuario.setLayout(null);
 
-        btnUsuario.setBackground(new java.awt.Color(153, 153, 153));
+        btnUsuario.setBackground(new java.awt.Color(204, 204, 204));
         btnUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnUsuario.setText("Usuario");
+        fondoUsuario.add(btnUsuario);
+        btnUsuario.setBounds(5, 5, 90, 30);
 
-        btnUsuarioInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnUsuarioInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnUsuarioInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnUsuarioInsertar.setText("Insertar");
+        fondoUsuario.add(btnUsuarioInsertar);
+        btnUsuarioInsertar.setBounds(5, 45, 80, 30);
 
-        btnUsuarioEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnUsuarioEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnUsuarioEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnUsuarioEditar.setText("Editar");
+        fondoUsuario.add(btnUsuarioEditar);
+        btnUsuarioEditar.setBounds(5, 80, 80, 30);
 
-        javax.swing.GroupLayout fondoUsuarioLayout = new javax.swing.GroupLayout(fondoUsuario);
-        fondoUsuario.setLayout(fondoUsuarioLayout);
-        fondoUsuarioLayout.setHorizontalGroup(
-            fondoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoUsuarioLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addGroup(fondoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnUsuarioInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnUsuarioEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
-        fondoUsuarioLayout.setVerticalGroup(
-            fondoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoUsuarioLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(btnUsuarioInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(10, 10, 10)
-                    .addComponent(btnUsuarioEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
+        btnUsuarioVer.setBackground(new java.awt.Color(204, 204, 204));
+        btnUsuarioVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnUsuarioVer.setText("Ver");
+        fondoUsuario.add(btnUsuarioVer);
+        btnUsuarioVer.setBounds(5, 115, 80, 30);
+        fondoUsuario.add(jSeparator3);
+        jSeparator3.setBounds(4, 40, 110, 2);
 
         fondoPermisos.add(fondoUsuario);
-        fondoUsuario.setBounds(10, 195, 120, 120);
+        fondoUsuario.setBounds(10, 195, 120, 155);
 
-        fondoRoles.setBackground(new java.awt.Color(153, 153, 153));
+        fondoRoles.setBackground(new java.awt.Color(204, 204, 204));
         fondoRoles.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoRoles.setLayout(null);
 
-        btnRoles.setBackground(new java.awt.Color(153, 153, 153));
+        btnRoles.setBackground(new java.awt.Color(204, 204, 204));
         btnRoles.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnRoles.setText("Roles");
+        fondoRoles.add(btnRoles);
+        btnRoles.setBounds(5, 5, 80, 30);
 
-        btnRolesInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnRolesInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnRolesInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnRolesInsertar.setText("Insertar");
+        fondoRoles.add(btnRolesInsertar);
+        btnRolesInsertar.setBounds(5, 45, 80, 30);
 
-        btnRolesEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnRolesEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnRolesEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnRolesEditar.setText("Editar");
+        fondoRoles.add(btnRolesEditar);
+        btnRolesEditar.setBounds(5, 80, 80, 30);
 
-        javax.swing.GroupLayout fondoRolesLayout = new javax.swing.GroupLayout(fondoRoles);
-        fondoRoles.setLayout(fondoRolesLayout);
-        fondoRolesLayout.setHorizontalGroup(
-            fondoRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoRolesLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addGroup(fondoRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRolesInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRolesEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
-        fondoRolesLayout.setVerticalGroup(
-            fondoRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoRolesLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addComponent(btnRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(btnRolesInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(10, 10, 10)
-                    .addComponent(btnRolesEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
+        btnRolesVer.setBackground(new java.awt.Color(204, 204, 204));
+        btnRolesVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnRolesVer.setText("Ver");
+        fondoRoles.add(btnRolesVer);
+        btnRolesVer.setBounds(5, 115, 80, 30);
+        fondoRoles.add(jSeparator4);
+        jSeparator4.setBounds(4, 40, 110, 2);
 
         fondoPermisos.add(fondoRoles);
-        fondoRoles.setBounds(135, 195, 120, 120);
+        fondoRoles.setBounds(135, 195, 120, 155);
 
-        fondoGenero.setBackground(new java.awt.Color(153, 153, 153));
+        fondoGenero.setBackground(new java.awt.Color(204, 204, 204));
         fondoGenero.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoGenero.setLayout(null);
 
-        btnGenero.setBackground(new java.awt.Color(153, 153, 153));
+        btnGenero.setBackground(new java.awt.Color(204, 204, 204));
         btnGenero.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnGenero.setText("Genero");
+        fondoGenero.add(btnGenero);
+        btnGenero.setBounds(5, 5, 80, 30);
 
-        btnGeneroInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnGeneroInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnGeneroInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnGeneroInsertar.setText("Insertar");
+        fondoGenero.add(btnGeneroInsertar);
+        btnGeneroInsertar.setBounds(5, 45, 80, 30);
 
-        btnGeneroEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnGeneroEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnGeneroEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnGeneroEditar.setText("Editar");
+        fondoGenero.add(btnGeneroEditar);
+        btnGeneroEditar.setBounds(5, 80, 80, 30);
 
-        javax.swing.GroupLayout fondoGeneroLayout = new javax.swing.GroupLayout(fondoGenero);
-        fondoGenero.setLayout(fondoGeneroLayout);
-        fondoGeneroLayout.setHorizontalGroup(
-            fondoGeneroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 86, Short.MAX_VALUE)
-            .addGroup(fondoGeneroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoGeneroLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addGroup(fondoGeneroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnGeneroInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnGeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
-        fondoGeneroLayout.setVerticalGroup(
-            fondoGeneroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoGeneroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoGeneroLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addComponent(btnGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(btnGeneroInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(10, 10, 10)
-                    .addComponent(btnGeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
+        btnGeneroVer.setBackground(new java.awt.Color(204, 204, 204));
+        btnGeneroVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnGeneroVer.setText("Ver");
+        fondoGenero.add(btnGeneroVer);
+        btnGeneroVer.setBounds(5, 115, 80, 30);
+        fondoGenero.add(jSeparator8);
+        jSeparator8.setBounds(4, 40, 80, 2);
 
         fondoPermisos.add(fondoGenero);
-        fondoGenero.setBounds(260, 195, 90, 120);
+        fondoGenero.setBounds(260, 195, 90, 155);
 
-        fondoOrdenCompra.setBackground(new java.awt.Color(153, 153, 153));
+        fondoOrdenCompra.setBackground(new java.awt.Color(204, 204, 204));
         fondoOrdenCompra.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoOrdenCompra.setLayout(null);
 
-        btnOrdenCompra.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenCompra.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenCompra.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenCompra.setText("Orden Compra");
+        fondoOrdenCompra.add(btnOrdenCompra);
+        btnOrdenCompra.setBounds(5, 5, 133, 30);
 
-        btnOrdenCompraInsertar.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenCompraInsertar.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenCompraInsertar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenCompraInsertar.setText("Insertar");
+        fondoOrdenCompra.add(btnOrdenCompraInsertar);
+        btnOrdenCompraInsertar.setBounds(5, 45, 80, 30);
 
-        btnOrdenCompraEditar.setBackground(new java.awt.Color(153, 153, 153));
+        btnOrdenCompraEditar.setBackground(new java.awt.Color(204, 204, 204));
         btnOrdenCompraEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnOrdenCompraEditar.setText("Editar");
+        fondoOrdenCompra.add(btnOrdenCompraEditar);
+        btnOrdenCompraEditar.setBounds(5, 80, 80, 30);
 
-        javax.swing.GroupLayout fondoOrdenCompraLayout = new javax.swing.GroupLayout(fondoOrdenCompra);
-        fondoOrdenCompra.setLayout(fondoOrdenCompraLayout);
-        fondoOrdenCompraLayout.setHorizontalGroup(
-            fondoOrdenCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 146, Short.MAX_VALUE)
-            .addGroup(fondoOrdenCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoOrdenCompraLayout.createSequentialGroup()
-                    .addGap(0, 13, Short.MAX_VALUE)
-                    .addGroup(fondoOrdenCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnOrdenCompraInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnOrdenCompraEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
-        fondoOrdenCompraLayout.setVerticalGroup(
-            fondoOrdenCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(fondoOrdenCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(fondoOrdenCompraLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(btnOrdenCompraInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(10, 10, 10)
-                    .addComponent(btnOrdenCompraEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
-        );
+        btnOrdenCompraVer.setBackground(new java.awt.Color(204, 204, 204));
+        btnOrdenCompraVer.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnOrdenCompraVer.setText("Ver");
+        fondoOrdenCompra.add(btnOrdenCompraVer);
+        btnOrdenCompraVer.setBounds(5, 115, 80, 30);
+        fondoOrdenCompra.add(jSeparator6);
+        jSeparator6.setBounds(4, 40, 125, 2);
 
         fondoPermisos.add(fondoOrdenCompra);
-        fondoOrdenCompra.setBounds(355, 195, 150, 120);
+        fondoOrdenCompra.setBounds(355, 195, 150, 155);
 
         jPanel1.add(fondoPermisos);
-        fondoPermisos.setBounds(10, 140, 515, 330);
+        fondoPermisos.setBounds(10, 155, 515, 370);
 
         foto.setBackground(new java.awt.Color(153, 153, 153));
         foto.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
         jPanel1.add(foto);
-        foto.setBounds(10, 10, 155, 130);
+        foto.setBounds(10, 10, 175, 140);
 
         btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEditar);
-        btnEditar.setBounds(540, 320, 70, 70);
+        btnEditar.setBounds(450, 5, 70, 70);
 
         btnGuardar.setText("Guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(540, 400, 70, 70);
+        btnGuardar.setBounds(450, 80, 70, 70);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 630, 540);
+        jPanel1.setBounds(3, 3, 530, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        RolUsuario rolUsuario = obtenerElementos();
+        List<RolUsuario> permisos = obtenerElementoPermisos();
+        switch (caso) {
+            case 0:
+                for (RolUsuario roles : permisos) {
+                    MC_RolUsuario control = new MC_RolUsuario();
+                    roles.setNombrerol(rolUsuario.getNombrerol());
+                    roles.setFechacreacion(rolUsuario.getFechacreacion());
+                    roles.setUsuarioId(rolUsuario.getUsuarioId());
+                    control.nuevoRolUsuario(roles);
+                }
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "El Campo Rol No Puede Quedar Vacio", "Error", 0, null);
+                break;
+             case 2:
+                JOptionPane.showMessageDialog(this, "Usuario No Especificado", "Error", 0, null);
+                break;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        System.out.print("Tamaño ventana: "+this.getSize());
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     public RolUsuario obtenerElementos () {
         String rol = entRol.getText();
@@ -492,14 +479,19 @@ public class ventanaRoles extends javax.swing.JDialog {
         if (rol.isEmpty()) {
             caso = 1;
         }
-        RolUsuario rolUsuario = new RolUsuario(rol, fechaRegistro);
+        
+        if (usuario.getId() < 1 || usuario.getId() == null) {
+            caso = 2;
+        }
+        RolUsuario rolUsuario = new RolUsuario(rol,fechaRegistro,usuario);
         return rolUsuario;
     }
     
-    public void obtenerElementoPermisos () {
+    public List<RolUsuario> obtenerElementoPermisos () {
+        List<RolUsuario> permisosRol = new ArrayList<>();
         boolean cliente = btnCliente.isSelected();
         boolean empleado = btnEmpleado.isSelected();
-        boolean usuario = btnUsuario.isSelected();
+        boolean usuarioA = btnUsuario.isSelected();
         boolean libro = btnLibro.isSelected();
         boolean ordenCompra = btnOrdenCompra.isSelected();
         boolean ordenPrestamo = btnOrdenPrestamo.isSelected();
@@ -507,9 +499,57 @@ public class ventanaRoles extends javax.swing.JDialog {
         boolean genero = btnGenero.isSelected();
         
         if  (cliente) {
-            
+            RolUsuario tablaCliente = new RolUsuario("Cliente", btnClienteVer.isSelected(), btnClienteInsertar.isSelected(), 
+                    btnClienteEditar.isSelected(), false);
+            permisosRol.add(tablaCliente);
         }
+        if (empleado) {
+            RolUsuario tablaEmpleado = new RolUsuario("Empleado", btnEmpleadoVer.isSelected(), btnEmpleadoInsertar.isSelected(), 
+                    btnEmpleadoEditar.isSelected(), false);
+            permisosRol.add(tablaEmpleado);
+        }
+        if (usuarioA) {
+            RolUsuario tablaUsuario = new RolUsuario("Usuario", btnUsuarioVer.isSelected(), btnUsuarioInsertar.isSelected(), 
+                    btnUsuarioEditar.isSelected(), false);
+            permisosRol.add(tablaUsuario);
+        }
+        if (libro) {
+            RolUsuario tablaLibro = new RolUsuario("Libro", btnLibroVer.isSelected(), btnLibroInsertar.isSelected(), 
+                    btnLibroEditar.isSelected(), false);
+            permisosRol.add(tablaLibro);
+        }
+        if (ordenCompra) {
+            RolUsuario tablaOrdenCompra = new RolUsuario("OrdenCompra", btnOrdenCompraVer.isSelected(), btnOrdenCompraInsertar.isSelected(), 
+                    btnOrdenCompraEditar.isSelected(), false);
+            permisosRol.add(tablaOrdenCompra);
+        }
+        if (ordenPrestamo) {
+            RolUsuario tablaOrdenPrestamo = new RolUsuario("OrdenPrestamo", btnOrdenPrestamoVer.isSelected(), btnOrdenPrestamoInsertar.isSelected(), 
+                    btnOrdenPrestamoEditar.isSelected(), false);
+            permisosRol.add(tablaOrdenPrestamo);
+        }
+        if (roles) {
+            RolUsuario tablaRol = new RolUsuario("Rol", btnRolesVer.isSelected(), btnRolesInsertar.isSelected(), 
+                    btnRolesEditar.isSelected(), false);
+            permisosRol.add(tablaRol);
+        }
+        if (genero) {
+            RolUsuario tablaGenero = new RolUsuario("Genero", btnGeneroVer.isSelected(), btnGeneroInsertar.isSelected(), 
+                    btnGeneroEditar.isSelected(), false);
+            permisosRol.add(tablaGenero);
+        }
+        return permisosRol;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -565,6 +605,7 @@ public class ventanaRoles extends javax.swing.JDialog {
     private javax.swing.JRadioButton btnGenero;
     private javax.swing.JRadioButton btnGeneroEditar;
     private javax.swing.JRadioButton btnGeneroInsertar;
+    private javax.swing.JRadioButton btnGeneroVer;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JRadioButton btnLibro;
     private javax.swing.JRadioButton btnLibroEditar;
@@ -577,12 +618,15 @@ public class ventanaRoles extends javax.swing.JDialog {
     private javax.swing.JRadioButton btnOrdenPrestamo;
     private javax.swing.JRadioButton btnOrdenPrestamoEditar;
     private javax.swing.JRadioButton btnOrdenPrestamoInsertar;
+    private javax.swing.JRadioButton btnOrdenPrestamoVer;
     private javax.swing.JRadioButton btnRoles;
     private javax.swing.JRadioButton btnRolesEditar;
     private javax.swing.JRadioButton btnRolesInsertar;
+    private javax.swing.JRadioButton btnRolesVer;
     private javax.swing.JRadioButton btnUsuario;
     private javax.swing.JRadioButton btnUsuarioEditar;
     private javax.swing.JRadioButton btnUsuarioInsertar;
+    private javax.swing.JRadioButton btnUsuarioVer;
     private com.toedter.calendar.JDateChooser entFechaRegistro;
     private javax.swing.JTextField entRol;
     private javax.swing.JTextField entUsuario;
