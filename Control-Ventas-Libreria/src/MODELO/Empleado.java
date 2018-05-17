@@ -108,6 +108,24 @@ public class Empleado implements Serializable {
         this.salario = salario;
     }
 
+    public Empleado(byte[] foto, String nombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, String cedula, String direccion, String pais, String ciudad, String correo, String telefono, Date fechaContrato, String cargo, double salario) {
+        this.foto = foto;
+        this.nombre = nombre;
+        this.segundoNombre = segundoNombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.cedula = cedula;
+        this.direccion = direccion;
+        this.pais = pais;
+        this.ciudad = ciudad;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.fechaContrato = fechaContrato;
+        this.cargo = cargo;
+        this.salario = salario;
+    }
+
+    
     public Integer getId() {
         return id;
     }

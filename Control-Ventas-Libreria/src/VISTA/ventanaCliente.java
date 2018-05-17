@@ -10,7 +10,6 @@ import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +21,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     /**
      * Creates new form ventanaCliente
      */
+    Cliente cliente;
     public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -32,20 +32,18 @@ public class ventanaCliente extends javax.swing.JDialog {
         entFecha.setDate(funciones.fecha());
     }
     
-    public Cliente obtenerElementosVentana () {
-       String primerNombre = entPrimerNombre.getText();
-       String segundoNombre = entSegundoNombre.getText();
-       String apellidoPaterno = entApellidoPaterno.getText();
-       String apellidoMaterno = entApellidoMaterno.getText();
-       String cedula = entCedula.getText();
-       String pais = entPais.getText();
-       String ciudad = entCiudad.getText();
-       String direccion = entDireccion.getText();
-       String telefono = entTelefono.getText();
-       String correo = entCorreo.getText();
-       Date fechaRegistro = entFecha.getDate();
-       Cliente cliente = new Cliente(primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, cedula, direccion, telefono, pais, ciudad, correo, fechaRegistro);
-       return cliente;
+    public void obtenerElementosVentana () {
+       cliente.setNombre(entPrimerNombre.getText());
+       cliente.setSegundoNombre(entSegundoNombre.getText());
+       cliente.setApellidoPaterno(entApellidoPaterno.getText());
+       cliente.setApellidoMaterno(entApellidoMaterno.getText());
+       cliente.setCedula(entCedula.getText());
+       cliente.setPais(entPais.getText());
+       cliente.setCiudad(entCiudad.getText());
+       cliente.setDireccion(entDireccion.getText());
+       cliente.setTelefono(entTelefono.getText());
+       cliente.setCorreo(entCorreo.getText());
+       cliente.setFechaRegistro(entFecha.getDate());
     }
     
     public void mostrarDatosVentana (Cliente cliente) {
@@ -311,8 +309,8 @@ public class ventanaCliente extends javax.swing.JDialog {
 
     private void btnGuargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarActionPerformed
         MC_Cliente control = new MC_Cliente();
-        Cliente cliente =  obtenerElementosVentana();
-        
+        cliente = new Cliente();
+        obtenerElementosVentana();
         if (JOptionPane.showConfirmDialog(this, "Guardar Cliente", "Alerta", 1, 2, null) == 0) {
             if (control.nuevoCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion",1, null);
@@ -324,9 +322,7 @@ public class ventanaCliente extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         MC_Cliente control = new MC_Cliente();
-        Cliente cliente = obtenerElementosVentana();
-        int id = Integer.parseInt(entId.getText());
-        cliente.setId(id);
+        obtenerElementosVentana();
         
         if (JOptionPane.showConfirmDialog(this, "Editar Cliente", "Alerta", 1, 2, null) == 0) {
             if (control.editarCliente(cliente)) {
