@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_Libro {
     
@@ -40,6 +41,7 @@ public class MC_Libro {
         }catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Guardar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Libro.insertarLibro(): "+e.getMessage());
         } finally {
             em.close();
@@ -59,6 +61,7 @@ public class MC_Libro {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Libro.editarLibro(): "+e.getMessage());
         } finally {
             em.close();

@@ -6,8 +6,12 @@
 package VISTA;
 
 import MODELO.Libro;
+import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.funciones;
+import com.toedter.calendar.JCalendar;
 import java.io.FileInputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,16 +20,29 @@ import java.io.FileInputStream;
 public class ventanaLibro extends javax.swing.JDialog {
 
     /**
-     * Creates new form ventanaLibro
+     *                                                                          Funciones de la clase 
+     * obtenerElementos -> obtener los Elementos de la caja de texto de la ventana y almacenarlo en la variable global (libro) de la clase
+     * mostrarElementos -> mostrar informacion del libro en las cajas de texto de la ventana balidando si estan vacias.
      */
+    //Almacernar la imagen que se carga desde el metodo funciones.cargarImagen()
     FileInputStream portadaLibro;
+    //Arreglo de byte que se alamcena en la base de datos
     byte portadaLibroByte[];
-    boolean estadoPortada = false;
+    //Comprobar que una imagen se cargo desde funciones.cargarImagen()
+    boolean estadoPortada;
+    //Alamacenar informacion del libro otbtenida en las cajas de texto 
     Libro libro;
-    
+    //Comprobar que el usuario si aya ingresado el isbn del libro 
+    int caso = 0;
+
     public ventanaLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setSize(610,527);
+        estadoPortada = false;
+        JCalendar calendario = entFechaPublicacion.getJCalendar();
+        calendario.setWeekOfYearVisible(false);
+        calendario.setMaxDayCharacters(2);
     }
 
     /**
@@ -83,7 +100,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(290, 4, 220, 30);
         jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(225, 20, 60, 10);
+        jSeparator1.setBounds(225, 20, 60, 2);
         jPanel1.add(jSeparator2);
         jSeparator2.setBounds(510, 20, 75, 2);
         jPanel1.add(jSeparator3);
@@ -153,10 +170,20 @@ public class ventanaLibro extends javax.swing.JDialog {
         entFechaPublicacion.setBounds(430, 336, 145, 30);
 
         btnGuardar.setText("Guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(505, 406, 70, 70);
 
         btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEditar);
         btnEditar.setBounds(425, 406, 70, 70);
 
@@ -176,7 +203,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         jSeparator5.setBounds(445, 165, 135, 2);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(4, 4, 70, 70);
+        jPanel1.setBounds(4, 4, 585, 480);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -186,10 +213,47 @@ public class ventanaLibro extends javax.swing.JDialog {
         estadoPortada = true;
     }//GEN-LAST:event_btnSubirActionPerformed
 
-    public void obtenerElementos () {
-        if  (estadoPortada) {
-            portadaLibroByte = funciones.jpg_bytes(portadaLibro); 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        libro = new Libro();
+        obtenerElementos();
+
+        switch (caso) {
+            case 0:
+                if (JOptionPane.showConfirmDialog(this, "Guardar Libro", "Escudo", 1, 3, null) == 0) {
+                    MC_Libro control = new MC_Libro();
+                    if (control.nuevoLibro(libro)) {
+                        JOptionPane.showMessageDialog(this, "Libro Guardado", "Informacion", 1, null);
+                    }
+                }
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Isbn Obligatorio ", "Error", 0, null);
+                caso  = 0;
+                break;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        obtenerElementos();
+        if (JOptionPane.showConfirmDialog(this, "Editar Libro", "Escudo", 1, 3, null) == 0) {
+            MC_Libro control = new MC_Libro();
+            if (control.nuevoLibro(libro)) {
+                JOptionPane.showMessageDialog(this, "Libro Editado", "Informacion", 1, null);
+            }
+        }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    public void obtenerElementos() {
+        if (entIsbn.getText().isEmpty()) {
+            caso = 1;
+        } else {
+            libro.setIsbn(Integer.parseInt(entIsbn.getText()));
+        }
+        if (estadoPortada) {
+            portadaLibroByte = funciones.jpg_bytes(portadaLibro);
             libro.setPortada(portadaLibroByte);
+            estadoPortada = false;
         }
         libro.setTitulo(entTitulo.getText());
         libro.setSipnosis(entSipnosis.getText());
@@ -197,8 +261,61 @@ public class ventanaLibro extends javax.swing.JDialog {
         libro.setEditorial(entEditorial.getText());
         libro.setFechaPublicacion(entFechaPublicacion.getDate());
         libro.setEstadolibro(entCantidadInventario.getText());
-        libro.setPrecio(Double.parseDouble(entPrecio.getText()));
+        if (!entPrecio.getText().isEmpty()) {
+            libro.setPrecio(Double.parseDouble(entPrecio.getText()));
+        }
+        
     }
+
+    public void mostrarElementos(Libro libro) {
+        if (libro.getPortada().length > 0) {
+            portadaLibroByte = libro.getPortada();
+            portada.setIcon(new ImageIcon(funciones.byte_jpg(portadaLibroByte)));
+        }
+        if (libro.getTitulo().isEmpty()) {
+            entTitulo.setText("Sin Nombre");
+        } else {
+            entTitulo.setText(libro.getTitulo());
+        }
+        if (libro.getSipnosis().isEmpty()) {
+            entSipnosis.setText("Sin Sipnosis");
+        } else {
+            entSipnosis.setText(libro.getSipnosis());
+        }
+        if (libro.getAutor().isEmpty()) {
+            entAutor.setText("Sin Autor");
+        } else {
+            entAutor.setText(libro.getAutor());
+        }
+        if (libro.getEditorial().isEmpty()) {
+            entEditorial.setText("Sin Editorial");
+        } else {
+            entEditorial.setText(libro.getEditorial());
+        }
+        if (libro.getFechaPublicacion() != null) {
+            entFechaPublicacion.setDate(libro.getFechaPublicacion());
+        }
+        if (libro.getEstadolibro().isEmpty()) {
+            entCantidadInventario.setText("0");
+        } else {
+            entCantidadInventario.setText(libro.getEstadolibro());
+        }
+        if (libro.getPrecio() > 0) {
+            entPrecio.setText("0");
+        } else {
+            entPrecio.setText(String.valueOf(libro.getPrecio()));
+        }
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
+    }
+
+    
     /**
      * @param args the command line arguments
      */

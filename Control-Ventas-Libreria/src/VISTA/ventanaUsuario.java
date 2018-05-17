@@ -12,7 +12,6 @@ import MODELO_CONTROLADOR.MC_Usuario;
 import MODELO_CONTROLADOR.funciones;
 import java.awt.Color;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -24,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class ventanaUsuario extends javax.swing.JDialog {
     //Informacion Obtenida De Un Empleado Desde Otra Ventana
-    private Empleado empleado = new Empleado(1);
+    private Empleado empleado;
     /**
      * variable para identificar errores al momento de obtener los elementos de la caja de texto
      * 0 = no hay errores en los datos
@@ -32,6 +31,10 @@ public class ventanaUsuario extends javax.swing.JDialog {
      * 2 = confirmacion de contraseña incorrecta
      */
     private int caso = 0;
+    //Variable usada para guardar la informacion obtenidad de las cajas de texto de la ventana 
+    private Usuario usuario;
+    //lista de roles que el usuario a creado
+    private List<RolUsuario> rolesUsuario;
     // nombreTabla -> identifica  a la tabla usuario para validar permisos
     private String  nombreTabla = "Usuario";
     
@@ -144,15 +147,16 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel9);
         jLabel9.setBounds(10, 329, 140, 30);
 
+        entEstadoUsuario.setBackground(new java.awt.Color(204, 204, 204));
         entEstadoUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         entEstadoUsuario.setText("Activo");
         jPanel1.add(entEstadoUsuario);
         entEstadoUsuario.setBounds(180, 294, 80, 30);
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel10.setText("Informacion Del Empleado ");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(265, 15, 210, 30);
+        jLabel10.setBounds(240, 15, 270, 30);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(173, 165, 420, 10);
 
@@ -206,7 +210,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
         switch ( caso ) {
             case 0:
                 MC_Usuario control = new  MC_Usuario();
-                Usuario usuario = obtenerElementosVentana();
+                usuario = new Usuario();
+                obtenerElementosVentana();
                 if (JOptionPane.showConfirmDialog(this, "Guardar Usuario", "Escudo", 1, 2, null) == 0){
                     if (control.nuevoUsuario(usuario)) {
                         JOptionPane.showMessageDialog(this, "Registro De Usuario Exitoso ", "Informacion", 1, null);
@@ -217,9 +222,11 @@ public class ventanaUsuario extends javax.swing.JDialog {
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "Los Campos Usuario, Contraseña y  Confirmar Contraseña Son Obligatorios", "Error", 0, null);
+                caso = 0;
                 break;
             case 2:
                 JOptionPane.showMessageDialog(this, "Confirmacion De Contraseña Incorrecta", "Error", 0, null);
+                caso = 0;
                 break;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -228,7 +235,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         switch ( caso ) {
             case 0:
                 MC_Usuario control = new  MC_Usuario();
-                Usuario usuario = obtenerElementosVentana();
+                obtenerElementosVentana();
                 if (JOptionPane.showConfirmDialog(this, "Editar Usuario", "Escudo", 1, 2, null) == 0){
                     if (control.ediatrUsuario(usuario)) {
                         JOptionPane.showMessageDialog(this, "Usuario Editado  Exitosamente ", "Informacion", 1, null);
@@ -239,14 +246,16 @@ public class ventanaUsuario extends javax.swing.JDialog {
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "Los Campos Usuario, Contraseña y  Confirmar Contraseña Son Obligatorios", "Error", 0, null);
+                caso = 0;
                 break;
             case 2:
                 JOptionPane.showMessageDialog(this, "Confirmacion De Contraseña Incorrecta", "Error", 0, null);
+                caso = 0;
                 break; 
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    public Usuario obtenerElementosVentana () {
+    public void obtenerElementosVentana () {
         String Usuario = entUsuario.getText();
         String contraseña = entContraseña.getText();
         String confirmarContraseña = entConfirmarContraseña.getText();
@@ -257,13 +266,14 @@ public class ventanaUsuario extends javax.swing.JDialog {
         if (contraseña.equals(confirmarContraseña)){
             caso = 2;
         }
-        Usuario usuario  = new Usuario(Usuario, contraseña, estadoUsuario, empleado);
-        return usuario;
+        usuario.setUsuario(Usuario);
+        usuario.setContraseña(contraseña);
+        usuario.setEstado(estadoUsuario);
+        usuario.setEmpleadoId(empleado);
     }
     
     public void mostrarElementos(Usuario usuario) {
         Empleado emp = usuario.getEmpleadoId();
-        List<RolUsuario> rolesUsuario = new ArrayList<>();
         
         if (emp.getFoto().length > 0) {
             Image imagen = funciones.byte_jpg(emp.getFoto()).getScaledInstance(fotoEmpleado.getWidth(), fotoEmpleado.getHeight(), Image.SCALE_DEFAULT);
@@ -296,6 +306,24 @@ public class ventanaUsuario extends javax.swing.JDialog {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<RolUsuario> getRolesUsuario() {
+        return rolesUsuario;
+    }
+
+    public void setRolesUsuario(List<RolUsuario> rolesUsuario) {
+        this.rolesUsuario = rolesUsuario;
+    }
+    
+    
   
     /**
      * @param args the command line arguments

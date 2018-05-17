@@ -22,13 +22,17 @@ import javax.swing.JOptionPane;
 public class ventanaEmpleado extends javax.swing.JDialog {
 
     /**
-     * Creates new form ventanaEmpleado
+     *                                                                          Funciones de la clase 
+     * obtenerElementos -> obtener los Elementos de la caja de texto de la ventana y almacenarlo en la variable global (empleado) de la clase
+     * mostrarElementos -> mostrar informacion del libro en las cajas de texto de la ventana balidando si estan vacias.
      */
-    //Variable Foto Empleado
+    //Almacenar imagen que se sube desde funciones.cargarImagen()
     FileInputStream fotoEmpleado;
+    //Arreglo de byte almacenado en la base de datos
     byte fotoEntEmpleado[];
+    //variable usada para almacenar la informacion obtenidad de las cajas de texto de la ventana
     Empleado empleado;
-    //estadoFoto -> usada para saber si el usuario subio una foto desde el pc 
+    //estadoFoto -> usada para saber si el usuario subio una foto desde  funciones.cargarImagen() 
     boolean estadoFoto;
 
     public ventanaEmpleado(java.awt.Frame parent, boolean modal) {
@@ -304,7 +308,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         empleado.setSalario(Double.parseDouble(entSalario.getText()));
     }
     
-    public void mostrarDatosVentana (Empleado cliente) {
+    public void mostrarElementos (Empleado cliente) {
         entId.setText(String.valueOf(cliente.getId()));
         if (cliente.getNombre().isEmpty()) {
             entPrimerNombre.setText("Sin Priemer Nombre");

@@ -22,31 +22,32 @@ public class ventanaCliente extends javax.swing.JDialog {
      * Creates new form ventanaCliente
      */
     Cliente cliente;
+
     public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         entId.setBackground(Color.WHITE);
         JCalendar calendario = entFecha.getJCalendar();
         calendario.setWeekOfYearVisible(false);
-        calendario.setMaxDayCharacters(1);
+        calendario.setMaxDayCharacters(2);
         entFecha.setDate(funciones.fecha());
     }
-    
-    public void obtenerElementosVentana () {
-       cliente.setNombre(entPrimerNombre.getText());
-       cliente.setSegundoNombre(entSegundoNombre.getText());
-       cliente.setApellidoPaterno(entApellidoPaterno.getText());
-       cliente.setApellidoMaterno(entApellidoMaterno.getText());
-       cliente.setCedula(entCedula.getText());
-       cliente.setPais(entPais.getText());
-       cliente.setCiudad(entCiudad.getText());
-       cliente.setDireccion(entDireccion.getText());
-       cliente.setTelefono(entTelefono.getText());
-       cliente.setCorreo(entCorreo.getText());
-       cliente.setFechaRegistro(entFecha.getDate());
+
+    public void obtenerElementosVentana() {
+        cliente.setNombre(entPrimerNombre.getText());
+        cliente.setSegundoNombre(entSegundoNombre.getText());
+        cliente.setApellidoPaterno(entApellidoPaterno.getText());
+        cliente.setApellidoMaterno(entApellidoMaterno.getText());
+        cliente.setCedula(entCedula.getText());
+        cliente.setPais(entPais.getText());
+        cliente.setCiudad(entCiudad.getText());
+        cliente.setDireccion(entDireccion.getText());
+        cliente.setTelefono(entTelefono.getText());
+        cliente.setCorreo(entCorreo.getText());
+        cliente.setFechaRegistro(entFecha.getDate());
     }
-    
-    public void mostrarDatosVentana (Cliente cliente) {
+
+    public void mostrarDatosVentana(Cliente cliente) {
         entId.setText(String.valueOf(cliente.getId()));
         if (cliente.getNombre().isEmpty()) {
             entPrimerNombre.setText("Sin nombre");
@@ -92,8 +93,8 @@ public class ventanaCliente extends javax.swing.JDialog {
             entTelefono.setText("Sin Telefono");
         } else {
             entTelefono.setText(cliente.getTelefono());
-        } 
-        
+        }
+
         if (cliente.getDireccion().isEmpty()) {
             entDireccion.setText("Sin Direccion");
         } else {
@@ -308,27 +309,27 @@ public class ventanaCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarActionPerformed
-        MC_Cliente control = new MC_Cliente();
         cliente = new Cliente();
         obtenerElementosVentana();
         if (JOptionPane.showConfirmDialog(this, "Guardar Cliente", "Alerta", 1, 2, null) == 0) {
+            MC_Cliente control = new MC_Cliente();
             if (control.nuevoCliente(cliente)) {
-                JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion",1, null);
+                JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion", 1, null);
             } else {
-                JOptionPane.showMessageDialog(this, "Error Al Guardar El Cliente", "Error",0, null);
+                JOptionPane.showMessageDialog(this, "Error Al Guardar El Cliente", "Error", 0, null);
             }
         }
     }//GEN-LAST:event_btnGuargarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        MC_Cliente control = new MC_Cliente();
         obtenerElementosVentana();
-        
+
         if (JOptionPane.showConfirmDialog(this, "Editar Cliente", "Alerta", 1, 2, null) == 0) {
+            MC_Cliente control = new MC_Cliente();
             if (control.editarCliente(cliente)) {
-                JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion",1, null);
+                JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion", 1, null);
             } else {
-                JOptionPane.showMessageDialog(this, "Error Al Editar El Cliente", "Error",0, null);
+                JOptionPane.showMessageDialog(this, "Error Al Editar El Cliente", "Error", 0, null);
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -365,7 +366,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             public void run() {
                 ventanaCliente dialog = new ventanaCliente(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override 
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }

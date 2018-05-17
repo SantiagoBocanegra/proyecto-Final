@@ -12,7 +12,6 @@ import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -20,6 +19,7 @@ import javax.swing.JOptionPane;
  *                      Funciones De La  ventanaRoles
  * obtenerElementos -> obtener la informacion de la caja de texto de la ventana 
  * obtenerElementosPermisos -> obtener los permisos que se le otorgo al rol del usuario
+ * mostrarElementos -> mostrar la informacion en las cajas de texto de la vetana.
  */
 public class ventanaRoles extends javax.swing.JDialog {
 /**
@@ -29,7 +29,11 @@ public class ventanaRoles extends javax.swing.JDialog {
  */
     private int caso = 0;
     //Usuario Para El Campo De Usuario Id De La Clase RoleUsuario
-    private Usuario usuario = new Usuario();
+    private Usuario usuario;
+    //Variable usada para almacenar informacion obtenidad de las cajas de texto de la ventana
+    private RolUsuario rolUsuario;
+    //Lista de permisos que tiene un rol 
+    //private List<RolUsuario> permisosRol;
     
     public ventanaRoles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -448,7 +452,8 @@ public class ventanaRoles extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        RolUsuario rolUsuario = obtenerElementos();
+        rolUsuario = new RolUsuario();
+        obtenerElementos();
         List<RolUsuario> permisos = obtenerElementoPermisos();
         switch (caso) {
             case 0:
@@ -462,29 +467,40 @@ public class ventanaRoles extends javax.swing.JDialog {
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "El Campo Rol No Puede Quedar Vacio", "Error", 0, null);
-                break;
-             case 2:
-                JOptionPane.showMessageDialog(this, "Usuario No Especificado", "Error", 0, null);
+                caso = 0;
                 break;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        System.out.print("Tamaño ventana: "+this.getSize());
+        obtenerElementos();
+        List<RolUsuario> permisos = obtenerElementoPermisos();
+        switch (caso) {
+            case 0:
+                for (RolUsuario roles : permisos) {
+                    MC_RolUsuario control = new MC_RolUsuario();
+                    roles.setId(rolUsuario.getId());
+                    roles.setNombrerol(rolUsuario.getNombrerol());
+                    roles.setFechacreacion(rolUsuario.getFechacreacion());
+                    roles.setUsuarioId(rolUsuario.getUsuarioId());
+                    control.editarRolUsuario(roles);
+                }
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "El Campo Rol No Puede Quedar Vacio", "Error", 0, null);
+                caso = 0;
+                break;
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    public RolUsuario obtenerElementos () {
+    public void obtenerElementos () {
         String rol = entRol.getText();
-        Date fechaRegistro = entFechaRegistro.getDate();
+        rolUsuario.setFechacreacion(entFechaRegistro.getDate());
         if (rol.isEmpty()) {
             caso = 1;
-        }
-        
-        if (usuario.getId() < 1 || usuario.getId() == null) {
-            caso = 2;
-        }
-        RolUsuario rolUsuario = new RolUsuario(rol,fechaRegistro,usuario);
-        return rolUsuario;
+        } else {
+            rolUsuario.setNombrerol(rol);
+        } 
     }
     
     public List<RolUsuario> obtenerElementoPermisos () {
@@ -540,6 +556,70 @@ public class ventanaRoles extends javax.swing.JDialog {
         }
         return permisosRol;
     }
+    
+    public void mostrarElemtos (List<RolUsuario> permisos) {
+        if (permisos.size() >= 0) {
+            rolUsuario = new RolUsuario();
+            usuario = new Usuario();
+            rolUsuario = permisos.get(0);
+            usuario = rolUsuario.getUsuarioId();
+            entUsuario.setText(usuario.getUsuario());
+            entRol.setText(rolUsuario.getNombrerol());
+            entFechaRegistro.setDate(rolUsuario.getFechacreacion());
+        } 
+        for (RolUsuario permisosRol :  permisos) {
+            switch (permisosRol.getNombretabla()) {
+                case "Cliente":
+                    btnCliente.setSelected(true);
+                    btnClienteInsertar.setSelected(permisosRol.getInsertar());
+                    btnClienteEditar.setSelected(permisosRol.getEditar());
+                    btnClienteVer.setSelected(permisosRol.getVer());
+                    break;
+                case "Empleado":
+                    btnEmpleado.setSelected(true);
+                    btnEmpleadoInsertar.setSelected(permisosRol.getInsertar());
+                    btnEmpleadoEditar.setSelected(permisosRol.getEditar());
+                    btnEmpleadoVer.setSelected(permisosRol.getVer());
+                    break;
+                case "Libro":
+                    btnLibro.setSelected(true);
+                    btnLibroInsertar.setSelected(permisosRol.getInsertar());
+                    btnLibroEditar.setSelected(permisosRol.getEditar());
+                    btnLibroVer.setSelected(permisosRol.getVer());
+                    break;
+                case "OrdenPrestamo":
+                    btnOrdenPrestamo.setSelected(true);
+                    btnOrdenPrestamoInsertar.setSelected(permisosRol.getInsertar());
+                    btnOrdenPrestamoEditar.setSelected(permisosRol.getEditar());
+                    btnOrdenPrestamoVer.setSelected(permisosRol.getVer());
+                    break;
+                case "Usuario":
+                    btnUsuario.setSelected(true);
+                    btnUsuarioInsertar.setSelected(permisosRol.getInsertar());
+                    btnUsuarioEditar.setSelected(permisosRol.getEditar());
+                    btnUsuarioVer.setSelected(permisosRol.getVer());
+                    break;
+                case "Roles":
+                    btnRoles.setSelected(true);
+                    btnRolesInsertar.setSelected(permisosRol.getInsertar());
+                    btnRolesEditar.setSelected(permisosRol.getEditar());
+                    btnRolesVer.setSelected(permisosRol.getVer());
+                    break;
+                case "Genero":
+                    btnGenero.setSelected(true);
+                    btnGeneroInsertar.setSelected(permisosRol.getInsertar());
+                    btnGeneroEditar.setSelected(permisosRol.getEditar());
+                    btnGeneroVer.setSelected(permisosRol.getVer());
+                    break;
+                case "OrdenCompra":
+                    btnOrdenCompra.setSelected(true);
+                    btnOrdenCompraInsertar.setSelected(permisosRol.getInsertar());
+                    btnOrdenCompraEditar.setSelected(permisosRol.getEditar());
+                    btnOrdenCompraVer.setSelected(permisosRol.getVer());
+                    break;
+            }
+        }
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -548,6 +628,16 @@ public class ventanaRoles extends javax.swing.JDialog {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
+    }
+
+    public void setRolUsuario(RolUsuario rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+    
+    
     
     
     /**
