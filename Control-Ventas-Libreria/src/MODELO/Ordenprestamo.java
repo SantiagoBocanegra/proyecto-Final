@@ -56,7 +56,7 @@ public class Ordenprestamo implements Serializable {
     private Date fechaentrega;
     @Column(name = "cantidadtotal")
     private Integer cantidadtotal;
-    @Column(name = "estadoOrden")
+    @Column(name = "estadoorden")
     private String estadoOrden;
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

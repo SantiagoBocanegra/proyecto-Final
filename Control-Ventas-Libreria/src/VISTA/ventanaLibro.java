@@ -262,7 +262,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         libro.setFechaPublicacion(entFechaPublicacion.getDate());
         libro.setEstadolibro(entCantidadInventario.getText());
         if (!entPrecio.getText().isEmpty()) {
-            libro.setPrecio(Double.parseDouble(entPrecio.getText()));
+            libro.setPrecio(Integer.parseInt(entPrecio.getText()));
         }
         
     }

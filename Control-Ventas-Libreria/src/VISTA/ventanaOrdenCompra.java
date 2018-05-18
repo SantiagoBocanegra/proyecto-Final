@@ -5,6 +5,23 @@
  */
 package VISTA;
 
+import MODELO.Cliente;
+import MODELO.Empleado;
+import MODELO.Libro;
+import MODELO.Ordencompra;
+import MODELO.Ordenitem;
+import MODELO_CONTROLADOR.MC_Cliente;
+import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.MC_Libro;
+import MODELO_CONTROLADOR.MC_OrdenCompra;
+import MODELO_CONTROLADOR.MC_OrdenItem;
+import MODELO_CONTROLADOR.funciones;
+import com.toedter.calendar.JCalendar;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ayenni42
@@ -12,11 +29,34 @@ package VISTA;
 public class ventanaOrdenCompra extends javax.swing.JDialog {
 
     /**
-     * Creates new form ventanaOrdenCompra
+     * Funciones de la clase 
+     * numeroOrden -> obtener el numero que se la va a dar a la factura 
+     * obtenerElementos -> obtener la informacion de las cajas de texto de la ventana
+     * mostrar libros -> recibe una lista de libros y los pone en la tabla de item pidiento la cantidad de libros que se van a comprar 
      */
+    //variable que guarda la informacion del empleado 
+    Empleado empleado;
+    //variable para guardar la informacion del cliente 
+    Cliente cliente;
+    //variable para guardar la informacion de la orden de compra
+    Ordencompra ordenCompra;
+    //variable de los libros a comprar
+    List<Libro> libroOrden;
+    //variable de los Item a compra 
+    List<Ordenitem> ordenItem = new ArrayList<>();
+    // modelo de la tablaOrdenCompra
+    DefaultTableModel modeloTablaItem;
+
     public ventanaOrdenCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setSize(600, 570);
+        modeloTablaItem = (DefaultTableModel) tablaOrdenCompra.getModel();
+        JCalendar calendario = entFechaOrden.getJCalendar();
+        calendario.setWeekOfYearVisible(false);
+        calendario.setMaxDayCharacters(2);
+        entFechaOrden.setDate(funciones.fecha());
+        numeroOrden();//--> dato de prueba
     }
 
     /**
@@ -28,21 +68,448 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        entNombreEmpledo = new javax.swing.JTextField();
+        entTelefonoEmpleado = new javax.swing.JTextField();
+        entCedulaEmpleado = new javax.swing.JTextField();
+        entApellidoEmpleado = new javax.swing.JTextField();
+        btnBuscarEmpleado = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        entNombreCliente = new javax.swing.JTextField();
+        entTelefonoCliente = new javax.swing.JTextField();
+        entCedulaCliente = new javax.swing.JTextField();
+        entApellidoCliente = new javax.swing.JTextField();
+        btnBuscarCliente = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        entNumeroOrden = new javax.swing.JTextField();
+        entFechaOrden = new com.toedter.calendar.JDateChooser();
+        btnGuardar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaOrdenCompra = new javax.swing.JTable();
+        entCantidadTotal = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        entPrecioTotal = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 570));
+        getContentPane().setLayout(null);
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setLayout(null);
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel5.setText("Orden De Compra");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(210, 5, 150, 30);
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel2.setLayout(null);
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel6.setText("Nombre ");
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(4, 20, 50, 30);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setText("Apellido");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(254, 20, 50, 30);
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel9.setText("Cedula");
+        jPanel2.add(jLabel9);
+        jLabel9.setBounds(4, 55, 50, 30);
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel11.setText("Telefono");
+        jPanel2.add(jLabel11);
+        jLabel11.setBounds(254, 55, 50, 30);
+
+        entNombreEmpledo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNombreEmpledo.setEnabled(false);
+        jPanel2.add(entNombreEmpledo);
+        entNombreEmpledo.setBounds(59, 20, 180, 30);
+
+        entTelefonoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefonoEmpleado.setEnabled(false);
+        jPanel2.add(entTelefonoEmpleado);
+        entTelefonoEmpleado.setBounds(309, 55, 180, 30);
+
+        entCedulaEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedulaEmpleado.setEnabled(false);
+        jPanel2.add(entCedulaEmpleado);
+        entCedulaEmpleado.setBounds(59, 55, 180, 30);
+
+        entApellidoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoEmpleado.setEnabled(false);
+        jPanel2.add(entApellidoEmpleado);
+        entApellidoEmpleado.setBounds(309, 20, 180, 30);
+
+        btnBuscarEmpleado.setText("Busca");
+        btnBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBuscarEmpleado);
+        btnBuscarEmpleado.setBounds(490, 15, 70, 70);
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(5, 75, 564, 90);
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Cliente", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel4.setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel7.setText("Nombre ");
+        jPanel4.add(jLabel7);
+        jLabel7.setBounds(4, 20, 50, 30);
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel8.setText("Apellido");
+        jPanel4.add(jLabel8);
+        jLabel8.setBounds(254, 20, 50, 30);
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel10.setText("Cedula");
+        jPanel4.add(jLabel10);
+        jLabel10.setBounds(4, 55, 50, 30);
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel12.setText("Telefono");
+        jPanel4.add(jLabel12);
+        jLabel12.setBounds(254, 55, 50, 30);
+
+        entNombreCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNombreCliente.setEnabled(false);
+        jPanel4.add(entNombreCliente);
+        entNombreCliente.setBounds(59, 20, 180, 30);
+
+        entTelefonoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefonoCliente.setEnabled(false);
+        jPanel4.add(entTelefonoCliente);
+        entTelefonoCliente.setBounds(309, 55, 180, 30);
+
+        entCedulaCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedulaCliente.setEnabled(false);
+        jPanel4.add(entCedulaCliente);
+        entCedulaCliente.setBounds(59, 55, 180, 30);
+
+        entApellidoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoCliente.setEnabled(false);
+        jPanel4.add(entApellidoCliente);
+        entApellidoCliente.setBounds(309, 20, 180, 30);
+
+        btnBuscarCliente.setText("Busca");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnBuscarCliente);
+        btnBuscarCliente.setBounds(490, 15, 70, 70);
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(5, 170, 564, 90);
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setLayout(null);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setText("Fecha Orden");
+        jPanel3.add(jLabel3);
+        jLabel3.setBounds(289, 5, 80, 30);
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel13.setText("Numero Orden");
+        jPanel3.add(jLabel13);
+        jLabel13.setBounds(35, 5, 90, 30);
+
+        entNumeroOrden.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNumeroOrden.setEnabled(false);
+        jPanel3.add(entNumeroOrden);
+        entNumeroOrden.setBounds(130, 5, 155, 30);
+
+        entFechaOrden.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jPanel3.add(entFechaOrden);
+        entFechaOrden.setBounds(374, 5, 155, 30);
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(5, 30, 564, 40);
+
+        btnGuardar.setText("guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(494, 390, 70, 70);
+
+        btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditar);
+        btnEditar.setBounds(494, 315, 70, 70);
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel5.setLayout(null);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
+        tablaOrdenCompra.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tablaOrdenCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Isbn", "Titulo", "Precio C/U", "cantidad", "Precio Total"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaOrdenCompra);
+
+        jPanel5.add(jScrollPane1);
+        jScrollPane1.setBounds(5, 5, 480, 200);
+
+        entCantidadTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel5.add(entCantidadTotal);
+        entCantidadTotal.setBounds(105, 210, 140, 30);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setText("Cantidad Total");
+        jPanel5.add(jLabel4);
+        jLabel4.setBounds(10, 210, 90, 30);
+
+        entPrecioTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel5.add(entPrecioTotal);
+        entPrecioTotal.setBounds(329, 210, 155, 30);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setText("Precio Total");
+        jPanel5.add(jLabel1);
+        jLabel1.setBounds(254, 210, 80, 30);
+
+        jPanel1.add(jPanel5);
+        jPanel5.setBounds(5, 265, 564, 250);
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(5, 18, 200, 2);
+        jPanel1.add(jSeparator2);
+        jSeparator2.setBounds(360, 18, 210, 2);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(5, 5, 575, 522);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        MC_Cliente control = new MC_Cliente();
+        cliente = new Cliente();
+        cliente = control.buscarCliente(Integer.parseInt(JOptionPane.showInputDialog("Id Del Cliente")));
+        if (cliente.getId() == null || cliente.getId() > 0) {
+            if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
+                entNombreCliente.setText("Sin Nombre");
+            } else {
+                entNombreCliente.setText(cliente.getNombre());
+            }
+            if (cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty()) {
+                entApellidoCliente.setText("Sin Apellido");
+            } else {
+                entApellidoCliente.setText(cliente.getApellidoPaterno());
+            }
+            if (cliente.getTelefono() == null || cliente.getTelefono().isEmpty()) {
+                entTelefonoCliente.setText("Sin Telefono");
+            } else {
+                entTelefonoCliente.setText(cliente.getTelefono());
+            }
+            if (cliente.getCedula() == null || cliente.getCedula().isEmpty()) {
+                entCedulaCliente.setText("Sin Cedula");
+            } else {
+                entCedulaCliente.setText(cliente.getCedula());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontro El Cliente", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleadoActionPerformed
+        MC_Empleado control = new MC_Empleado();
+        empleado = new Empleado();
+        empleado = control.buscarEmpleado(Integer.parseInt(JOptionPane.showInputDialog("Id Del Empleado")));
+        if (empleado.getId() == null || empleado.getId() > 0) {
+            if (empleado.getNombre() == null || empleado.getNombre().isEmpty()) {
+                entNombreEmpledo.setText("Sin Nombre");
+            } else {
+                entNombreEmpledo.setText(empleado.getNombre());
+            }
+            if (empleado.getApellidoPaterno() == null || empleado.getApellidoPaterno().isEmpty()) {
+                entApellidoEmpleado.setText("Sin Apellido");
+            } else {
+                entApellidoEmpleado.setText(empleado.getApellidoPaterno());
+            }
+            if (empleado.getTelefono() == null || empleado.getTelefono().isEmpty()) {
+                entTelefonoEmpleado.setText("Sin Telefono");
+            } else {
+                entTelefonoEmpleado.setText(empleado.getTelefono());
+            }
+            if (empleado.getCedula() == null || empleado.getCedula().isEmpty()) {
+                entCedulaEmpleado.setText("Sin Cedula");
+            } else {
+                entCedulaEmpleado.setText(empleado.getCedula());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnBuscarEmpleadoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        MC_Libro con = new MC_Libro();//--> dato de prueba
+        libroOrden = new ArrayList<>();//--> dato de prueba
+        libroOrden.add(con.buscarLibro(1)); // -------> dato de prueba
+        mostraLibro(libroOrden); //--> dato de prueba
+
+        ordenCompra = new Ordencompra();
+        obtenerElemntos();
+
+        if (!ordenItem.isEmpty()) {
+            
+            if (JOptionPane.showConfirmDialog(this, "Guardar Orden De Compra", "Escudo", 1, 3, null) == 0) {
+                boolean permiso = true;
+                MC_OrdenCompra control = new MC_OrdenCompra();
+                if (control.nuevaOrdenCompra(ordenCompra)) {
+
+                    for (Ordenitem item : ordenItem) {
+                        item.setOrdencompra(ordenCompra);
+                        MC_OrdenItem controlItem = new MC_OrdenItem();
+                        if (!controlItem.nuevaOrdenItem(item)) {
+                            permiso = false;
+                            MC_OrdenCompra controlBorrar = new MC_OrdenCompra();
+                            controlBorrar.borrarOrdenCompra(item.getOrdenitemPK().getOrdencompraNumeroorden());
+                        }
+                    }
+                    
+                } else {
+                    permiso = false;
+                }
+
+                if (permiso) {
+                    JOptionPane.showMessageDialog(this, "Orden De Compra Almacenada", "Informacion", 1, null);
+                }
+                
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        obtenerElemntos();
+        
+        if ( !ordenItem.isEmpty() ) {
+            boolean permiso = true;
+                MC_OrdenCompra control = new MC_OrdenCompra();
+                if (control.editarOrdenCompra(ordenCompra)) {
+
+                    for (Ordenitem item : ordenItem) {
+                        item.setOrdencompra(ordenCompra);
+                        MC_OrdenItem controlItem = new MC_OrdenItem();
+                        if (!controlItem.editarOrdenItem(item)) {
+                            permiso = false;
+                            MC_OrdenCompra controlBorrar = new MC_OrdenCompra();
+                            controlBorrar.borrarOrdenCompra(item.getOrdenitemPK().getOrdencompraNumeroorden());
+                        }
+                    }
+                    
+                } else {
+                    permiso = false;
+                }
+
+                if (permiso) {
+                    JOptionPane.showMessageDialog(this, "Orden De Compra Editada", "Informacion", 1, null);
+                }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    public void numeroOrden() {
+        int numeroOrden;
+        MC_OrdenCompra control = new MC_OrdenCompra();
+        List<Ordencompra> ordenCom = control.buscarTodasOrdenesCompra();
+        if (ordenCom.isEmpty()) {
+            numeroOrden = 1;
+        } else {
+            numeroOrden = ordenCom.get(ordenCom.size() - 1).getNumeroorden() + 1;
+        }
+        entNumeroOrden.setText(String.valueOf(numeroOrden));
+    }
+
+    public void obtenerElemntos() {
+        ordenCompra.setFechaorden(entFechaOrden.getDate());
+        ordenCompra.setPreciototal(Integer.parseInt(entPrecioTotal.getText()));
+        ordenCompra.setCantidadtotal(Integer.parseInt(entCantidadTotal.getText()));
+        ordenCompra.setClienteId(cliente);
+        ordenCompra.setEmpleadoId(empleado);
+    }
+
+    public void mostraLibro(List<Libro> libros) {
+        int cantidadTotal = 0;
+        int precioTotal = 0;
+        for (Libro libro : libros) {
+            int isbn = libro.getIsbn();
+            String titulo = "Sin Titulo";
+            int precio = 0;
+            int cantidad = 0;
+
+            if (!libro.getTitulo().isEmpty()) {
+                titulo = libro.getTitulo();
+            }
+            if (libro.getPrecio() > 0) {
+                precio = libro.getPrecio();
+            }
+            
+            String entrada = JOptionPane.showInputDialog("Cuantos Libros Desea Comprar \nTitulo Del Libro: " + titulo);
+            if (!entrada.isEmpty()) {
+                cantidad = Integer.parseInt(entrada);
+            }
+            int precioTotalLibro = cantidad * precio;
+            Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
+            ordenItem.add(ordenI);
+            modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+            cantidadTotal += cantidad;
+            precioTotal += precioTotalLibro;
+        }
+        entCantidadTotal.setText(String.valueOf(cantidadTotal));
+        entPrecioTotal.setText(String.valueOf(precioTotal));
+    }
 
     /**
      * @param args the command line arguments
@@ -87,5 +554,43 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarEmpleado;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JTextField entApellidoCliente;
+    private javax.swing.JTextField entApellidoEmpleado;
+    private javax.swing.JTextField entCantidadTotal;
+    private javax.swing.JTextField entCedulaCliente;
+    private javax.swing.JTextField entCedulaEmpleado;
+    private com.toedter.calendar.JDateChooser entFechaOrden;
+    private javax.swing.JTextField entNombreCliente;
+    private javax.swing.JTextField entNombreEmpledo;
+    private javax.swing.JTextField entNumeroOrden;
+    private javax.swing.JTextField entPrecioTotal;
+    private javax.swing.JTextField entTelefonoCliente;
+    private javax.swing.JTextField entTelefonoEmpleado;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable tablaOrdenCompra;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_OrdenItem {
     
@@ -41,6 +42,7 @@ public class MC_OrdenItem {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Almacenar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItem.nuevaOrdenItem(): "+e.getMessage());
         } finally {
             em.close();

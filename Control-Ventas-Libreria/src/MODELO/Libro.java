@@ -68,7 +68,7 @@ public class Libro implements Serializable {
     private String estadolibro;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "precio")
-    private Double precio;
+    private int precio;
     @ManyToMany(mappedBy = "libroCollection")
     private Collection<Genero> generoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
@@ -147,11 +147,11 @@ public class Libro implements Serializable {
         this.estadolibro = estadolibro;
     }
 
-    public Double getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 

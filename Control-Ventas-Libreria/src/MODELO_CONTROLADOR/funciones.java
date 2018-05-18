@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
  * 2 jpg_bytes -> Convertir una imagen en un arreglo de bytes
  * 3 bytes -> jpg -> Convertir un arreglo de bytes en imagen 
  * 4 cargarImagen -> Cargar una imagen de el pc
+ * 5 sumarRestarFecha -> sumar o restar dias de la fecha actual
  */
 public class funciones {
     
@@ -81,5 +83,14 @@ public class funciones {
             }
         }
         return imagenCargada;
+    }
+    
+    //Funciones numero 5
+    public static Date sumarRestaFecha( int año, int mes, int dia) {
+        Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, dia);
+            cal.add(Calendar.MONTH, mes);
+            cal.add(Calendar.YEAR, año);
+        return cal.getTime();
     }
 }

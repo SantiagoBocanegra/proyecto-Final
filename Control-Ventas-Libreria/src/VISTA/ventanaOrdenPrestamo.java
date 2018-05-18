@@ -5,6 +5,27 @@
  */
 package VISTA;
 
+import MODELO.Cliente;
+import MODELO.Empleado;
+import MODELO.Libro;
+import MODELO.Ordenitemprestamo;
+import MODELO.Ordenprestamo;
+import MODELO_CONTROLADOR.MC_Cliente;
+import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.MC_Libro;
+import MODELO_CONTROLADOR.MC_OrdenItemPrestamo;
+import MODELO_CONTROLADOR.MC_OrdenPrestamo;
+import MODELO_CONTROLADOR.funciones;
+import com.toedter.calendar.JCalendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ayenni42
@@ -12,11 +33,33 @@ package VISTA;
 public class ventanaOrdenPrestamo extends javax.swing.JDialog {
 
     /**
-     * Creates new form ventanaOrdenPrestamo
+     * Funciones de la clase numeroOrden -> obtener el numero que se la va a dar
+     * a la factura obtenerElementos -> obtener la informacion de las cajas de
+     * texto de la ventana mostrarlibros -> recibe una lista de libros y los
+     * pone en la tabla de item pidiento la cantidad de libros que se van a
+     * comprar.
      */
+    private Empleado empleado;
+    private Cliente cliente;
+    private Ordenprestamo ordenPrestamo;
+    private List<Ordenitemprestamo> ordenItemPrestamo = new ArrayList<>();
+    private DefaultTableModel modelo;
+
     public ventanaOrdenPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        modelo = (DefaultTableModel) tablaItem.getModel();
+
+        JCalendar calendario = entFechaOrden.getJCalendar();
+        calendario.setWeekOfYearVisible(false);
+        calendario.setMaxDayCharacters(2);
+        entFechaOrden.setDate(funciones.fecha());
+
+        JCalendar calendario2 = entFechaEntrega.getJCalendar();
+        calendario2.setWeekOfYearVisible(false);
+        calendario2.setMaxDayCharacters(2);
+        entFechaEntrega.setDate(funciones.sumarRestaFecha(0, 0, 8));
+        //numeroOrden();
     }
 
     /**
@@ -28,21 +71,477 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        entNombreEmpledo = new javax.swing.JTextField();
+        entTelefonoEmpleado = new javax.swing.JTextField();
+        entCedulaEmpleado = new javax.swing.JTextField();
+        entApellidoEmpleado = new javax.swing.JTextField();
+        btnBuscarEmpleado = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        entNombreCliente = new javax.swing.JTextField();
+        entTelefonoCliente = new javax.swing.JTextField();
+        entCedulaCliente = new javax.swing.JTextField();
+        entApellidoCliente = new javax.swing.JTextField();
+        btnBuscarCliente = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        entFechaEntrega = new com.toedter.calendar.JDateChooser();
+        jLabel14 = new javax.swing.JLabel();
+        entFechaOrden = new com.toedter.calendar.JDateChooser();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaItem = new javax.swing.JTable();
+        entCantidadTotal = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        cajaEstadoOrden = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel13 = new javax.swing.JLabel();
+        entNumeroOrden = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(570, 600));
+        setPreferredSize(new java.awt.Dimension(620, 530));
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setLayout(null);
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel5.setText("Orden De Prestamo");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(10, 5, 160, 30);
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel2.setLayout(null);
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel6.setText("Nombre ");
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(4, 20, 50, 30);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setText("Apellido");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(254, 20, 50, 30);
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel9.setText("Cedula");
+        jPanel2.add(jLabel9);
+        jLabel9.setBounds(4, 55, 50, 30);
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel11.setText("Telefono");
+        jPanel2.add(jLabel11);
+        jLabel11.setBounds(254, 55, 50, 30);
+
+        entNombreEmpledo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNombreEmpledo.setEnabled(false);
+        jPanel2.add(entNombreEmpledo);
+        entNombreEmpledo.setBounds(59, 20, 180, 30);
+
+        entTelefonoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefonoEmpleado.setEnabled(false);
+        jPanel2.add(entTelefonoEmpleado);
+        entTelefonoEmpleado.setBounds(309, 55, 180, 30);
+
+        entCedulaEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedulaEmpleado.setEnabled(false);
+        jPanel2.add(entCedulaEmpleado);
+        entCedulaEmpleado.setBounds(59, 55, 180, 30);
+
+        entApellidoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoEmpleado.setEnabled(false);
+        jPanel2.add(entApellidoEmpleado);
+        entApellidoEmpleado.setBounds(309, 20, 180, 30);
+
+        btnBuscarEmpleado.setText("Busca");
+        btnBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBuscarEmpleado);
+        btnBuscarEmpleado.setBounds(490, 17, 70, 70);
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(5, 85, 564, 90);
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Cliente", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel4.setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel7.setText("Nombre ");
+        jPanel4.add(jLabel7);
+        jLabel7.setBounds(4, 20, 50, 30);
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel8.setText("Apellido");
+        jPanel4.add(jLabel8);
+        jLabel8.setBounds(254, 20, 50, 30);
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel10.setText("Cedula");
+        jPanel4.add(jLabel10);
+        jLabel10.setBounds(4, 55, 50, 30);
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel12.setText("Telefono");
+        jPanel4.add(jLabel12);
+        jLabel12.setBounds(254, 55, 50, 30);
+
+        entNombreCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNombreCliente.setEnabled(false);
+        jPanel4.add(entNombreCliente);
+        entNombreCliente.setBounds(59, 20, 180, 30);
+
+        entTelefonoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefonoCliente.setEnabled(false);
+        jPanel4.add(entTelefonoCliente);
+        entTelefonoCliente.setBounds(309, 55, 180, 30);
+
+        entCedulaCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedulaCliente.setEnabled(false);
+        jPanel4.add(entCedulaCliente);
+        entCedulaCliente.setBounds(59, 55, 180, 30);
+
+        entApellidoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoCliente.setEnabled(false);
+        jPanel4.add(entApellidoCliente);
+        entApellidoCliente.setBounds(309, 20, 180, 30);
+
+        btnBuscarCliente.setText("Busca");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnBuscarCliente);
+        btnBuscarCliente.setBounds(490, 17, 70, 70);
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(5, 180, 564, 90);
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setLayout(null);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setText("Fecha Entrega");
+        jPanel3.add(jLabel3);
+        jLabel3.setBounds(304, 5, 90, 30);
+
+        entFechaEntrega.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jPanel3.add(entFechaEntrega);
+        entFechaEntrega.setBounds(399, 5, 155, 30);
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel14.setText("Fecha Orden");
+        jPanel3.add(jLabel14);
+        jLabel14.setBounds(5, 5, 80, 30);
+
+        entFechaOrden.setEnabled(false);
+        entFechaOrden.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jPanel3.add(entFechaOrden);
+        entFechaOrden.setBounds(85, 5, 155, 30);
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(5, 40, 564, 40);
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel5.setLayout(null);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
+        tablaItem.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tablaItem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Isbn", "Titulo", "Estado Del Libro"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaItem);
+        if (tablaItem.getColumnModel().getColumnCount() > 0) {
+            tablaItem.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tablaItem.getColumnModel().getColumn(1).setPreferredWidth(5);
+            tablaItem.getColumnModel().getColumn(2).setPreferredWidth(10);
+        }
+
+        jPanel5.add(jScrollPane1);
+        jScrollPane1.setBounds(5, 5, 480, 200);
+
+        entCantidadTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel5.add(entCantidadTotal);
+        entCantidadTotal.setBounds(305, 210, 180, 30);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setText("Cantidad Total");
+        jPanel5.add(jLabel4);
+        jLabel4.setBounds(210, 210, 90, 30);
+
+        btnGuardar.setText("guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnGuardar);
+        btnGuardar.setBounds(490, 170, 70, 70);
+
+        btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnEditar);
+        btnEditar.setBounds(490, 95, 70, 70);
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel15.setText("Estado Orden");
+        jPanel5.add(jLabel15);
+        jLabel15.setBounds(5, 210, 80, 30);
+
+        cajaEstadoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin Cancelar", "Cancelada" }));
+        jPanel5.add(cajaEstadoOrden);
+        cajaEstadoOrden.setBounds(90, 210, 115, 30);
+
+        jPanel1.add(jPanel5);
+        jPanel5.setBounds(5, 275, 564, 250);
+        jPanel1.add(jSeparator2);
+        jSeparator2.setBounds(165, 20, 145, 2);
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel13.setText("Numero Orden");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(320, 5, 90, 30);
+
+        entNumeroOrden.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entNumeroOrden.setEnabled(false);
+        jPanel1.add(entNumeroOrden);
+        entNumeroOrden.setBounds(410, 5, 155, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void numeroOrden() {
+        int numeroOrden;
+        MC_OrdenPrestamo control = new MC_OrdenPrestamo();
+        List<Ordenprestamo> ordenCom = control.buscarTodasOrdenesPrestamo();
+        if (ordenCom.isEmpty()) {
+            numeroOrden = 1;
+        } else {
+            numeroOrden = ordenCom.get(ordenCom.size() - 1).getNumeroorden() + 1;
+        }
+        entNumeroOrden.setText(String.valueOf(numeroOrden));
+    }
+
+    public void obtenerElemntos() {
+        ordenPrestamo.setFechaorden(entFechaOrden.getDate());
+        ordenPrestamo.setFechaentrega(entFechaEntrega.getDate());
+        ordenPrestamo.setCantidadtotal(Integer.parseInt(entCantidadTotal.getText()));
+        ordenPrestamo.setClienteId(cliente);
+        ordenPrestamo.setEmpleadoId(empleado);
+        ordenPrestamo.setEstadoOrden(cajaEstadoOrden.getSelectedItem().toString());
+    }
+    
+    public void mostrarElementos (Ordenprestamo orden) {
+        entNumeroOrden.setText(String.valueOf(orden.getNumeroorden()));
+        entFechaEntrega.setDate(orden.getFechaentrega());
+        entFechaOrden.setDate(orden.getFechaorden());
+        entCantidadTotal.setText(String.valueOf(orden.getCantidadtotal()));
+        cajaEstadoOrden.setSelectedItem(orden.getEstadoOrden());
+        mostraElementodEmpleado(orden.getEmpleadoId());
+        mostrarElementosCliente(orden.getClienteId());
+    }
+
+    public void mostraLibro(List<Libro> libros) {
+        int cantidadTotal = 0;
+        for (Libro libro : libros) {
+            int isbn = libro.getIsbn();
+            String titulo = "Sin Titulo";
+            //Validar los campos del libro que no esten vacios
+            if (!libro.getTitulo().isEmpty()) {
+                titulo = libro.getTitulo();
+            }
+            //Pedir el estado del libro que se va a prestar
+            String entrada = JOptionPane.showInputDialog("Estado Del Libro '" + titulo + "' Que Se Va A Prestar.");
+            if (entrada.isEmpty()) {
+                entrada = "Sin Especificar";
+            }
+            //prepara la lista con los item que se van a guardar en la base de datos
+            Ordenitemprestamo ordenI = new Ordenitemprestamo();
+            ordenI.setEstadolibro(entrada);
+            ordenI.setLibro(libro);
+            ordenItemPrestamo.add(ordenI);
+            modelo.addRow(new Object[]{isbn, titulo, entrada});
+            cantidadTotal += 1;
+        }
+        entCantidadTotal.setText(String.valueOf(cantidadTotal));
+    }
+
+    public void mostraElementodEmpleado (Empleado empleado) {
+        entNombreEmpledo.setText("");
+        entApellidoEmpleado.setText("");
+        entTelefonoEmpleado.setText("");
+        entCedulaEmpleado.setText("");
+        if (empleado == null ) {
+            JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
+        } else {
+            if (empleado.getNombre() == null || empleado.getNombre().isEmpty()) {
+                entNombreEmpledo.setText("Sin Nombre");
+            } else {
+                entNombreEmpledo.setText(empleado.getNombre());
+            }
+            if (empleado.getApellidoPaterno() == null || empleado.getApellidoPaterno().isEmpty()) {
+                entApellidoEmpleado.setText("Sin Apellido");
+            } else {
+                entApellidoEmpleado.setText(empleado.getApellidoPaterno());
+            }
+            if (empleado.getTelefono() == null || empleado.getTelefono().isEmpty()) {
+                entTelefonoEmpleado.setText("Sin Telefono");
+            } else {
+                entTelefonoEmpleado.setText(empleado.getTelefono());
+            }
+            if (empleado.getCedula() == null || empleado.getCedula().isEmpty()) {
+                entCedulaEmpleado.setText("Sin Cedula");
+            } else {
+                entCedulaEmpleado.setText(empleado.getCedula());
+            }
+        }
+    }
+    
+    public void mostrarElementosCliente (Cliente cliente) {
+        entNombreEmpledo.setText("");
+        entApellidoEmpleado.setText("");
+        entTelefonoEmpleado.setText("");
+        entCedulaEmpleado.setText("");
+        if (cliente != null) {
+            if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
+                entNombreCliente.setText("Sin Nombre");
+            } else {
+                entNombreCliente.setText(cliente.getNombre());
+            }
+            if (cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty()) {
+                entApellidoCliente.setText("Sin Apellido");
+            } else {
+                entApellidoCliente.setText(cliente.getApellidoPaterno());
+            }
+            if (cliente.getTelefono() == null || cliente.getTelefono().isEmpty()) {
+                entTelefonoCliente.setText("Sin Telefono");
+            } else {
+                entTelefonoCliente.setText(cliente.getTelefono());
+            }
+            if (cliente.getCedula() == null || cliente.getCedula().isEmpty()) {
+                entCedulaCliente.setText("Sin Cedula");
+            } else {
+                entCedulaCliente.setText(cliente.getCedula());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontro El Cliente", "Informacion", 1, null);
+        }
+    }
+    private void btnBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleadoActionPerformed
+        entNombreEmpledo.setText("");
+        entApellidoEmpleado.setText("");
+        entTelefonoEmpleado.setText("");
+        entCedulaEmpleado.setText("");
+        empleado =null;
+        MC_Empleado control = new MC_Empleado();
+        empleado = control.buscarEmpleado(Integer.parseInt(JOptionPane.showInputDialog("Id Del Empleado")));
+        mostraElementodEmpleado(empleado);
+    }//GEN-LAST:event_btnBuscarEmpleadoActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+       entNombreCliente.setText("");
+        entApellidoCliente.setText("");
+        entTelefonoCliente.setText("");
+        entCedulaCliente.setText("");
+        cliente = null;
+         MC_Cliente control = new MC_Cliente();
+        cliente = control.buscarCliente(Integer.parseInt(JOptionPane.showInputDialog("Id Del Cliente")));
+        mostrarElementosCliente(cliente);
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        ordenPrestamo = new Ordenprestamo();
+        obtenerElemntos();
+
+        if (!ordenItemPrestamo.isEmpty()) {
+            if (JOptionPane.showConfirmDialog(this, "Guardar Orden De Prestamo", "Escudo", 1, 3, null) == 0) {
+                //Almacenar la orden de prestamo
+                MC_OrdenPrestamo control = new MC_OrdenPrestamo();
+                if (control.nuevaOrdenPrestamo(ordenPrestamo)) {
+                    //Almacenar los item de que se escogieron
+                    for (Ordenitemprestamo item : ordenItemPrestamo) {
+                        item.setOrdenprestamo(ordenPrestamo);
+                        MC_OrdenItemPrestamo controlItem = new MC_OrdenItemPrestamo();
+                        controlItem.nuevaOrdenItemPrestamo(item);
+                    }
+                    JOptionPane.showMessageDialog(this, "Orden De Prestamo Almacenada", "Informacion", 1, null);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        obtenerElemntos();
+
+        if (!ordenItemPrestamo.isEmpty()) {
+            if (JOptionPane.showConfirmDialog(this, "Editar Orden De Prestamo", "Escudo", 1, 3, null) == 0) {
+                //editar la orden de prestamo
+                MC_OrdenPrestamo control = new MC_OrdenPrestamo();
+                if (control.editarOrdenPrestamo(ordenPrestamo)) {
+                    //Almacenar los item que se escogieron
+                    for (Ordenitemprestamo item : ordenItemPrestamo) {
+                        item.setOrdenprestamo(ordenPrestamo);
+                        MC_OrdenItemPrestamo controlItem = new MC_OrdenItemPrestamo();
+                        controlItem.editarOrdenItemPrestamo(item);
+                    }
+                    JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -87,5 +586,44 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarEmpleado;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cajaEstadoOrden;
+    private javax.swing.JTextField entApellidoCliente;
+    private javax.swing.JTextField entApellidoEmpleado;
+    private javax.swing.JTextField entCantidadTotal;
+    private javax.swing.JTextField entCedulaCliente;
+    private javax.swing.JTextField entCedulaEmpleado;
+    private com.toedter.calendar.JDateChooser entFechaEntrega;
+    private com.toedter.calendar.JDateChooser entFechaOrden;
+    private javax.swing.JTextField entNombreCliente;
+    private javax.swing.JTextField entNombreEmpledo;
+    private javax.swing.JTextField entNumeroOrden;
+    private javax.swing.JTextField entTelefonoCliente;
+    private javax.swing.JTextField entTelefonoEmpleado;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable tablaItem;
     // End of variables declaration//GEN-END:variables
 }

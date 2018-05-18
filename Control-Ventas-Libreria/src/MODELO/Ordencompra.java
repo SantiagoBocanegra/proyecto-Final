@@ -52,9 +52,9 @@ public class Ordencompra implements Serializable {
     private Date fechaorden;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "cantidadtotal")
-    private Double cantidadtotal;
+    private int cantidadtotal;
     @Column(name = "preciototal")
-    private Double preciototal;
+    private int preciototal;
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cliente clienteId;
@@ -87,19 +87,19 @@ public class Ordencompra implements Serializable {
         this.fechaorden = fechaorden;
     }
 
-    public Double getCantidadtotal() {
+    public int getCantidadtotal() {
         return cantidadtotal;
     }
 
-    public void setCantidadtotal(Double cantidadtotal) {
+    public void setCantidadtotal(int cantidadtotal) {
         this.cantidadtotal = cantidadtotal;
     }
 
-    public Double getPreciototal() {
+    public int getPreciototal() {
         return preciototal;
     }
 
-    public void setPreciototal(Double preciototal) {
+    public void setPreciototal(int preciototal) {
         this.preciototal = preciototal;
     }
 
