@@ -42,12 +42,9 @@ public class MC_OrdenItem {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Almacenar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Guardar El Item De La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItem.nuevaOrdenItem(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
-        } 
+        }
         return estado;
     }
     
@@ -62,11 +59,9 @@ public class MC_OrdenItem {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar El Item De La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItem.editarOrdenItem(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
-        } 
+        }  
         return estado;
     }
     
@@ -80,7 +75,8 @@ public class MC_OrdenItem {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
-            System.err.print("ERROR MC_OrdenItem.buscarOrdenItem(): "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Item De La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            System.err.println("ERROR MC_OrdenItem.buscarOrdenItem(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
@@ -98,11 +94,18 @@ public class MC_OrdenItem {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Item De La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItem.buscarTodasOrdenItem(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
         } 
         return ordenesItem;
+    }
+    
+    
+    public void close () {
+        em.close();
+        emf.close();
     }
 }

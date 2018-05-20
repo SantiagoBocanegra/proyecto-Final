@@ -5,6 +5,7 @@ FUNCIONES DE LA CLASE MC_RolUsuario
     2-EDITAR ROL DE USUARIO
     3-BUSCAR ROL DE USUARIO
     3.1-BUSCAR  TODOS LOS ROLES DE USUARIOS
+    4 Borrar un rol 
 */
 package MODELO_CONTROLADOR;
 
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_RolUsuario {
     private EntityManagerFactory emf = null;
@@ -39,10 +41,8 @@ public class MC_RolUsuario {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Guardar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.nuevoRolUsuario(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return estado;
     }
@@ -58,10 +58,8 @@ public class MC_RolUsuario {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.editarRolUsuario(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return estado;
     }
@@ -76,10 +74,8 @@ public class MC_RolUsuario {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.buscarRolUsuario(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return rolUsuario;
     }
@@ -94,11 +90,38 @@ public class MC_RolUsuario {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.buscarTodosRolUsuario(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return rolesUsuario;
+    }
+    
+    //Funcion numero 4
+    public boolean  borrarRolUsuario ( int idRol) {
+        RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);
+        boolean estado = true;
+        try {
+            emt.begin();
+            servicio.destroy(idRol);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            estado = false;
+            JOptionPane.showMessageDialog(null, "Error Al Borrar El Rol: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.borrarRolUsuario(): "+e.getMessage());
+        }
+        return estado;
+    }
+
+    public EntityTransaction getEmt() {
+        return emt;
+    }
+    
+    public void close () {
+        em.close();
+        emf.close();
     }
 }

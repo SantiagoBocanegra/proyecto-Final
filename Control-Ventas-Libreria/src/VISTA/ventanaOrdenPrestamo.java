@@ -12,16 +12,12 @@ import MODELO.Ordenitemprestamo;
 import MODELO.Ordenprestamo;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.MC_Empleado;
-import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.MC_OrdenItemPrestamo;
 import MODELO_CONTROLADOR.MC_OrdenPrestamo;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +44,16 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     public ventanaOrdenPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        entNombreEmpledo.setBackground(Color.WHITE);
+        entApellidoEmpleado.setBackground(Color.WHITE);
+        entTelefonoEmpleado.setBackground(Color.WHITE);
+        entCedulaEmpleado.setBackground(Color.WHITE);
+        entNombreCliente.setBackground(Color.WHITE);
+        entApellidoCliente.setBackground(Color.WHITE);
+        entTelefonoCliente.setBackground(Color.WHITE);
+        entCedulaCliente.setBackground(Color.WHITE);
+        entNumeroOrden.setBackground(Color.WHITE);
+        
         modelo = (DefaultTableModel) tablaItem.getModel();
 
         JCalendar calendario = entFechaOrden.getJCalendar();
@@ -377,16 +383,16 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         ordenPrestamo.setCantidadtotal(Integer.parseInt(entCantidadTotal.getText()));
         ordenPrestamo.setClienteId(cliente);
         ordenPrestamo.setEmpleadoId(empleado);
-        ordenPrestamo.setEstadoOrden(cajaEstadoOrden.getSelectedItem().toString());
+        ordenPrestamo.setEstadoorden(cajaEstadoOrden.getSelectedItem().toString());
     }
-    
-    public void mostrarElementos (Ordenprestamo orden) {
+
+    public void mostrarElementos(Ordenprestamo orden) {
         entNumeroOrden.setText(String.valueOf(orden.getNumeroorden()));
         entFechaEntrega.setDate(orden.getFechaentrega());
         entFechaOrden.setDate(orden.getFechaorden());
         entCantidadTotal.setText(String.valueOf(orden.getCantidadtotal()));
-        cajaEstadoOrden.setSelectedItem(orden.getEstadoOrden());
-        mostraElementodEmpleado(orden.getEmpleadoId());
+        cajaEstadoOrden.setSelectedItem(orden.getEstadoorden());
+        mostraElementosEmpleado(orden.getEmpleadoId());
         mostrarElementosCliente(orden.getClienteId());
     }
 
@@ -414,15 +420,34 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
     }
+    
+    public void limpiarOrdenPrestamo () {
+        numeroOrden();
+        entFechaEntrega.setDate(funciones.sumarRestaFecha(0, 0, 8));
+        entFechaOrden.setDate(funciones.fecha());
+        entCantidadTotal.setText("");
+        cajaEstadoOrden.setSelectedItem("Sin Cancelar");
+        limpiarCliente();
+        limpiarEmpleado();
+    }
 
-    public void mostraElementodEmpleado (Empleado empleado) {
+    public void limpiarCliente() {
+        entNombreCliente.setText("");
+        entApellidoCliente.setText("");
+        entTelefonoCliente.setText("");
+        entCedulaCliente.setText("");
+    }
+
+    public void limpiarEmpleado() {
         entNombreEmpledo.setText("");
         entApellidoEmpleado.setText("");
         entTelefonoEmpleado.setText("");
         entCedulaEmpleado.setText("");
-        if (empleado == null ) {
-            JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
-        } else {
+    }
+    
+    public void mostraElementosEmpleado(Empleado empleado) {
+        limpiarEmpleado();
+        if (empleado != null) {
             if (empleado.getNombre() == null || empleado.getNombre().isEmpty()) {
                 entNombreEmpledo.setText("Sin Nombre");
             } else {
@@ -442,15 +467,14 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 entCedulaEmpleado.setText("Sin Cedula");
             } else {
                 entCedulaEmpleado.setText(empleado.getCedula());
-            }
+            }    
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
         }
     }
-    
-    public void mostrarElementosCliente (Cliente cliente) {
-        entNombreEmpledo.setText("");
-        entApellidoEmpleado.setText("");
-        entTelefonoEmpleado.setText("");
-        entCedulaEmpleado.setText("");
+
+    public void mostrarElementosCliente(Cliente cliente) {
+        limpiarCliente();
         if (cliente != null) {
             if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
                 entNombreCliente.setText("Sin Nombre");
@@ -477,23 +501,17 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         }
     }
     private void btnBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleadoActionPerformed
-        entNombreEmpledo.setText("");
-        entApellidoEmpleado.setText("");
-        entTelefonoEmpleado.setText("");
-        entCedulaEmpleado.setText("");
-        empleado =null;
+        limpiarEmpleado();
+        empleado = null;
         MC_Empleado control = new MC_Empleado();
         empleado = control.buscarEmpleado(Integer.parseInt(JOptionPane.showInputDialog("Id Del Empleado")));
-        mostraElementodEmpleado(empleado);
+        mostraElementosEmpleado(empleado);
     }//GEN-LAST:event_btnBuscarEmpleadoActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-       entNombreCliente.setText("");
-        entApellidoCliente.setText("");
-        entTelefonoCliente.setText("");
-        entCedulaCliente.setText("");
+        limpiarCliente();
         cliente = null;
-         MC_Cliente control = new MC_Cliente();
+        MC_Cliente control = new MC_Cliente();
         cliente = control.buscarCliente(Integer.parseInt(JOptionPane.showInputDialog("Id Del Cliente")));
         mostrarElementosCliente(cliente);
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
@@ -524,22 +542,13 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerElemntos();
 
-        if (!ordenItemPrestamo.isEmpty()) {
-            if (JOptionPane.showConfirmDialog(this, "Editar Orden De Prestamo", "Escudo", 1, 3, null) == 0) {
-                //editar la orden de prestamo
-                MC_OrdenPrestamo control = new MC_OrdenPrestamo();
-                if (control.editarOrdenPrestamo(ordenPrestamo)) {
-                    //Almacenar los item que se escogieron
-                    for (Ordenitemprestamo item : ordenItemPrestamo) {
-                        item.setOrdenprestamo(ordenPrestamo);
-                        MC_OrdenItemPrestamo controlItem = new MC_OrdenItemPrestamo();
-                        controlItem.editarOrdenItemPrestamo(item);
-                    }
-                    JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
-                }
+        if (JOptionPane.showConfirmDialog(this, "Editar Orden De Prestamo", "Escudo", 1, 3, null) == 0) {
+            //editar la orden de prestamo
+            MC_OrdenPrestamo control = new MC_OrdenPrestamo();
+            if (control.editarOrdenPrestamo(ordenPrestamo)) {
+                JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
+                limpiarOrdenPrestamo();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 

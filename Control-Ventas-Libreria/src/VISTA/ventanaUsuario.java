@@ -93,7 +93,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(fotoEmpleado);
         fotoEmpleado.setBounds(4, 4, 165, 215);
 
-        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entApellidoPaterno.setEnabled(false);
         jPanel1.add(entApellidoPaterno);
         entApellidoPaterno.setBounds(295, 85, 285, 30);
@@ -108,7 +108,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(170, 85, 120, 30);
 
-        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entCedula.setEnabled(false);
         jPanel1.add(entCedula);
         entCedula.setBounds(295, 120, 285, 30);
@@ -118,7 +118,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(205, 120, 60, 30);
 
-        entUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entUsuario);
         entUsuario.setBounds(295, 180, 285, 30);
 
@@ -137,7 +137,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel8);
         jLabel8.setBounds(10, 259, 170, 30);
 
-        entPimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entPimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entPimerNombre.setEnabled(false);
         jPanel1.add(entPimerNombre);
         entPimerNombre.setBounds(295, 50, 285, 30);
@@ -192,11 +192,11 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(380, 374, 70, 70);
 
-        entConfirmarContraseña.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entConfirmarContraseña.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entConfirmarContraseña);
         entConfirmarContraseña.setBounds(180, 259, 400, 30);
 
-        entContraseña.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entContraseña.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entContraseña);
         entContraseña.setBounds(100, 224, 480, 30);
 
@@ -215,8 +215,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
                 if (JOptionPane.showConfirmDialog(this, "Guardar Usuario", "Escudo", 1, 2, null) == 0){
                     if (control.nuevoUsuario(usuario)) {
                         JOptionPane.showMessageDialog(this, "Registro De Usuario Exitoso ", "Informacion", 1, null);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Error Al Registrar El Usuario", "Error", 0, null);
                     }
                 }
                 break;
@@ -239,8 +237,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
                 if (JOptionPane.showConfirmDialog(this, "Editar Usuario", "Escudo", 1, 2, null) == 0){
                     if (control.ediatrUsuario(usuario)) {
                         JOptionPane.showMessageDialog(this, "Usuario Editado  Exitosamente ", "Informacion", 1, null);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Error Al Editar El Usuario", "Error", 0, null);
                     }
                 }
                 break;
@@ -256,9 +252,12 @@ public class ventanaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public void obtenerElementosVentana () {
-        String Usuario = entUsuario.getText();
-        String contraseña = entContraseña.getText();
-        String confirmarContraseña = entConfirmarContraseña.getText();
+        String Usuario = "";
+        Usuario = entUsuario.getText();
+        String contraseña = "";
+        contraseña = entContraseña.getText();
+        String confirmarContraseña = "";
+        confirmarContraseña = entConfirmarContraseña.getText();
         boolean estadoUsuario = entEstadoUsuario.isSelected();
         if  (Usuario.isEmpty() || contraseña.isEmpty() || contraseña.isEmpty()){
             caso = 1;
@@ -275,16 +274,16 @@ public class ventanaUsuario extends javax.swing.JDialog {
     public void mostrarElementos(Usuario usuario) {
         Empleado emp = usuario.getEmpleadoId();
         
-        if (emp.getFoto().length > 0) {
+        if (emp.getFoto() == null || emp.getFoto().length > 0) {
             Image imagen = funciones.byte_jpg(emp.getFoto()).getScaledInstance(fotoEmpleado.getWidth(), fotoEmpleado.getHeight(), Image.SCALE_DEFAULT);
             fotoEmpleado.setIcon(new ImageIcon(imagen));
         }
-        if (emp.getNombre().isEmpty()) {
+        if (emp.getNombre() == null || emp.getNombre().isEmpty()) {
             entPimerNombre.setText("Sin Nombre");
         } else {
             entPimerNombre.setText(emp.getNombre());
         }
-        if (emp.getApellidoPaterno().isEmpty()) {
+        if (emp.getApellidoPaterno() == null || emp.getApellidoPaterno().isEmpty()) {
             entApellidoPaterno.setText("Sin Apellido Paterno");
         } else {
             entApellidoPaterno.setText(emp.getApellidoPaterno());

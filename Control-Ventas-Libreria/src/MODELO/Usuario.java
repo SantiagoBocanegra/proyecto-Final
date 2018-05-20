@@ -63,13 +63,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(String usuario, String contraseña, Boolean estado, Empleado empleadoId) {
-        this.usuario = usuario;
-        this.contraseña = contraseña;
-        this.estado = estado;
-        this.empleadoId = empleadoId;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -31,6 +31,7 @@ public class ventanaCliente extends javax.swing.JDialog {
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
         entFecha.setDate(funciones.fecha());
+        barraProgreso.setVisible(false);
     }
 
     public void obtenerElementosVentana() {
@@ -48,61 +49,79 @@ public class ventanaCliente extends javax.swing.JDialog {
     }
 
     public void mostrarDatosVentana(Cliente cliente) {
-        entId.setText(String.valueOf(cliente.getId()));
-        if (cliente.getNombre().isEmpty()) {
-            entPrimerNombre.setText("Sin nombre");
+        if (cliente != null) {
+            entId.setText(String.valueOf(cliente.getId()));
+            if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
+                entPrimerNombre.setText("Sin Priemer Nombre");
+            } else {
+                entPrimerNombre.setText(cliente.getNombre());
+            }
+            if (cliente.getSegundoNombre() == null || cliente.getSegundoNombre().isEmpty()) {
+                entSegundoNombre.setText("Sin Segundo Nombre");
+            } else {
+                entSegundoNombre.setText(cliente.getSegundoNombre());
+            }
+            if (cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty()) {
+                entApellidoPaterno.setText("Sin Apellido Paterno");
+            } else {
+                entApellidoPaterno.setText(cliente.getApellidoPaterno());
+            }
+            if (cliente.getApellidoMaterno() == null || cliente.getApellidoMaterno().isEmpty()) {
+                entApellidoMaterno.setText("Sin Apellido Materno");
+            } else {
+                entApellidoMaterno.setText(cliente.getApellidoMaterno());
+            }
+            if (cliente.getCedula() == null || cliente.getCedula().isEmpty()) {
+                entCedula.setText("Sin cedula");
+            } else {
+                entCedula.setText(cliente.getCedula());
+            }
+            if (cliente.getPais() == null || cliente.getPais().isEmpty()) {
+                entPais.setText("Sin Pais");
+            } else {
+                entPais.setText(cliente.getPais());
+            }
+            if (cliente.getCiudad() == null || cliente.getCiudad().isEmpty()) {
+                entCiudad.setText("Sin Ciudad");
+            } else {
+                entCiudad.setText(cliente.getCiudad());
+            }
+            if (cliente.getCorreo() == null || cliente.getCorreo().isEmpty()) {
+                entCorreo.setText("Sin Correo");
+            } else {
+                entCorreo.setText(cliente.getCorreo());
+            }
+            if (cliente.getTelefono() == null || cliente.getTelefono().isEmpty()) {
+                entTelefono.setText("Sin Telefono");
+            } else {
+                entTelefono.setText(cliente.getTelefono());
+            }
+            if  (cliente.getFechaRegistro() != null ) {
+                entFecha.setDate(cliente.getFechaRegistro());
+            }
+            if (cliente.getDireccion() == null || cliente.getDireccion().isEmpty()) {
+                entDireccion.setText("Sin Direccion");
+            } else {
+                entDireccion.setText(cliente.getDireccion());
+            }
         } else {
-            entPrimerNombre.setText(cliente.getNombre());
+            JOptionPane.showMessageDialog(this, "No Se Encontro Ningun Cliente", "Informacion", 1, null);
         }
-        if (cliente.getSegundoNombre().isEmpty()) {
-            entSegundoNombre.setText("Sin Segundo Nombre");
-        } else {
-            entSegundoNombre.setText(cliente.getSegundoNombre());
-        }
-        if (cliente.getApellidoPaterno().isEmpty()) {
-            entApellidoPaterno.setText("Sin Apellido Paterno");
-        } else {
-            entApellidoPaterno.setText(cliente.getApellidoPaterno());
-        }
-        if (cliente.getApellidoMaterno().isEmpty()) {
-            entApellidoMaterno.setText("Sin Apellido Materno");
-        } else {
-            entApellidoMaterno.setText(cliente.getApellidoMaterno());
-        }
-        if (cliente.getCedula().isEmpty()) {
-            entCedula.setText("Sin cedula");
-        } else {
-            entCedula.setText(cliente.getCedula());
-        }
-        if (cliente.getPais().isEmpty()) {
-            entPais.setText("Sin Pais");
-        } else {
-            entPais.setText(cliente.getPais());
-        }
-        if (cliente.getCiudad().isEmpty()) {
-            entCiudad.setText("Sin Ciudad");
-        } else {
-            entCiudad.setText(cliente.getCiudad());
-        }
-        if (cliente.getCorreo().isEmpty()) {
-            entCorreo.setText("Sin Correo");
-        } else {
-            entCorreo.setText(cliente.getCorreo());
-        }
-        if (cliente.getTelefono().isEmpty()) {
-            entTelefono.setText("Sin Telefono");
-        } else {
-            entTelefono.setText(cliente.getTelefono());
-        }
-
-        if (cliente.getDireccion().isEmpty()) {
-            entDireccion.setText("Sin Direccion");
-        } else {
-            entDireccion.setText(cliente.getDireccion());
-        }
-        if (cliente.getFechaRegistro() != null) {
-            entFecha.setDate(cliente.getFechaRegistro());
-        }
+    }
+    
+    public void limpiar() {
+        entId.setText(" ");
+        entPrimerNombre.setText(" ");
+        entSegundoNombre.setText(" ");
+        entApellidoPaterno.setText(" ");
+        entApellidoMaterno.setText(" ");
+        entCedula.setText(" ");
+        entCiudad.setText(" ");
+        entCorreo.setText(" ");
+        entDireccion.setText(" ");
+        entFecha.setDate(null);
+        entPais.setText("");
+        entTelefono.setText(" ");
     }
 
     /**
@@ -160,113 +179,115 @@ public class ventanaCliente extends javax.swing.JDialog {
         jLabel1.setBounds(4, 4, 165, 215);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel2.setText("ID");
+        jLabel2.setText("Id");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(230, 13, 19, 30);
+        jLabel2.setBounds(230, 13, 15, 30);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel3.setText("PRIMER NOMBRE");
+        jLabel3.setText("Primer Nombre");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(174, 48, 150, 30);
+        jLabel3.setBounds(174, 48, 113, 30);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel4.setText("APELLIDO PATERNO");
+        jLabel4.setText("Apellido Paterno");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(174, 118, 177, 30);
+        jLabel4.setBounds(174, 118, 120, 30);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel5.setText("APELLIDO MATERNO");
+        jLabel5.setText("Apellido Materno");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(174, 152, 182, 30);
+        jLabel5.setBounds(174, 152, 140, 30);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel6.setText("SEGUNDO NOMBRE");
+        jLabel6.setText("Segundo Nombre");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(174, 83, 168, 30);
+        jLabel6.setBounds(174, 83, 126, 30);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel8.setText("CEDULA");
+        jLabel8.setText("Cedula");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(174, 187, 72, 30);
+        jLabel8.setBounds(174, 187, 50, 30);
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel9.setText("DIRECCION ");
+        jLabel9.setText("Direccion");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(250, 227, 103, 30);
+        jLabel9.setBounds(250, 227, 69, 30);
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel10.setText("PAIS");
+        jLabel10.setText("Pais");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(10, 227, 39, 30);
+        jLabel10.setBounds(10, 227, 30, 30);
 
         jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel11.setText("TELEFONO");
+        jLabel11.setText("Telefono");
         jPanel1.add(jLabel11);
         jLabel11.setBounds(250, 262, 100, 30);
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel12.setText("CORREO");
+        jLabel12.setText("Correo");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(10, 297, 73, 30);
+        jLabel12.setBounds(10, 297, 50, 30);
 
         jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel13.setText("FECHA REGISTRO");
+        jLabel13.setText("Fecha Registro");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(10, 332, 152, 30);
+        jLabel13.setBounds(10, 332, 107, 30);
 
         jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel14.setText("CIUDAD");
+        jLabel14.setText("Ciudad");
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(10, 262, 69, 30);
+        jLabel14.setBounds(10, 262, 51, 30);
 
-        entId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entId.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entId.setEnabled(false);
         jPanel1.add(entId);
         entId.setBounds(260, 13, 150, 30);
 
-        entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entPrimerNombre);
-        entPrimerNombre.setBounds(360, 48, 200, 30);
+        entPrimerNombre.setBounds(310, 48, 250, 30);
 
-        entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entSegundoNombre);
-        entSegundoNombre.setBounds(360, 82, 200, 30);
+        entSegundoNombre.setBounds(310, 82, 250, 30);
 
-        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entApellidoPaterno);
-        entApellidoPaterno.setBounds(360, 118, 200, 30);
+        entApellidoPaterno.setBounds(310, 118, 250, 30);
 
-        entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entApellidoMaterno);
-        entApellidoMaterno.setBounds(360, 152, 200, 30);
+        entApellidoMaterno.setBounds(310, 152, 250, 30);
 
-        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCedula);
-        entCedula.setBounds(250, 187, 200, 30);
+        entCedula.setBounds(235, 187, 200, 30);
 
-        entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entDireccion);
-        entDireccion.setBounds(360, 227, 200, 30);
+        entDireccion.setBounds(325, 227, 235, 30);
 
-        entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entTelefono);
-        entTelefono.setBounds(360, 262, 200, 30);
+        entTelefono.setBounds(325, 262, 235, 30);
 
-        entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCorreo);
-        entCorreo.setBounds(85, 297, 475, 30);
+        entCorreo.setBounds(65, 297, 495, 30);
 
-        entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCiudad);
-        entCiudad.setBounds(85, 262, 160, 30);
+        entCiudad.setBounds(65, 262, 180, 30);
 
-        entPais.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entPais.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entPais);
-        entPais.setBounds(85, 227, 160, 30);
+        entPais.setBounds(65, 227, 180, 30);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(4, 222, 565, 10);
+
+        entFecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entFecha);
-        entFecha.setBounds(165, 332, 200, 30);
+        entFecha.setBounds(120, 332, 200, 30);
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 372, 400, 30);
 
@@ -315,8 +336,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             MC_Cliente control = new MC_Cliente();
             if (control.nuevoCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion", 1, null);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error Al Guardar El Cliente", "Error", 0, null);
+                limpiar();
             }
         }
     }//GEN-LAST:event_btnGuargarActionPerformed
@@ -328,8 +348,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             MC_Cliente control = new MC_Cliente();
             if (control.editarCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion", 1, null);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error Al Editar El Cliente", "Error", 0, null);
+                limpiar();
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed

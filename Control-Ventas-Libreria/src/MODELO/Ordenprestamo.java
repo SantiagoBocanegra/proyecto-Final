@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ordenprestamo.findByFechaorden", query = "SELECT o FROM Ordenprestamo o WHERE o.fechaorden = :fechaorden")
     , @NamedQuery(name = "Ordenprestamo.findByFechaentrega", query = "SELECT o FROM Ordenprestamo o WHERE o.fechaentrega = :fechaentrega")
     , @NamedQuery(name = "Ordenprestamo.findByCantidadtotal", query = "SELECT o FROM Ordenprestamo o WHERE o.cantidadtotal = :cantidadtotal")
-    , @NamedQuery(name = "Ordenprestamo.findByEstadoOrden", query = "SELECT o FROM Ordenprestamo o WHERE o.estadoOrden = :estadoOrden")})
+    , @NamedQuery(name = "Ordenprestamo.findByEstadoorden", query = "SELECT o FROM Ordenprestamo o WHERE o.estadoorden = :estadoorden")})
 public class Ordenprestamo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,7 +57,7 @@ public class Ordenprestamo implements Serializable {
     @Column(name = "cantidadtotal")
     private Integer cantidadtotal;
     @Column(name = "estadoorden")
-    private String estadoOrden;
+    private String estadoorden;
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cliente clienteId;
@@ -106,12 +106,12 @@ public class Ordenprestamo implements Serializable {
         this.cantidadtotal = cantidadtotal;
     }
 
-    public String getEstadoOrden() {
-        return estadoOrden;
+    public String getEstadoorden() {
+        return estadoorden;
     }
 
-    public void setEstadoOrden(String estadoOrden) {
-        this.estadoOrden = estadoOrden;
+    public void setEstadoorden(String estadoorden) {
+        this.estadoorden = estadoorden;
     }
 
     public Cliente getClienteId() {

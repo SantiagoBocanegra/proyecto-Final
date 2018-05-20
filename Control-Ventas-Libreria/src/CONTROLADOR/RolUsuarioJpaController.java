@@ -5,14 +5,18 @@
  */
 package CONTROLADOR;
 
+import CONTROLADOR.exceptions.IllegalOrphanException;
 import CONTROLADOR.exceptions.NonexistentEntityException;
-import MODELO.RolUsuario;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import MODELO.Usuario;
+import MODELO.Permisos;
+import MODELO.RolUsuario;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,6 +37,9 @@ public class RolUsuarioJpaController implements Serializable {
     }
 
     public void create(RolUsuario rolUsuario) {
+        if (rolUsuario.getPermisosCollection() == null) {
+            rolUsuario.setPermisosCollection(new ArrayList<Permisos>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -42,10 +49,25 @@ public class RolUsuarioJpaController implements Serializable {
                 usuarioId = em.getReference(usuarioId.getClass(), usuarioId.getId());
                 rolUsuario.setUsuarioId(usuarioId);
             }
+            Collection<Permisos> attachedPermisosCollection = new ArrayList<Permisos>();
+            for (Permisos permisosCollectionPermisosToAttach : rolUsuario.getPermisosCollection()) {
+                permisosCollectionPermisosToAttach = em.getReference(permisosCollectionPermisosToAttach.getClass(), permisosCollectionPermisosToAttach.getIdpermisos());
+                attachedPermisosCollection.add(permisosCollectionPermisosToAttach);
+            }
+            rolUsuario.setPermisosCollection(attachedPermisosCollection);
             em.persist(rolUsuario);
             if (usuarioId != null) {
                 usuarioId.getRolUsuarioCollection().add(rolUsuario);
                 usuarioId = em.merge(usuarioId);
+            }
+            for (Permisos permisosCollectionPermisos : rolUsuario.getPermisosCollection()) {
+                RolUsuario oldRolUsuarioIdOfPermisosCollectionPermisos = permisosCollectionPermisos.getRolUsuarioId();
+                permisosCollectionPermisos.setRolUsuarioId(rolUsuario);
+                permisosCollectionPermisos = em.merge(permisosCollectionPermisos);
+                if (oldRolUsuarioIdOfPermisosCollectionPermisos != null) {
+                    oldRolUsuarioIdOfPermisosCollectionPermisos.getPermisosCollection().remove(permisosCollectionPermisos);
+                    oldRolUsuarioIdOfPermisosCollectionPermisos = em.merge(oldRolUsuarioIdOfPermisosCollectionPermisos);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -55,7 +77,7 @@ public class RolUsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(RolUsuario rolUsuario) throws NonexistentEntityException, Exception {
+    public void edit(RolUsuario rolUsuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -63,10 +85,31 @@ public class RolUsuarioJpaController implements Serializable {
             RolUsuario persistentRolUsuario = em.find(RolUsuario.class, rolUsuario.getId());
             Usuario usuarioIdOld = persistentRolUsuario.getUsuarioId();
             Usuario usuarioIdNew = rolUsuario.getUsuarioId();
+            Collection<Permisos> permisosCollectionOld = persistentRolUsuario.getPermisosCollection();
+            Collection<Permisos> permisosCollectionNew = rolUsuario.getPermisosCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Permisos permisosCollectionOldPermisos : permisosCollectionOld) {
+                if (!permisosCollectionNew.contains(permisosCollectionOldPermisos)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Permisos " + permisosCollectionOldPermisos + " since its rolUsuarioId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (usuarioIdNew != null) {
                 usuarioIdNew = em.getReference(usuarioIdNew.getClass(), usuarioIdNew.getId());
                 rolUsuario.setUsuarioId(usuarioIdNew);
             }
+            Collection<Permisos> attachedPermisosCollectionNew = new ArrayList<Permisos>();
+            for (Permisos permisosCollectionNewPermisosToAttach : permisosCollectionNew) {
+                permisosCollectionNewPermisosToAttach = em.getReference(permisosCollectionNewPermisosToAttach.getClass(), permisosCollectionNewPermisosToAttach.getIdpermisos());
+                attachedPermisosCollectionNew.add(permisosCollectionNewPermisosToAttach);
+            }
+            permisosCollectionNew = attachedPermisosCollectionNew;
+            rolUsuario.setPermisosCollection(permisosCollectionNew);
             rolUsuario = em.merge(rolUsuario);
             if (usuarioIdOld != null && !usuarioIdOld.equals(usuarioIdNew)) {
                 usuarioIdOld.getRolUsuarioCollection().remove(rolUsuario);
@@ -75,6 +118,17 @@ public class RolUsuarioJpaController implements Serializable {
             if (usuarioIdNew != null && !usuarioIdNew.equals(usuarioIdOld)) {
                 usuarioIdNew.getRolUsuarioCollection().add(rolUsuario);
                 usuarioIdNew = em.merge(usuarioIdNew);
+            }
+            for (Permisos permisosCollectionNewPermisos : permisosCollectionNew) {
+                if (!permisosCollectionOld.contains(permisosCollectionNewPermisos)) {
+                    RolUsuario oldRolUsuarioIdOfPermisosCollectionNewPermisos = permisosCollectionNewPermisos.getRolUsuarioId();
+                    permisosCollectionNewPermisos.setRolUsuarioId(rolUsuario);
+                    permisosCollectionNewPermisos = em.merge(permisosCollectionNewPermisos);
+                    if (oldRolUsuarioIdOfPermisosCollectionNewPermisos != null && !oldRolUsuarioIdOfPermisosCollectionNewPermisos.equals(rolUsuario)) {
+                        oldRolUsuarioIdOfPermisosCollectionNewPermisos.getPermisosCollection().remove(permisosCollectionNewPermisos);
+                        oldRolUsuarioIdOfPermisosCollectionNewPermisos = em.merge(oldRolUsuarioIdOfPermisosCollectionNewPermisos);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -93,7 +147,7 @@ public class RolUsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -104,6 +158,17 @@ public class RolUsuarioJpaController implements Serializable {
                 rolUsuario.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The rolUsuario with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            Collection<Permisos> permisosCollectionOrphanCheck = rolUsuario.getPermisosCollection();
+            for (Permisos permisosCollectionOrphanCheckPermisos : permisosCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This RolUsuario (" + rolUsuario + ") cannot be destroyed since the Permisos " + permisosCollectionOrphanCheckPermisos + " in its permisosCollection field has a non-nullable rolUsuarioId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Usuario usuarioId = rolUsuario.getUsuarioId();
             if (usuarioId != null) {

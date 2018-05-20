@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_OrdenItemPrestamo {
     
@@ -41,6 +42,7 @@ public class MC_OrdenItemPrestamo {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Guardar El item Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItemPrestamo.nuevaOrdenItemPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -60,6 +62,7 @@ public class MC_OrdenItemPrestamo {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Editar El item Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItemPrestamo.editarOrdenItemPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -78,6 +81,7 @@ public class MC_OrdenItemPrestamo {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Buscar El item Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItemPrestamo.buscarOrdenItemPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -96,6 +100,7 @@ public class MC_OrdenItemPrestamo {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Buscar El item Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenItemPrestamo.buscarTodasOrdenesItemPrestamo(): "+e.getMessage());
         } finally {
             em.close();

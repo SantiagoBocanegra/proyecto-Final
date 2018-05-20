@@ -47,6 +47,7 @@ public class Libro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "isbn")
     private Integer isbn;
@@ -66,9 +67,8 @@ public class Libro implements Serializable {
     private Date fechaPublicacion;
     @Column(name = "estadolibro")
     private String estadolibro;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "precio")
-    private int precio;
+    private Integer precio;
     @ManyToMany(mappedBy = "libroCollection")
     private Collection<Genero> generoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
@@ -147,11 +147,11 @@ public class Libro implements Serializable {
         this.estadolibro = estadolibro;
     }
 
-    public int getPrecio() {
+    public Integer getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(Integer precio) {
         this.precio = precio;
     }
 

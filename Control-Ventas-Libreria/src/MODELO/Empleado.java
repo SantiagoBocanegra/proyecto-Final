@@ -87,7 +87,7 @@ public class Empleado implements Serializable {
     private String cargo;
     @Basic(optional = false)
     @Column(name = "salario")
-    private double salario;
+    private int salario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private Collection<Ordencompra> ordencompraCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
@@ -102,30 +102,12 @@ public class Empleado implements Serializable {
         this.id = id;
     }
 
-    public Empleado(Integer id, String cedula, double salario) {
+    public Empleado(Integer id, String cedula, int salario) {
         this.id = id;
         this.cedula = cedula;
         this.salario = salario;
     }
 
-    public Empleado(byte[] foto, String nombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, String cedula, String direccion, String pais, String ciudad, String correo, String telefono, Date fechaContrato, String cargo, double salario) {
-        this.foto = foto;
-        this.nombre = nombre;
-        this.segundoNombre = segundoNombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.cedula = cedula;
-        this.direccion = direccion;
-        this.pais = pais;
-        this.ciudad = ciudad;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.fechaContrato = fechaContrato;
-        this.cargo = cargo;
-        this.salario = salario;
-    }
-
-    
     public Integer getId() {
         return id;
     }
@@ -238,11 +220,11 @@ public class Empleado implements Serializable {
         this.cargo = cargo;
     }
 
-    public double getSalario() {
+    public int getSalario() {
         return salario;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(int salario) {
         this.salario = salario;
     }
 

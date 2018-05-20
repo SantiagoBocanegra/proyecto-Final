@@ -102,44 +102,6 @@ CREATE INDEX IFK_Rel_10 ON ordenPrestamo (CLIENTE_ID);
 CREATE INDEX IFK_Rel_11 ON ordenPrestamo (EMPLEADO_ID);
 
 
-CREATE TABLE ordenItemPrestamo (
-  LIBRO_ISBN INTEGER   NOT NULL ,
-  ordenPrestamo_numeroOrden INTEGER   NOT NULL ,
-  estadoLibro VARCHAR(60)    ,
-  estadoOrden VARCHAR(60)      ,
-PRIMARY KEY(LIBRO_ISBN, ordenPrestamo_numeroOrden)    ,
-  FOREIGN KEY(LIBRO_ISBN)
-    REFERENCES LIBRO(ISBN),
-  FOREIGN KEY(ordenPrestamo_numeroOrden)
-    REFERENCES ordenPrestamo(numeroOrden));
-
-
-CREATE INDEX LIBRO_has_ordenPrestamo_FKIndex1 ON ordenItemPrestamo (LIBRO_ISBN);
-CREATE INDEX LIBRO_has_ordenPrestamo_FKIndex2 ON ordenItemPrestamo (ordenPrestamo_numeroOrden);
-
-
-CREATE INDEX IFK_Rel_07 ON ordenItemPrestamo (LIBRO_ISBN);
-CREATE INDEX IFK_Rel_08 ON ordenItemPrestamo (ordenPrestamo_numeroOrden);
-
-
-CREATE TABLE GENERO_LIBROS (
-  GENERO_id INTEGER   NOT NULL ,
-  LIBRO_ISBN INTEGER   NOT NULL   ,
-PRIMARY KEY(GENERO_id, LIBRO_ISBN)    ,
-  FOREIGN KEY(GENERO_id)
-    REFERENCES GENERO(id),
-  FOREIGN KEY(LIBRO_ISBN)
-    REFERENCES LIBRO(ISBN));
-
-
-CREATE INDEX GENERO_has_LIBRO_FKIndex1 ON GENERO_LIBROS (GENERO_id);
-CREATE INDEX GENERO_has_LIBRO_FKIndex2 ON GENERO_LIBROS (LIBRO_ISBN);
-
-
-CREATE INDEX IFK_Rel_09 ON GENERO_LIBROS (GENERO_id);
-CREATE INDEX IFK_Rel_10 ON GENERO_LIBROS (LIBRO_ISBN);
-
-
 CREATE TABLE ordenCompra (
   numeroOrden SERIAL  NOT NULL ,
   EMPLEADO_ID INTEGER   NOT NULL ,
@@ -160,6 +122,44 @@ CREATE INDEX ordenCompra_FKIndex2 ON ordenCompra (EMPLEADO_ID);
 
 CREATE INDEX IFK_Rel_01 ON ordenCompra (CLIENTE_ID);
 CREATE INDEX IFK_Rel_03 ON ordenCompra (EMPLEADO_ID);
+
+
+CREATE TABLE GENERO_LIBROS (
+  GENERO_id INTEGER   NOT NULL ,
+  LIBRO_ISBN INTEGER   NOT NULL   ,
+PRIMARY KEY(GENERO_id, LIBRO_ISBN)    ,
+  FOREIGN KEY(GENERO_id)
+    REFERENCES GENERO(id),
+  FOREIGN KEY(LIBRO_ISBN)
+    REFERENCES LIBRO(ISBN));
+
+
+CREATE INDEX GENERO_has_LIBRO_FKIndex1 ON GENERO_LIBROS (GENERO_id);
+CREATE INDEX GENERO_has_LIBRO_FKIndex2 ON GENERO_LIBROS (LIBRO_ISBN);
+
+
+CREATE INDEX IFK_Rel_09 ON GENERO_LIBROS (GENERO_id);
+CREATE INDEX IFK_Rel_10 ON GENERO_LIBROS (LIBRO_ISBN);
+
+
+CREATE TABLE ordenItemPrestamo (
+  LIBRO_ISBN INTEGER   NOT NULL ,
+  ordenPrestamo_numeroOrden INTEGER   NOT NULL ,
+  estadoLibro VARCHAR(60)    ,
+  estadoOrden VARCHAR(60)      ,
+PRIMARY KEY(LIBRO_ISBN, ordenPrestamo_numeroOrden)    ,
+  FOREIGN KEY(LIBRO_ISBN)
+    REFERENCES LIBRO(ISBN),
+  FOREIGN KEY(ordenPrestamo_numeroOrden)
+    REFERENCES ordenPrestamo(numeroOrden));
+
+
+CREATE INDEX LIBRO_has_ordenPrestamo_FKIndex1 ON ordenItemPrestamo (LIBRO_ISBN);
+CREATE INDEX LIBRO_has_ordenPrestamo_FKIndex2 ON ordenItemPrestamo (ordenPrestamo_numeroOrden);
+
+
+CREATE INDEX IFK_Rel_07 ON ordenItemPrestamo (LIBRO_ISBN);
+CREATE INDEX IFK_Rel_08 ON ordenItemPrestamo (ordenPrestamo_numeroOrden);
 
 
 CREATE TABLE ordenItem (
@@ -183,18 +183,38 @@ CREATE INDEX IFK_Rel_08 ON ordenItem (LIBRO_ISBN);
 
 
 CREATE TABLE ROL_USUARIO (
-  id SERIAL not null,
+  id SERIAL  NOT NULL ,
   USUARIO_id INTEGER   NOT NULL ,
   nombreRol VARCHAR(60)    ,
-  fechaCreacion DATE    ,
-  nombreTabla VARCHAR    ,
+  fechaCreacion DATE      ,
+PRIMARY KEY(id)  ,
+  FOREIGN KEY(USUARIO_id)
+    REFERENCES USUARIO(id));
+
+
+CREATE INDEX ROL_USUARIO_FKIndex1 ON ROL_USUARIO (USUARIO_id);
+
+
+CREATE INDEX IFK_Rel_16 ON ROL_USUARIO (USUARIO_id);
+
+
+CREATE TABLE permisos (
+  idpermisos SERIAL  NOT NULL ,
+  ROL_USUARIO_id INTEGER   NOT NULL ,
+  nombre_tabla VARCHAR(60)    ,
   ver BOOL    ,
   insertar BOOL    ,
   editar BOOL    ,
   borrar BOOL      ,
-PRIMARY KEY(id)  ,
-  FOREIGN KEY(USUARIO_id)
-    REFERENCES USUARIO(id));
+PRIMARY KEY(idpermisos)  ,
+  FOREIGN KEY(ROL_USUARIO_id)
+    REFERENCES ROL_USUARIO(id));
+
+
+CREATE INDEX permisos_FKIndex1 ON permisos (ROL_USUARIO_id);
+
+
+CREATE INDEX IFK_Rel_13 ON permisos (ROL_USUARIO_id);
 
 
 

@@ -36,9 +36,8 @@ public class Ordenitem implements Serializable {
     protected OrdenitemPK ordenitemPK;
     @Column(name = "cantidadorden")
     private Integer cantidadorden;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valororden")
-    private int valororden;
+    private Integer valororden;
     @JoinColumn(name = "libro_isbn", referencedColumnName = "isbn", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Libro libro;
@@ -49,18 +48,18 @@ public class Ordenitem implements Serializable {
     public Ordenitem() {
     }
 
+    public Ordenitem(Integer cantidadorden, Integer valororden, Libro libro) {
+        this.cantidadorden = cantidadorden;
+        this.valororden = valororden;
+        this.libro = libro;
+    }
+
     public Ordenitem(OrdenitemPK ordenitemPK) {
         this.ordenitemPK = ordenitemPK;
     }
 
     public Ordenitem(int ordencompraNumeroorden, int libroIsbn) {
         this.ordenitemPK = new OrdenitemPK(ordencompraNumeroorden, libroIsbn);
-    }
-
-    public Ordenitem(Integer cantidadorden, int valororden, Libro isbnLibro) {
-        this.cantidadorden = cantidadorden;
-        this.valororden = valororden;
-        this.libro = isbnLibro;
     }
 
     public OrdenitemPK getOrdenitemPK() {
@@ -79,11 +78,11 @@ public class Ordenitem implements Serializable {
         this.cantidadorden = cantidadorden;
     }
 
-    public int getValororden() {
+    public Integer getValororden() {
         return valororden;
     }
 
-    public void setValororden(int valororden) {
+    public void setValororden(Integer valororden) {
         this.valororden = valororden;
     }
 

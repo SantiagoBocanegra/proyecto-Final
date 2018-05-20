@@ -12,6 +12,7 @@
     <class>MODELO.Ordenitem</class>
     <class>MODELO.Ordenitemprestamo</class>
     <class>MODELO.RolUsuario</class>
+    <class>MODELO.Permisos</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/control-Ventas-Libreria"/>
       <property name="javax.persistence.jdbc.user" value="santiago_bocanegra"/>

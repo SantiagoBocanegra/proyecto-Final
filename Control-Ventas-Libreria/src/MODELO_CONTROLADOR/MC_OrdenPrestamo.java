@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_OrdenPrestamo {
     
@@ -40,6 +41,7 @@ public class MC_OrdenPrestamo {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Guardar La Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenPrestamo.nuevaOrdenPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -59,6 +61,7 @@ public class MC_OrdenPrestamo {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Editar La Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenPrestamo.editarOrdenPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -77,6 +80,7 @@ public class MC_OrdenPrestamo {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Buscar La Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenPrestamo.buscarOrdenPrestamo(): "+e.getMessage());
         } finally {
             em.close();
@@ -95,11 +99,21 @@ public class MC_OrdenPrestamo {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Eror Al Buscar La Orden De Prestamo: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenPrestamo.buscarTodasOrdenesPrestamo(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return ordenesPrestamo;
+    }
+
+    public EntityTransaction getEmt() {
+        return emt;
+    }
+    
+    public void close () {
+        em.close();
+        emf.close();
     }
 }

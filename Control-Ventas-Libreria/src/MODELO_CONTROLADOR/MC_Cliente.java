@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_Cliente {
     private EntityManagerFactory emf  = null;
@@ -39,6 +40,7 @@ public class MC_Cliente {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Ingresar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.nuevoCliente(): "+e.getMessage());
         } finally {
             em.close();
@@ -58,6 +60,7 @@ public class MC_Cliente {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.editarCliente(): "+e.getMessage());
         }
         return estado;
@@ -73,6 +76,7 @@ public class MC_Cliente {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.buscarCliente:  "+e.getMessage());
         } finally {
             em.close();
@@ -91,6 +95,7 @@ public class MC_Cliente {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.buscarTodosClientes(): "+e.getMessage() );
         } finally {
             em.close();

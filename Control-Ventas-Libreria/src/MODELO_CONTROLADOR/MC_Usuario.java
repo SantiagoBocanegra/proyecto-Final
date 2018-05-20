@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 public class MC_Usuario {
     private EntityManager em = null;
@@ -39,6 +40,7 @@ public class MC_Usuario {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Guardar El Usuario: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Usuario.nuevoUsuario(): "+e.getMessage());
         } finally {
             em.close();
@@ -58,6 +60,7 @@ public class MC_Usuario {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar El Usuario: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Usuario.editarUsuario(): "+e.getMessage());
         } finally {
             em.close();
@@ -76,6 +79,7 @@ public class MC_Usuario {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Usuario.buscarUsuario(): "+e.getMessage());
         } finally {
             em.close();
@@ -94,6 +98,7 @@ public class MC_Usuario {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Usuario.buscarTodosUsuario(): "+e.getMessage());
         } finally {
             em.close();

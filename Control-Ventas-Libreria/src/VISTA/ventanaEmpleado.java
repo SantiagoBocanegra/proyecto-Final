@@ -22,9 +22,10 @@ import javax.swing.JOptionPane;
 public class ventanaEmpleado extends javax.swing.JDialog {
 
     /**
-     *                                                                          Funciones de la clase 
-     * obtenerElementos -> obtener los Elementos de la caja de texto de la ventana y almacenarlo en la variable global (empleado) de la clase
-     * mostrarElementos -> mostrar informacion del libro en las cajas de texto de la ventana balidando si estan vacias.
+     * Funciones de la clase obtenerElementos -> obtener los Elementos de la
+     * caja de texto de la ventana y almacenarlo en la variable global
+     * (empleado) de la clase mostrarElementos -> mostrar informacion del libro
+     * en las cajas de texto de la ventana balidando si estan vacias.
      */
     //Almacenar imagen que se sube desde funciones.cargarImagen()
     FileInputStream fotoEmpleado;
@@ -45,6 +46,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
         entFechaContrato.setDate(funciones.fecha());
+        barraProgreso.setVisible(false);
     }
 
     /**
@@ -158,7 +160,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel12.setText("Correo");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(10, 415, 60, 30);
+        jLabel12.setBounds(10, 410, 60, 30);
 
         jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel13.setText("Fecha Contrato");
@@ -170,52 +172,54 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(jLabel14);
         jLabel14.setBounds(10, 305, 60, 30);
 
-        entId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entId.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entId.setEnabled(false);
         jPanel1.add(entId);
         entId.setBounds(350, 50, 150, 30);
 
-        entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entPrimerNombre);
         entPrimerNombre.setBounds(350, 85, 250, 30);
 
-        entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entSegundoNombre);
         entSegundoNombre.setBounds(350, 120, 250, 30);
 
-        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entApellidoPaterno);
         entApellidoPaterno.setBounds(350, 155, 250, 30);
 
-        entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entApellidoMaterno);
         entApellidoMaterno.setBounds(350, 190, 250, 30);
 
-        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCedula);
         entCedula.setBounds(350, 225, 250, 30);
 
-        entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entDireccion);
         entDireccion.setBounds(355, 305, 245, 30);
 
-        entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entTelefono);
         entTelefono.setBounds(80, 340, 195, 30);
 
-        entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCorreo);
-        entCorreo.setBounds(80, 415, 520, 30);
+        entCorreo.setBounds(80, 410, 520, 30);
 
-        entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCiudad);
         entCiudad.setBounds(80, 305, 200, 30);
 
-        entPais.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entPais.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entPais);
         entPais.setBounds(350, 270, 250, 30);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(285, 260, 320, 10);
+
+        entFechaContrato.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entFechaContrato);
         entFechaContrato.setBounds(405, 340, 190, 30);
 
@@ -231,20 +235,20 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel15.setText("Salario");
         jPanel1.add(jLabel15);
-        jLabel15.setBounds(285, 380, 60, 30);
+        jLabel15.setBounds(285, 375, 60, 30);
 
-        entSalario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entSalario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entSalario);
-        entSalario.setBounds(350, 380, 245, 30);
+        entSalario.setBounds(350, 375, 245, 30);
 
-        entCargo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entCargo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCargo);
-        entCargo.setBounds(80, 380, 200, 30);
+        entCargo.setBounds(80, 375, 200, 30);
 
         jLabel16.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel16.setText("Cargo");
         jPanel1.add(jLabel16);
-        jLabel16.setBounds(10, 380, 60, 30);
+        jLabel16.setBounds(10, 375, 60, 30);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel7.setText("Primer Nombre");
@@ -305,76 +309,98 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         empleado.setFechaContrato(entFechaContrato.getDate());
         empleado.setCargo(entCargo.getText());
         empleado.setCorreo(entCorreo.getText());
-        empleado.setSalario(Double.parseDouble(entSalario.getText()));
+        empleado.setSalario(Integer.parseInt(entSalario.getText()));
     }
-    
-    public void mostrarElementos (Empleado cliente) {
-        entId.setText(String.valueOf(cliente.getId()));
-        if (cliente.getNombre().isEmpty()) {
-            entPrimerNombre.setText("Sin Priemer Nombre");
-        } else {
-            entPrimerNombre.setText(cliente.getNombre());
-        }
-        if (cliente.getSegundoNombre().isEmpty()) {
-            entSegundoNombre.setText("Sin Segundo Nombre");
-        } else {
-            entSegundoNombre.setText(cliente.getSegundoNombre());
-        }
-        if (cliente.getApellidoPaterno().isEmpty()) {
-            entApellidoPaterno.setText("Sin Apellido Paterno");
-        } else {
-            entApellidoPaterno.setText(cliente.getApellidoPaterno());
-        }
-        if (cliente.getApellidoMaterno().isEmpty()) {
-            entApellidoMaterno.setText("Sin Apellido Materno");
-        } else {
-            entApellidoMaterno.setText(cliente.getApellidoMaterno());
-        }
-        if (cliente.getCedula().isEmpty()) {
-            entCedula.setText("Sin cedula");
-        } else {
-            entCedula.setText(cliente.getCedula());
-        }
-        if (cliente.getPais().isEmpty()) {
-            entPais.setText("Sin Pais");
-        } else {
-            entPais.setText(cliente.getPais());
-        }
-        if (cliente.getCiudad().isEmpty()) {
-            entCiudad.setText("Sin Ciudad");
-        } else {
-            entCiudad.setText(cliente.getCiudad());
-        }
-        if (cliente.getCorreo().isEmpty()) {
-            entCorreo.setText("Sin Correo");
-        } else {
-            entCorreo.setText(cliente.getCorreo());
-        }
-        if (cliente.getTelefono().isEmpty()) {
-            entTelefono.setText("Sin Telefono");
-        } else {
-            entTelefono.setText(cliente.getTelefono());
-        }
-        if (cliente.getDireccion().isEmpty()) {
-            entDireccion.setText("Sin Direccion");
-        } else {
-            entDireccion.setText(cliente.getDireccion());
-        }
-        if (cliente.getFechaContrato()!= null) {
-            entFechaContrato.setDate(cliente.getFechaContrato());
-        }
-        if (cliente.getSalario() < 0) {
-            entSalario.setText("0");
-        } else {
-            entSalario.setText(String.valueOf(cliente.getSalario()));
-        }
-        if (cliente.getFoto().length > 0){
-            foto.setIcon(new ImageIcon(funciones.byte_jpg(cliente.getFoto()).getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_DEFAULT)));
-        }
-        if (cliente.getCargo().isEmpty()) {
-            entCargo.setText("Sin Cargo");
-        } else {
-            entCargo.setText(cliente.getCargo());
+
+    public void limpiar() {
+        foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
+        entId.setText(" ");
+        entPrimerNombre.setText(" ");
+        entSegundoNombre.setText(" ");
+        entApellidoPaterno.setText(" ");
+        entApellidoMaterno.setText(" ");
+        entCargo.setText(" ");
+        entCedula.setText(" ");
+        entCiudad.setText(" ");
+        entCorreo.setText(" ");
+        entDireccion.setText(" ");
+        entFechaContrato.setDate(null);
+        entPais.setText("");
+        entSalario.setText(" ");
+        entTelefono.setText(" ");
+    }
+
+    public void mostrarElementos(Empleado cliente) {
+        if (cliente != null) {
+            entId.setText(String.valueOf(cliente.getId()));
+            if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
+                entPrimerNombre.setText("Sin Priemer Nombre");
+            } else {
+                entPrimerNombre.setText(cliente.getNombre());
+            }
+            if (cliente.getSegundoNombre() == null || cliente.getSegundoNombre().isEmpty()) {
+                entSegundoNombre.setText("Sin Segundo Nombre");
+            } else {
+                entSegundoNombre.setText(cliente.getSegundoNombre());
+            }
+            if (cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty()) {
+                entApellidoPaterno.setText("Sin Apellido Paterno");
+            } else {
+                entApellidoPaterno.setText(cliente.getApellidoPaterno());
+            }
+            if (cliente.getApellidoMaterno() == null || cliente.getApellidoMaterno().isEmpty()) {
+                entApellidoMaterno.setText("Sin Apellido Materno");
+            } else {
+                entApellidoMaterno.setText(cliente.getApellidoMaterno());
+            }
+            if (cliente.getCedula() == null || cliente.getCedula().isEmpty()) {
+                entCedula.setText("Sin cedula");
+            } else {
+                entCedula.setText(cliente.getCedula());
+            }
+            if (cliente.getPais() == null || cliente.getPais().isEmpty()) {
+                entPais.setText("Sin Pais");
+            } else {
+                entPais.setText(cliente.getPais());
+            }
+            if (cliente.getCiudad() == null || cliente.getCiudad().isEmpty()) {
+                entCiudad.setText("Sin Ciudad");
+            } else {
+                entCiudad.setText(cliente.getCiudad());
+            }
+            if (cliente.getCorreo() == null || cliente.getCorreo().isEmpty()) {
+                entCorreo.setText("Sin Correo");
+            } else {
+                entCorreo.setText(cliente.getCorreo());
+            }
+            if (cliente.getTelefono() == null || cliente.getTelefono().isEmpty()) {
+                entTelefono.setText("Sin Telefono");
+            } else {
+                entTelefono.setText(cliente.getTelefono());
+            }
+            if (cliente.getDireccion() == null || cliente.getDireccion().isEmpty()) {
+                entDireccion.setText("Sin Direccion");
+            } else {
+                entDireccion.setText(cliente.getDireccion());
+            }
+            if (cliente.getFechaContrato() != null) {
+                entFechaContrato.setDate(cliente.getFechaContrato());
+            }
+            if (cliente.getSalario() < 0) {
+                entSalario.setText("0");
+            } else {
+                entSalario.setText(String.valueOf(cliente.getSalario()));
+            }
+            if (cliente.getFoto() != null && cliente.getFoto().length > 0) {
+                foto.setIcon(new ImageIcon(funciones.byte_jpg(cliente.getFoto()).getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_DEFAULT)));
+            }
+            if (cliente.getCargo() == null || cliente.getCargo().isEmpty()) {
+                entCargo.setText("Sin Cargo");
+            } else {
+                entCargo.setText(cliente.getCargo());
+            }
+        }  else {
+            JOptionPane.showMessageDialog(this, "No Se Encontro Ningun Empleado", "Informacion", 1, null);
         }
     }
 
@@ -389,10 +415,10 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         obtenerElementos();
         if (JOptionPane.showConfirmDialog(this, "Guardar Empleado", "Alerta", 1, 2, null) == 0) {
             if (control.nuevoEmmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Empleado Guardado Con Exito", "Informacion",1, null);
+                JOptionPane.showMessageDialog(this, "Empleado Guardado Con Exito", "Informacion", 1, null);
+                limpiar();
                 foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
-            } else {
-                JOptionPane.showMessageDialog(this, "Error Al Guardar El Empleado", "Error",0, null);
+
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -400,13 +426,13 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         MC_Empleado control = new MC_Empleado();
         obtenerElementos();
-        
+
         if (JOptionPane.showConfirmDialog(this, "Editar Empleado", "Alerta", 1, 2, null) == 0) {
             if (control.editarEmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Empleado Editado Con Exito", "Informacion",1, null);
+                JOptionPane.showMessageDialog(this, "Empleado Editado Con Exito", "Informacion", 1, null);
+                limpiar();
                 foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
-            } else {
-                JOptionPane.showMessageDialog(this, "Error Al Editar El Empleado", "Error",0, null);
+
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed

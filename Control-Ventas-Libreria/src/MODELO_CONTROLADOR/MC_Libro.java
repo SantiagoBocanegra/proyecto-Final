@@ -80,10 +80,8 @@ public class MC_Libro {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Libro.buscarLibro(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return libro;
     }
@@ -98,11 +96,17 @@ public class MC_Libro {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR: MC_Libro.buscarTodosLibros(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return libros;
+    }
+    
+    public void close () {
+        em.close();
+        emf.close();
     }
 }

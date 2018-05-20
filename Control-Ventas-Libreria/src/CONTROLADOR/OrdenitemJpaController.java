@@ -39,8 +39,8 @@ public class OrdenitemJpaController implements Serializable {
         if (ordenitem.getOrdenitemPK() == null) {
             ordenitem.setOrdenitemPK(new OrdenitemPK());
         }
-        ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
         ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
+        ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class OrdenitemJpaController implements Serializable {
     }
 
     public void edit(Ordenitem ordenitem) throws NonexistentEntityException, Exception {
-        ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
         ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
+        ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
         EntityManager em = null;
         try {
             em = getEntityManager();

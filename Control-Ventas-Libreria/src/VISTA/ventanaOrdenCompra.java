@@ -10,6 +10,7 @@ import MODELO.Empleado;
 import MODELO.Libro;
 import MODELO.Ordencompra;
 import MODELO.Ordenitem;
+import MODELO.OrdenitemPK;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.MC_Empleado;
 import MODELO_CONTROLADOR.MC_Libro;
@@ -17,6 +18,7 @@ import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.MC_OrdenItem;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -29,10 +31,11 @@ import javax.swing.table.DefaultTableModel;
 public class ventanaOrdenCompra extends javax.swing.JDialog {
 
     /**
-     * Funciones de la clase 
-     * numeroOrden -> obtener el numero que se la va a dar a la factura 
-     * obtenerElementos -> obtener la informacion de las cajas de texto de la ventana
-     * mostrar libros -> recibe una lista de libros y los pone en la tabla de item pidiento la cantidad de libros que se van a comprar 
+     * Funciones de la clase numeroOrden -> obtener el numero que se la va a dar
+     * a la factura obtenerElementos -> obtener la informacion de las cajas de
+     * texto de la ventana mostrar libros -> recibe una lista de libros y los
+     * pone en la tabla de item pidiento la cantidad de libros que se van a
+     * comprar
      */
     //variable que guarda la informacion del empleado 
     Empleado empleado;
@@ -42,7 +45,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     Ordencompra ordenCompra;
     //variable de los libros a comprar
     List<Libro> libroOrden;
-    //variable de los Item a compra 
+    //variable de los Item a comprar 
     List<Ordenitem> ordenItem = new ArrayList<>();
     // modelo de la tablaOrdenCompra
     DefaultTableModel modeloTablaItem;
@@ -51,12 +54,24 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setSize(600, 570);
+
+        entNombreEmpledo.setBackground(Color.WHITE);
+        entApellidoEmpleado.setBackground(Color.WHITE);
+        entTelefonoEmpleado.setBackground(Color.WHITE);
+        entCedulaEmpleado.setBackground(Color.WHITE);
+        entNombreCliente.setBackground(Color.WHITE);
+        entApellidoCliente.setBackground(Color.WHITE);
+        entTelefonoCliente.setBackground(Color.WHITE);
+        entCedulaCliente.setBackground(Color.WHITE);
+        entNumeroOrden.setBackground(Color.WHITE);
+
         modeloTablaItem = (DefaultTableModel) tablaOrdenCompra.getModel();
+
         JCalendar calendario = entFechaOrden.getJCalendar();
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
         entFechaOrden.setDate(funciones.fecha());
-        numeroOrden();//--> dato de prueba
+        //numeroOrden();
     }
 
     /**
@@ -95,8 +110,6 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         entNumeroOrden = new javax.swing.JTextField();
         entFechaOrden = new com.toedter.calendar.JDateChooser();
-        btnGuardar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOrdenCompra = new javax.swing.JTable();
@@ -104,7 +117,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         entPrecioTotal = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        btnEditar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -118,7 +133,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setText("Orden De Compra");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(210, 5, 150, 30);
+        jLabel5.setBounds(5, 0, 150, 30);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -171,7 +186,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             }
         });
         jPanel2.add(btnBuscarEmpleado);
-        btnBuscarEmpleado.setBounds(490, 15, 70, 70);
+        btnBuscarEmpleado.setBounds(490, 17, 70, 70);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(5, 75, 564, 90);
@@ -227,7 +242,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnBuscarCliente);
-        btnBuscarCliente.setBounds(490, 15, 70, 70);
+        btnBuscarCliente.setBounds(490, 17, 70, 70);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(5, 170, 564, 90);
@@ -258,32 +273,14 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(5, 30, 564, 40);
 
-        btnGuardar.setText("guar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(494, 390, 70, 70);
-
-        btnEditar.setText("Edit");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEditar);
-        btnEditar.setBounds(494, 315, 70, 70);
-
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel5.setLayout(null);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jScrollPane1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
-        tablaOrdenCompra.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tablaOrdenCompra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tablaOrdenCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -315,12 +312,37 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(jLabel1);
         jLabel1.setBounds(254, 210, 80, 30);
 
+        btnEditar.setText("Edit");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnEditar);
+        btnEditar.setBounds(490, 100, 70, 70);
+
+        btnGuardar.setText("guar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnGuardar);
+        btnGuardar.setBounds(490, 175, 70, 70);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton1);
+        jButton1.setBounds(490, 50, 73, 23);
+
         jPanel1.add(jPanel5);
         jPanel5.setBounds(5, 265, 564, 250);
-        jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(5, 18, 200, 2);
         jPanel1.add(jSeparator2);
-        jSeparator2.setBounds(360, 18, 210, 2);
+        jSeparator2.setBounds(160, 15, 410, 2);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(5, 5, 575, 522);
@@ -328,11 +350,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        MC_Cliente control = new MC_Cliente();
-        cliente = new Cliente();
-        cliente = control.buscarCliente(Integer.parseInt(JOptionPane.showInputDialog("Id Del Cliente")));
-        if (cliente.getId() == null || cliente.getId() > 0) {
+    public void mostrarElemetnosCliente(Cliente cliente) {
+        limpiarCliente();
+        if (cliente != null) {
             if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
                 entNombreCliente.setText("Sin Nombre");
             } else {
@@ -356,13 +376,45 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No Se Encontro El Cliente", "Informacion", 1, null);
         }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+    }
 
-    private void btnBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleadoActionPerformed
-        MC_Empleado control = new MC_Empleado();
-        empleado = new Empleado();
-        empleado = control.buscarEmpleado(Integer.parseInt(JOptionPane.showInputDialog("Id Del Empleado")));
-        if (empleado.getId() == null || empleado.getId() > 0) {
+    public void mostrarElementosOrdenCompra(Ordencompra orden) {
+        Cliente clienteOrden = orden.getClienteId();
+        Empleado empleadoOrden = orden.getEmpleadoId();
+        entNumeroOrden.setText(String.valueOf(orden.getNumeroorden()));
+        entFechaOrden.setDate(orden.getFechaorden());
+        entPrecioTotal.setText(String.valueOf(orden.getPreciototal()));
+        entCantidadTotal.setText(String.valueOf(orden.getCantidadtotal()));
+        mostrarElemetnosCliente(clienteOrden);
+        mostrarElementosEmpleado(empleadoOrden);
+    }
+
+    public void limpiarOrden() {
+        numeroOrden();
+        entFechaOrden.setDate(funciones.fecha());
+        entPrecioTotal.setText("");
+        entCantidadTotal.setText("");
+        limpiarCliente();
+        limpiarEmpleado();
+    }
+
+    public void limpiarCliente() {
+        entNombreCliente.setText("");
+        entApellidoCliente.setText("");
+        entTelefonoCliente.setText("");
+        entCedulaCliente.setText("");
+    }
+
+    public void limpiarEmpleado() {
+        entNombreEmpledo.setText("");
+        entApellidoEmpleado.setText("");
+        entTelefonoEmpleado.setText("");
+        entCedulaEmpleado.setText("");
+    }
+
+    public void mostrarElementosEmpleado(Empleado empleado) {
+        limpiarEmpleado();
+        if (empleado != null) {
             if (empleado.getNombre() == null || empleado.getNombre().isEmpty()) {
                 entNombreEmpledo.setText("Sin Nombre");
             } else {
@@ -386,44 +438,47 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
         }
+    }
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        limpiarCliente();
+        cliente = null;
+        MC_Cliente control = new MC_Cliente();
+        cliente = control.buscarCliente(Integer.parseInt(JOptionPane.showInputDialog("Id Del Cliente")));
+        mostrarElemetnosCliente(cliente);
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleadoActionPerformed
+        limpiarEmpleado();
+        empleado = null;
+        MC_Empleado control = new MC_Empleado();
+        empleado = control.buscarEmpleado(Integer.parseInt(JOptionPane.showInputDialog("Id Del Empleado")));
+        mostrarElementosEmpleado(empleado);
     }//GEN-LAST:event_btnBuscarEmpleadoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        MC_Libro con = new MC_Libro();//--> dato de prueba
-        libroOrden = new ArrayList<>();//--> dato de prueba
-        libroOrden.add(con.buscarLibro(1)); // -------> dato de prueba
-        mostraLibro(libroOrden); //--> dato de prueba
-
         ordenCompra = new Ordencompra();
         obtenerElemntos();
 
         if (!ordenItem.isEmpty()) {
-            
-            if (JOptionPane.showConfirmDialog(this, "Guardar Orden De Compra", "Escudo", 1, 3, null) == 0) {
-                boolean permiso = true;
-                MC_OrdenCompra control = new MC_OrdenCompra();
-                if (control.nuevaOrdenCompra(ordenCompra)) {
 
+            if (JOptionPane.showConfirmDialog(this, "Guardar Orden De Compra", "Escudo", 1, 3, null) == 0) {
+                //Almacenar la orden de compra
+                MC_OrdenCompra controlCompra = new MC_OrdenCompra();
+                if (controlCompra.nuevaOrdenCompra(ordenCompra)) {
+                    MC_OrdenItem controlItem = new MC_OrdenItem();
+                    //Almacenar Los Item de la orden
                     for (Ordenitem item : ordenItem) {
                         item.setOrdencompra(ordenCompra);
-                        MC_OrdenItem controlItem = new MC_OrdenItem();
-                        if (!controlItem.nuevaOrdenItem(item)) {
-                            permiso = false;
-                            MC_OrdenCompra controlBorrar = new MC_OrdenCompra();
-                            controlBorrar.borrarOrdenCompra(item.getOrdenitemPK().getOrdencompraNumeroorden());
-                        }
+                        controlItem.nuevaOrdenItem(item);
                     }
-                    
-                } else {
-                    permiso = false;
-                }
-
-                if (permiso) {
+                    controlCompra.close();
+                    controlItem.close();
                     JOptionPane.showMessageDialog(this, "Orden De Compra Almacenada", "Informacion", 1, null);
+                    limpiarOrden();
+                } else {
+                    controlCompra.close();
                 }
-                
             }
-            
         } else {
             JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
         }
@@ -431,34 +486,28 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerElemntos();
-        
-        if ( !ordenItem.isEmpty() ) {
-            boolean permiso = true;
-                MC_OrdenCompra control = new MC_OrdenCompra();
-                if (control.editarOrdenCompra(ordenCompra)) {
-
-                    for (Ordenitem item : ordenItem) {
-                        item.setOrdencompra(ordenCompra);
-                        MC_OrdenItem controlItem = new MC_OrdenItem();
-                        if (!controlItem.editarOrdenItem(item)) {
-                            permiso = false;
-                            MC_OrdenCompra controlBorrar = new MC_OrdenCompra();
-                            controlBorrar.borrarOrdenCompra(item.getOrdenitemPK().getOrdencompraNumeroorden());
-                        }
-                    }
-                    
-                } else {
-                    permiso = false;
-                }
-
-                if (permiso) {
-                    JOptionPane.showMessageDialog(this, "Orden De Compra Editada", "Informacion", 1, null);
-                }
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "No Se A Seleccionado Ningun Item", "Informacion", 1, null);
+        if (JOptionPane.showConfirmDialog(this, "Editar Orden De Compra", "Escudo", 1, 3, null) == 0) {
+            //Editar la orden de compra
+            MC_OrdenCompra controlCompra = new MC_OrdenCompra();
+            if (controlCompra.editarOrdenCompra(ordenCompra)) {
+                controlCompra.close();
+                JOptionPane.showMessageDialog(this, "Orden De Compra Editada", "Informacion", 1, null);
+                limpiarOrden();
+            } else {
+                controlCompra.close();
+            }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MC_Libro contro = new MC_Libro();
+        List<Libro> ordenItem3 = new ArrayList<>();
+        ordenItem3.add(contro.buscarLibro(1));
+        ordenItem3.add(contro.buscarLibro(2));
+        contro.close();
+        //Actualiza la  lista de orden de item para modificar 
+        mostraLibro(ordenItem3);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void numeroOrden() {
         int numeroOrden;
@@ -483,11 +532,13 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     public void mostraLibro(List<Libro> libros) {
         int cantidadTotal = 0;
         int precioTotal = 0;
+
         for (Libro libro : libros) {
+
             int isbn = libro.getIsbn();
             String titulo = "Sin Titulo";
             int precio = 0;
-            int cantidad = 0;
+            int cantidad = 1;
 
             if (!libro.getTitulo().isEmpty()) {
                 titulo = libro.getTitulo();
@@ -495,8 +546,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             if (libro.getPrecio() > 0) {
                 precio = libro.getPrecio();
             }
-            
+
             String entrada = JOptionPane.showInputDialog("Cuantos Libros Desea Comprar \nTitulo Del Libro: " + titulo);
+
             if (!entrada.isEmpty()) {
                 cantidad = Integer.parseInt(entrada);
             }
@@ -509,6 +561,59 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
         entPrecioTotal.setText(String.valueOf(precioTotal));
+    }
+
+    public void mostraItem(List<Ordenitem> items) {
+        for (Ordenitem item : items) {
+            Libro libro = item.getLibro();
+            int isbn = libro.getIsbn();
+            String titulo = "Sin Titulo";
+            int precio = 0;
+            int cantidad = 1;
+
+            if (!libro.getTitulo().isEmpty()) {
+                titulo = libro.getTitulo();
+            }
+            if (libro.getPrecio() > 0) {
+                precio = libro.getPrecio();
+            }
+            cantidad = item.getCantidadorden();
+            int precioTotalLibro = item.getValororden();
+            ordenItem.add(item);
+            modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+        }
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Libro> getLibroOrden() {
+        return libroOrden;
+    }
+
+    public void setLibroOrden(List<Libro> libroOrden) {
+        this.libroOrden = libroOrden;
+    }
+
+    public List<Ordenitem> getOrdenItem() {
+        return ordenItem;
+    }
+
+    public void setOrdenItem(List<Ordenitem> ordenItem) {
+        this.ordenItem = ordenItem;
     }
 
     /**
@@ -570,6 +675,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     private javax.swing.JTextField entPrecioTotal;
     private javax.swing.JTextField entTelefonoCliente;
     private javax.swing.JTextField entTelefonoEmpleado;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -589,7 +695,6 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tablaOrdenCompra;
     // End of variables declaration//GEN-END:variables

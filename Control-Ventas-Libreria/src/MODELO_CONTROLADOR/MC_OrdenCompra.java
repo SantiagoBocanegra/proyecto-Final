@@ -9,7 +9,9 @@ FUNCIONES DE LA CLASE MC_OrdenCompra
 package MODELO_CONTROLADOR;
 
 import CONTROLADOR.OrdencompraJpaController;
+import CONTROLADOR.OrdenitemJpaController;
 import MODELO.Ordencompra;
+import MODELO.Ordenitem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,12 +43,9 @@ public class MC_OrdenCompra {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Almacenar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Guardar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.nuevaOrdenCompra(): " + e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
-        }
+        } 
         return estado;
     }
 
@@ -61,10 +60,8 @@ public class MC_OrdenCompra {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Editar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.EditarOrdenCompra(): " + e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return estado;
     }
@@ -79,6 +76,7 @@ public class MC_OrdenCompra {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.buscarOrdenCompra(): " + e.getMessage());
         } finally {
             em.close();
@@ -97,6 +95,7 @@ public class MC_OrdenCompra {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.buscarTodasOrdenesCompra(): " + e.getMessage());
         } finally {
             em.close();
@@ -116,11 +115,17 @@ public class MC_OrdenCompra {
         } catch (Exception e) {
             emt.rollback();
             estado =  false;
+            JOptionPane.showMessageDialog(null, "Error Al Borrar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.borrarOrdenCompra(): " + e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return estado;
+    }
+    
+    public void close () {
+        em.close();
+        emf.close();
     }
 }

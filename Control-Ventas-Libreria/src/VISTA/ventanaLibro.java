@@ -20,9 +20,10 @@ import javax.swing.JOptionPane;
 public class ventanaLibro extends javax.swing.JDialog {
 
     /**
-     *                                                                          Funciones de la clase 
-     * obtenerElementos -> obtener los Elementos de la caja de texto de la ventana y almacenarlo en la variable global (libro) de la clase
-     * mostrarElementos -> mostrar informacion del libro en las cajas de texto de la ventana balidando si estan vacias.
+     * Funciones de la clase obtenerElementos -> obtener los Elementos de la
+     * caja de texto de la ventana y almacenarlo en la variable global (libro)
+     * de la clase mostrarElementos -> mostrar informacion del libro en las
+     * cajas de texto de la ventana balidando si estan vacias.
      */
     //Almacernar la imagen que se carga desde el metodo funciones.cargarImagen()
     FileInputStream portadaLibro;
@@ -38,11 +39,12 @@ public class ventanaLibro extends javax.swing.JDialog {
     public ventanaLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setSize(610,527);
+        this.setSize(610, 527);
         estadoPortada = false;
         JCalendar calendario = entFechaPublicacion.getJCalendar();
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
+        barraProgreso.setVisible(false);
     }
 
     /**
@@ -83,6 +85,8 @@ public class ventanaLibro extends javax.swing.JDialog {
         barraProgreso = new javax.swing.JProgressBar();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        entGeneros = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -102,14 +106,14 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(225, 20, 60, 2);
         jPanel1.add(jSeparator2);
-        jSeparator2.setBounds(510, 20, 75, 2);
+        jSeparator2.setBounds(505, 20, 75, 2);
         jPanel1.add(jSeparator3);
-        jSeparator3.setBounds(225, 40, 360, 2);
+        jSeparator3.setBounds(220, 35, 360, 2);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setText("Precio");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(390, 371, 50, 30);
+        jLabel2.setBounds(390, 370, 60, 30);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setText("Isbn");
@@ -145,20 +149,33 @@ public class ventanaLibro extends javax.swing.JDialog {
         jLabel9.setText("Cantidad En Inventario");
         jPanel1.add(jLabel9);
         jLabel9.setBounds(10, 371, 170, 30);
+
+        entIsbn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entIsbn);
         entIsbn.setBounds(335, 45, 150, 30);
+
+        entTitulo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entTitulo);
         entTitulo.setBounds(285, 80, 295, 30);
+
+        entAutor.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entAutor);
         entAutor.setBounds(360, 115, 220, 30);
+
+        entEditorial.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entEditorial);
         entEditorial.setBounds(85, 336, 200, 30);
+
+        entCantidadInventario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCantidadInventario);
         entCantidadInventario.setBounds(185, 371, 200, 30);
+
+        entPrecio.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entPrecio);
         entPrecio.setBounds(445, 371, 130, 30);
 
         entSipnosis.setColumns(20);
+        entSipnosis.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entSipnosis.setRows(5);
         jScrollPane1.setViewportView(entSipnosis);
 
@@ -196,11 +213,20 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnSubir);
         btnSubir.setBounds(230, 115, 70, 70);
         jPanel1.add(barraProgreso);
-        barraProgreso.setBounds(10, 425, 410, 30);
+        barraProgreso.setBounds(10, 440, 410, 30);
         jPanel1.add(jSeparator4);
         jSeparator4.setBounds(305, 165, 65, 2);
         jPanel1.add(jSeparator5);
         jSeparator5.setBounds(445, 165, 135, 2);
+
+        entGeneros.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel1.add(entGeneros);
+        entGeneros.setBounds(85, 406, 300, 30);
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel10.setText("Generos");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(10, 406, 70, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(4, 4, 585, 480);
@@ -228,7 +254,7 @@ public class ventanaLibro extends javax.swing.JDialog {
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "Isbn Obligatorio ", "Error", 0, null);
-                caso  = 0;
+                caso = 0;
                 break;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -245,7 +271,7 @@ public class ventanaLibro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public void obtenerElementos() {
-        if (entIsbn.getText().isEmpty()) {
+        if (entIsbn.getText() == null || entIsbn.getText().isEmpty() ) {
             caso = 1;
         } else {
             libro.setIsbn(Integer.parseInt(entIsbn.getText()));
@@ -261,49 +287,55 @@ public class ventanaLibro extends javax.swing.JDialog {
         libro.setEditorial(entEditorial.getText());
         libro.setFechaPublicacion(entFechaPublicacion.getDate());
         libro.setEstadolibro(entCantidadInventario.getText());
-        if (!entPrecio.getText().isEmpty()) {
+        if (!entPrecio.getText().isEmpty() && entPrecio.getText() != null) {
             libro.setPrecio(Integer.parseInt(entPrecio.getText()));
+        } else {
+            libro.setPrecio(0);
         }
-        
     }
 
     public void mostrarElementos(Libro libro) {
-        if (libro.getPortada().length > 0) {
-            portadaLibroByte = libro.getPortada();
-            portada.setIcon(new ImageIcon(funciones.byte_jpg(portadaLibroByte)));
-        }
-        if (libro.getTitulo().isEmpty()) {
-            entTitulo.setText("Sin Nombre");
+        if (libro != null) {
+            entIsbn.setText(String.valueOf(libro.getIsbn()));
+            if (libro.getPortada() != null && libro.getPortada().length > 0) {
+                portadaLibroByte = libro.getPortada();
+                portada.setIcon(new ImageIcon(funciones.byte_jpg(portadaLibroByte)));
+            }
+            if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
+                entTitulo.setText("Sin Nombre");
+            } else {
+                entTitulo.setText(libro.getTitulo());
+            }
+            if (libro.getSipnosis() == null || libro.getSipnosis().isEmpty() ) {
+                entSipnosis.setText("Sin Sipnosis");
+            } else {
+                entSipnosis.setText(libro.getSipnosis());
+            }
+            if (libro.getAutor() == null || libro.getAutor().isEmpty()) {
+                entAutor.setText("Sin Autor");
+            } else {
+                entAutor.setText(libro.getAutor());
+            }
+            if (libro.getEditorial() == null || libro.getEditorial().isEmpty()) {
+                entEditorial.setText("Sin Editorial");
+            } else {
+                entEditorial.setText(libro.getEditorial());
+            }
+            if (libro.getFechaPublicacion() != null) {
+                entFechaPublicacion.setDate(libro.getFechaPublicacion());
+            }
+            if (libro.getEstadolibro() == null || libro.getEstadolibro().isEmpty()) {
+                entCantidadInventario.setText("0");
+            } else {
+                entCantidadInventario.setText(libro.getEstadolibro());
+            }
+            if (libro.getPrecio() < 0) {
+                entPrecio.setText("0");
+            } else {
+                entPrecio.setText(String.valueOf(libro.getPrecio()));
+            }
         } else {
-            entTitulo.setText(libro.getTitulo());
-        }
-        if (libro.getSipnosis().isEmpty()) {
-            entSipnosis.setText("Sin Sipnosis");
-        } else {
-            entSipnosis.setText(libro.getSipnosis());
-        }
-        if (libro.getAutor().isEmpty()) {
-            entAutor.setText("Sin Autor");
-        } else {
-            entAutor.setText(libro.getAutor());
-        }
-        if (libro.getEditorial().isEmpty()) {
-            entEditorial.setText("Sin Editorial");
-        } else {
-            entEditorial.setText(libro.getEditorial());
-        }
-        if (libro.getFechaPublicacion() != null) {
-            entFechaPublicacion.setDate(libro.getFechaPublicacion());
-        }
-        if (libro.getEstadolibro().isEmpty()) {
-            entCantidadInventario.setText("0");
-        } else {
-            entCantidadInventario.setText(libro.getEstadolibro());
-        }
-        if (libro.getPrecio() > 0) {
-            entPrecio.setText("0");
-        } else {
-            entPrecio.setText(String.valueOf(libro.getPrecio()));
+            JOptionPane.showMessageDialog(this, "No se Encontro Ningun Libro", "Informacion", 1, null);
         }
     }
 
@@ -315,7 +347,6 @@ public class ventanaLibro extends javax.swing.JDialog {
         this.libro = libro;
     }
 
-    
     /**
      * @param args the command line arguments
      */
@@ -367,11 +398,13 @@ public class ventanaLibro extends javax.swing.JDialog {
     private javax.swing.JTextField entCantidadInventario;
     private javax.swing.JTextField entEditorial;
     private com.toedter.calendar.JDateChooser entFechaPublicacion;
+    private javax.swing.JTextField entGeneros;
     private javax.swing.JTextField entIsbn;
     private javax.swing.JTextField entPrecio;
     private javax.swing.JTextArea entSipnosis;
     private javax.swing.JTextField entTitulo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

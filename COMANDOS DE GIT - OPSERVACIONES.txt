@@ -7,3 +7,7 @@ git branch ver ramas existentes
 git branch + nombre de la rama Crear nueva rama
 git checkout + nombre de la rama Cambiar de rama
 git branch -d + nombre de la rama Eliminar una rama
+
+
+opservaciones 
+cambiar la base de datos en el proyecto cambiar el mer 

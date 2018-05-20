@@ -6,8 +6,10 @@
 package MODELO;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,12 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RolUsuario.findAll", query = "SELECT r FROM RolUsuario r")
     , @NamedQuery(name = "RolUsuario.findById", query = "SELECT r FROM RolUsuario r WHERE r.id = :id")
     , @NamedQuery(name = "RolUsuario.findByNombrerol", query = "SELECT r FROM RolUsuario r WHERE r.nombrerol = :nombrerol")
-    , @NamedQuery(name = "RolUsuario.findByFechacreacion", query = "SELECT r FROM RolUsuario r WHERE r.fechacreacion = :fechacreacion")
-    , @NamedQuery(name = "RolUsuario.findByNombretabla", query = "SELECT r FROM RolUsuario r WHERE r.nombretabla = :nombretabla")
-    , @NamedQuery(name = "RolUsuario.findByVer", query = "SELECT r FROM RolUsuario r WHERE r.ver = :ver")
-    , @NamedQuery(name = "RolUsuario.findByInsertar", query = "SELECT r FROM RolUsuario r WHERE r.insertar = :insertar")
-    , @NamedQuery(name = "RolUsuario.findByEditar", query = "SELECT r FROM RolUsuario r WHERE r.editar = :editar")
-    , @NamedQuery(name = "RolUsuario.findByBorrar", query = "SELECT r FROM RolUsuario r WHERE r.borrar = :borrar")})
+    , @NamedQuery(name = "RolUsuario.findByFechacreacion", query = "SELECT r FROM RolUsuario r WHERE r.fechacreacion = :fechacreacion")})
 public class RolUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,16 +51,8 @@ public class RolUsuario implements Serializable {
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
-    @Column(name = "nombretabla")
-    private String nombretabla;
-    @Column(name = "ver")
-    private Boolean ver;
-    @Column(name = "insertar")
-    private Boolean insertar;
-    @Column(name = "editar")
-    private Boolean editar;
-    @Column(name = "borrar")
-    private Boolean borrar;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolUsuarioId")
+    private Collection<Permisos> permisosCollection;
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Usuario usuarioId;
@@ -71,31 +62,6 @@ public class RolUsuario implements Serializable {
 
     public RolUsuario(Integer id) {
         this.id = id;
-    }
-
-    public RolUsuario(String nombrerol, Date fechacreacion, Usuario usuarioId) {
-        this.nombrerol = nombrerol;
-        this.fechacreacion = fechacreacion;
-        this.usuarioId = usuarioId;
-    }
-
-    public RolUsuario(String nombretabla, Boolean ver, Boolean insertar, Boolean editar, Boolean borrar) {
-        this.nombretabla = nombretabla;
-        this.ver = ver;
-        this.insertar = insertar;
-        this.editar = editar;
-        this.borrar = borrar;
-    }
-    
-    public RolUsuario(String nombrerol, Date fechacreacion, String nombretabla, Boolean ver, Boolean insertar, Boolean editar, Boolean borrar, Usuario usuarioId) {
-        this.nombrerol = nombrerol;
-        this.fechacreacion = fechacreacion;
-        this.nombretabla = nombretabla;
-        this.ver = ver;
-        this.insertar = insertar;
-        this.editar = editar;
-        this.borrar = borrar;
-        this.usuarioId = usuarioId;
     }
 
     public Integer getId() {
@@ -122,44 +88,13 @@ public class RolUsuario implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public String getNombretabla() {
-        return nombretabla;
+    @XmlTransient
+    public Collection<Permisos> getPermisosCollection() {
+        return permisosCollection;
     }
 
-    public void setNombretabla(String nombretabla) {
-        this.nombretabla = nombretabla;
-    }
-
-    public Boolean getVer() {
-        return ver;
-    }
-
-    public void setVer(Boolean ver) {
-        this.ver = ver;
-    }
-
-    public Boolean getInsertar() {
-        return insertar;
-    }
-
-    public void setInsertar(Boolean insertar) {
-        this.insertar = insertar;
-    }
-
-    public Boolean getEditar() {
-        return editar;
-    }
-
-    public void setEditar(Boolean editar) {
-        this.editar = editar;
-    }
-
-    public Boolean getBorrar() {
-        return borrar;
-    }
-
-    public void setBorrar(Boolean borrar) {
-        this.borrar = borrar;
+    public void setPermisosCollection(Collection<Permisos> permisosCollection) {
+        this.permisosCollection = permisosCollection;
     }
 
     public Usuario getUsuarioId() {
