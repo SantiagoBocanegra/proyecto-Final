@@ -62,6 +62,9 @@ public class MC_Cliente {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Editar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.editarCliente(): "+e.getMessage());
+        }finally {
+            em.close();
+            emf.close();
         }
         return estado;
     }

@@ -37,6 +37,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
      * pone en la tabla de item pidiento la cantidad de libros que se van a
      * comprar
      */
+    private final String nombreTabla = "OrdenCompra";
     //variable que guarda la informacion del empleado 
     Empleado empleado;
     //variable para guardar la informacion del cliente 
@@ -50,20 +51,20 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     // modelo de la tablaOrdenCompra
     DefaultTableModel modeloTablaItem;
 
-    public ventanaOrdenCompra(java.awt.Frame parent, boolean modal) {
+    public ventanaOrdenCompra(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(600, 570);
 
-        entNombreEmpledo.setBackground(Color.WHITE);
-        entApellidoEmpleado.setBackground(Color.WHITE);
-        entTelefonoEmpleado.setBackground(Color.WHITE);
-        entCedulaEmpleado.setBackground(Color.WHITE);
-        entNombreCliente.setBackground(Color.WHITE);
-        entApellidoCliente.setBackground(Color.WHITE);
-        entTelefonoCliente.setBackground(Color.WHITE);
-        entCedulaCliente.setBackground(Color.WHITE);
-        entNumeroOrden.setBackground(Color.WHITE);
+        entNombreEmpledo.setEditable(true);
+        entApellidoEmpleado.setEditable(true);
+        entTelefonoEmpleado.setEditable(true);
+        entCedulaEmpleado.setEditable(true);
+        entNombreCliente.setEditable(true);
+        entApellidoCliente.setEditable(true);
+        entTelefonoCliente.setEditable(true);
+        entCedulaCliente.setEditable(true);
+        entNumeroOrden.setEditable(true);
 
         modeloTablaItem = (DefaultTableModel) tablaOrdenCompra.getModel();
 
@@ -385,8 +386,15 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         entFechaOrden.setDate(orden.getFechaorden());
         entPrecioTotal.setText(String.valueOf(orden.getPreciototal()));
         entCantidadTotal.setText(String.valueOf(orden.getCantidadtotal()));
+        cliente = clienteOrden;
+        empleado = empleadoOrden;
         mostrarElemetnosCliente(clienteOrden);
         mostrarElementosEmpleado(empleadoOrden);
+        MC_OrdenItem controlItem = new MC_OrdenItem();
+        List<Ordenitem> itemsAux = controlItem.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
+        if ( !itemsAux.isEmpty() ) {
+            mostraItem(itemsAux);
+        }
     }
 
     public void limpiarOrden() {
@@ -584,6 +592,14 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         }
     }
 
+    public Ordencompra getOrdenCompra() {
+        return ordenCompra;
+    }
+
+    public void setOrdenCompra(Ordencompra ordenCompra) {
+        this.ordenCompra = ordenCompra;
+    }
+
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -646,7 +662,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaOrdenCompra dialog = new ventanaOrdenCompra(new javax.swing.JFrame(), true);
+                ventanaOrdenCompra dialog = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -659,10 +675,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
-    private javax.swing.JButton btnBuscarEmpleado;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnBuscarCliente;
+    public javax.swing.JButton btnBuscarEmpleado;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuardar;
     private javax.swing.JTextField entApellidoCliente;
     private javax.swing.JTextField entApellidoEmpleado;
     private javax.swing.JTextField entCantidadTotal;

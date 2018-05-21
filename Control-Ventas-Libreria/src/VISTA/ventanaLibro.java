@@ -9,6 +9,7 @@ import MODELO.Libro;
 import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
+import java.awt.Image;
 import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ public class ventanaLibro extends javax.swing.JDialog {
      * de la clase mostrarElementos -> mostrar informacion del libro en las
      * cajas de texto de la ventana balidando si estan vacias.
      */
+    private final String nombreTabla = "Libro";
     //Almacernar la imagen que se carga desde el metodo funciones.cargarImagen()
     FileInputStream portadaLibro;
     //Arreglo de byte que se alamcena en la base de datos
@@ -36,7 +38,7 @@ public class ventanaLibro extends javax.swing.JDialog {
     //Comprobar que el usuario si aya ingresado el isbn del libro 
     int caso = 0;
 
-    public ventanaLibro(java.awt.Frame parent, boolean modal) {
+    public ventanaLibro(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(610, 527);
@@ -249,6 +251,7 @@ public class ventanaLibro extends javax.swing.JDialog {
                     MC_Libro control = new MC_Libro();
                     if (control.nuevoLibro(libro)) {
                         JOptionPane.showMessageDialog(this, "Libro Guardado", "Informacion", 1, null);
+                        this.setVisible(false);
                     }
                 }
                 break;
@@ -263,8 +266,9 @@ public class ventanaLibro extends javax.swing.JDialog {
         obtenerElementos();
         if (JOptionPane.showConfirmDialog(this, "Editar Libro", "Escudo", 1, 3, null) == 0) {
             MC_Libro control = new MC_Libro();
-            if (control.nuevoLibro(libro)) {
+            if (control.editarLibro(libro)) {
                 JOptionPane.showMessageDialog(this, "Libro Editado", "Informacion", 1, null);
+                this.setVisible(false);
             }
         }
 
@@ -299,7 +303,7 @@ public class ventanaLibro extends javax.swing.JDialog {
             entIsbn.setText(String.valueOf(libro.getIsbn()));
             if (libro.getPortada() != null && libro.getPortada().length > 0) {
                 portadaLibroByte = libro.getPortada();
-                portada.setIcon(new ImageIcon(funciones.byte_jpg(portadaLibroByte)));
+                portada.setIcon(new ImageIcon(funciones.byte_jpg(portadaLibroByte).getScaledInstance(portada.getWidth(), portada.getHeight(), Image.SCALE_DEFAULT)));
             }
             if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
                 entTitulo.setText("Sin Nombre");
@@ -329,7 +333,7 @@ public class ventanaLibro extends javax.swing.JDialog {
             } else {
                 entCantidadInventario.setText(libro.getEstadolibro());
             }
-            if (libro.getPrecio() < 0) {
+            if (libro.getPrecio() == null || libro.getPrecio() < 0) {
                 entPrecio.setText("0");
             } else {
                 entPrecio.setText(String.valueOf(libro.getPrecio()));
@@ -377,7 +381,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaLibro dialog = new ventanaLibro(new javax.swing.JFrame(), true);
+                ventanaLibro dialog = new ventanaLibro(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -391,15 +395,15 @@ public class ventanaLibro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgreso;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSubir;
     private javax.swing.JTextField entAutor;
     private javax.swing.JTextField entCantidadInventario;
     private javax.swing.JTextField entEditorial;
     private com.toedter.calendar.JDateChooser entFechaPublicacion;
     private javax.swing.JTextField entGeneros;
-    private javax.swing.JTextField entIsbn;
+    public javax.swing.JTextField entIsbn;
     private javax.swing.JTextField entPrecio;
     private javax.swing.JTextArea entSipnosis;
     private javax.swing.JTextField entTitulo;

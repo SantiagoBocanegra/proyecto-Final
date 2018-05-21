@@ -108,4 +108,22 @@ public class MC_OrdenItemPrestamo {
         }
         return ordenesItemPrestamo;
     }
+    
+    //Funcione numero 4
+    public List<Ordenitemprestamo> buscarOrdenItemNumeroOrden (int itemNumeroOrden) {
+        List<Ordenitemprestamo> ordenItem = new ArrayList<>();
+        OrdenitemprestamoJpaController controlador = new OrdenitemprestamoJpaController(emf);
+        try {
+            emt.begin();
+            ordenItem = controlador.buscarOrdenItemNumeroOrden(itemNumeroOrden);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error MC_Ordenitemprestamo.buscarOrdenItemNumeroOrden(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return ordenItem;
+    }
 }

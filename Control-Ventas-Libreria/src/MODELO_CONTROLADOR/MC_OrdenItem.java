@@ -103,6 +103,23 @@ public class MC_OrdenItem {
         return ordenesItem;
     }
     
+    //Funcione numero 4
+    public List<Ordenitem> buscarOrdenItemNumeroOrden (int itemNumeroOrden) {
+        List<Ordenitem> ordenItem = new ArrayList<>();
+        OrdenitemJpaController controlador = new OrdenitemJpaController(emf);
+        try {
+            emt.begin();
+            ordenItem = controlador.buscarOrdenItemNumeroOrden(itemNumeroOrden);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error MC_Ordenitem.buscarOrdenItemNumeroOrden(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return ordenItem;
+    }
     
     public void close () {
         em.close();

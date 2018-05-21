@@ -27,6 +27,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
      * (empleado) de la clase mostrarElementos -> mostrar informacion del libro
      * en las cajas de texto de la ventana balidando si estan vacias.
      */
+    private final String nombreTabla = "Empleado";
     //Almacenar imagen que se sube desde funciones.cargarImagen()
     FileInputStream fotoEmpleado;
     //Arreglo de byte almacenado en la base de datos
@@ -36,7 +37,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     //estadoFoto -> usada para saber si el usuario subio una foto desde  funciones.cargarImagen() 
     boolean estadoFoto;
 
-    public ventanaEmpleado(java.awt.Frame parent, boolean modal) {
+    public ventanaEmpleado(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         estadoFoto = false;
@@ -309,7 +310,11 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         empleado.setFechaContrato(entFechaContrato.getDate());
         empleado.setCargo(entCargo.getText());
         empleado.setCorreo(entCorreo.getText());
-        empleado.setSalario(Integer.parseInt(entSalario.getText()));
+        if (!entSalario.getText().isEmpty()){
+            empleado.setSalario(Integer.parseInt(entSalario.getText()));
+        }else {
+            empleado.setSalario(0);
+        }
     }
 
     public void limpiar() {
@@ -431,11 +436,20 @@ public class ventanaEmpleado extends javax.swing.JDialog {
             if (control.editarEmpleado(empleado)) {
                 JOptionPane.showMessageDialog(this, "Empleado Editado Con Exito", "Informacion", 1, null);
                 limpiar();
+                this.setVisible(false);
                 foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
 
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
 
     public FileInputStream getFotoEmpleado() {
         return fotoEmpleado;
@@ -475,7 +489,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaEmpleado dialog = new ventanaEmpleado(new javax.swing.JFrame(), true);
+                ventanaEmpleado dialog = new ventanaEmpleado(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -489,8 +503,8 @@ public class ventanaEmpleado extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgreso;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSubirFoto;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
@@ -499,7 +513,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField entCiudad;
     private javax.swing.JTextField entCorreo;
     private javax.swing.JTextField entDireccion;
-    private com.toedter.calendar.JDateChooser entFechaContrato;
+    public com.toedter.calendar.JDateChooser entFechaContrato;
     private javax.swing.JTextField entId;
     private javax.swing.JTextField entPais;
     private javax.swing.JTextField entPrimerNombre;

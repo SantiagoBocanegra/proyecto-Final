@@ -9,9 +9,7 @@ FUNCIONES DE LA CLASE MC_OrdenCompra
 package MODELO_CONTROLADOR;
 
 import CONTROLADOR.OrdencompraJpaController;
-import CONTROLADOR.OrdenitemJpaController;
 import MODELO.Ordencompra;
-import MODELO.Ordenitem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

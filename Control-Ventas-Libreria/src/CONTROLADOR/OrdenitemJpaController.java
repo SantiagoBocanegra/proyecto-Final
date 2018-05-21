@@ -19,6 +19,7 @@ import MODELO.OrdenitemPK;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -206,6 +207,25 @@ public class OrdenitemJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    //Busquedas Propias
+    public List<Ordenitem> buscarOrdenItemNumeroOrden(int numeroOrden){
+        List<Ordenitem> ordenItem = null;
+        EntityManager em = getEntityManager();
+        try{
+            em.getTransaction().begin();
+            TypedQuery<Ordenitem>  q = em.createNamedQuery("Ordenitem.findByOrdencompraNumeroorden", Ordenitem.class);
+            q.setParameter("ordencompraNumeroorden", numeroOrden);
+            ordenItem = q.getResultList();
+            em.getTransaction().commit();
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            System.out.println("ERROR ordenitemJpaController.buscarOrdenItemNumeroOrden: "+e.getMessage());
+        }finally{
+            em.close();
+        }
+        return ordenItem;
     }
     
 }

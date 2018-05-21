@@ -36,7 +36,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
     //lista de roles que el usuario a creado
     private List<RolUsuario> rolesUsuario;
     // nombreTabla -> identifica  a la tabla usuario para validar permisos
-    private String  nombreTabla = "Usuario";
+    private final String  nombreTabla = "Usuario";
     
     public ventanaUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);

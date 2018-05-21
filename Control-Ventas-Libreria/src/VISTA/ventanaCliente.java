@@ -21,7 +21,8 @@ public class ventanaCliente extends javax.swing.JDialog {
     /**
      * Creates new form ventanaCliente
      */
-    Cliente cliente;
+    private final String nombreTabla = "Cliente";
+    private Cliente cliente;
 
     public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -353,6 +354,14 @@ public class ventanaCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -397,15 +406,15 @@ public class ventanaCliente extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgreso;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuargar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuargar;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCedula;
     private javax.swing.JTextField entCiudad;
     private javax.swing.JTextField entCorreo;
     private javax.swing.JTextField entDireccion;
-    private com.toedter.calendar.JDateChooser entFecha;
+    public com.toedter.calendar.JDateChooser entFecha;
     private javax.swing.JTextField entId;
     private javax.swing.JTextField entPais;
     private javax.swing.JTextField entPrimerNombre;

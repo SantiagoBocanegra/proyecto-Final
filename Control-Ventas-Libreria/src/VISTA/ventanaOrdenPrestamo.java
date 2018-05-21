@@ -35,13 +35,14 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
      * pone en la tabla de item pidiento la cantidad de libros que se van a
      * comprar.
      */
+    private final String nombreTabla = "OrdenPrestamo";
     private Empleado empleado;
     private Cliente cliente;
     private Ordenprestamo ordenPrestamo;
     private List<Ordenitemprestamo> ordenItemPrestamo = new ArrayList<>();
     private DefaultTableModel modelo;
 
-    public ventanaOrdenPrestamo(java.awt.Frame parent, boolean modal) {
+    public ventanaOrdenPrestamo(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         entNombreEmpledo.setBackground(Color.WHITE);
@@ -53,7 +54,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         entTelefonoCliente.setBackground(Color.WHITE);
         entCedulaCliente.setBackground(Color.WHITE);
         entNumeroOrden.setBackground(Color.WHITE);
-        
+
         modelo = (DefaultTableModel) tablaItem.getModel();
 
         JCalendar calendario = entFechaOrden.getJCalendar();
@@ -392,8 +393,15 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         entFechaOrden.setDate(orden.getFechaorden());
         entCantidadTotal.setText(String.valueOf(orden.getCantidadtotal()));
         cajaEstadoOrden.setSelectedItem(orden.getEstadoorden());
+        cliente = orden.getClienteId();
+        empleado = orden.getEmpleadoId();
         mostraElementosEmpleado(orden.getEmpleadoId());
         mostrarElementosCliente(orden.getClienteId());
+        MC_OrdenItemPrestamo control = new MC_OrdenItemPrestamo();
+        List<Ordenitemprestamo> items = control.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
+        if (!items.isEmpty()) {
+            mostrarItem(items);
+        }
     }
 
     public void mostraLibro(List<Libro> libros) {
@@ -420,8 +428,28 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
     }
-    
-    public void limpiarOrdenPrestamo () {
+
+    public void mostrarItem(List<Ordenitemprestamo> items) {
+        if (!items.isEmpty()) {
+            for (Ordenitemprestamo item : items) {
+                Libro libro = item.getLibro();
+                int isbn = libro.getIsbn();
+                String titulo = "Sin Titulo";
+                //Validar los campos del libro que no esten vacios
+                if (!libro.getTitulo().isEmpty()) {
+                    titulo = libro.getTitulo();
+                }
+                //Pedir el estado del libro que se va a prestar
+                String entrada = item.getEstadolibro();
+                ordenItemPrestamo.add(item);
+                modelo.addRow(new Object[]{isbn, titulo, entrada});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Hay Items", "Informacion", 1, null);
+        }
+    }
+
+    public void limpiarOrdenPrestamo() {
         numeroOrden();
         entFechaEntrega.setDate(funciones.sumarRestaFecha(0, 0, 8));
         entFechaOrden.setDate(funciones.fecha());
@@ -444,7 +472,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         entTelefonoEmpleado.setText("");
         entCedulaEmpleado.setText("");
     }
-    
+
     public void mostraElementosEmpleado(Empleado empleado) {
         limpiarEmpleado();
         if (empleado != null) {
@@ -467,7 +495,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 entCedulaEmpleado.setText("Sin Cedula");
             } else {
                 entCedulaEmpleado.setText(empleado.getCedula());
-            }    
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
         }
@@ -532,6 +560,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                         controlItem.nuevaOrdenItemPrestamo(item);
                     }
                     JOptionPane.showMessageDialog(this, "Orden De Prestamo Almacenada", "Informacion", 1, null);
+                    this.setVisible(false);
                 }
             }
         } else {
@@ -548,9 +577,18 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             if (control.editarOrdenPrestamo(ordenPrestamo)) {
                 JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
                 limpiarOrdenPrestamo();
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    public Ordenprestamo getOrdenPrestamo() {
+        return ordenPrestamo;
+    }
+
+    public void setOrdenPrestamo(Ordenprestamo ordenPrestamo) {
+        this.ordenPrestamo = ordenPrestamo;
+    }
 
     /**
      * @param args the command line arguments
@@ -582,7 +620,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaOrdenPrestamo dialog = new ventanaOrdenPrestamo(new javax.swing.JFrame(), true);
+                ventanaOrdenPrestamo dialog = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -595,10 +633,10 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
-    private javax.swing.JButton btnBuscarEmpleado;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnBuscarCliente;
+    public javax.swing.JButton btnBuscarEmpleado;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cajaEstadoOrden;
     private javax.swing.JTextField entApellidoCliente;
     private javax.swing.JTextField entApellidoEmpleado;
