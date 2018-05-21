@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -228,6 +229,24 @@ public class RolUsuarioJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<RolUsuario>  buscarRolUsuarioId (int idUsuario) {
+        List<RolUsuario> roles = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<RolUsuario> q = em.createNamedQuery("RolUsuario.findByRolUsuarioId" ,  RolUsuario.class);
+            q.setParameter("usuarioId", idUsuario);
+            roles = q.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error RolUsuarioJpaController.buscarRolUsuarioId(): "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return roles;
     }
     
 }

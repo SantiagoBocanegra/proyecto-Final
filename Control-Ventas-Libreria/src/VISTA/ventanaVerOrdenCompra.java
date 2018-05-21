@@ -245,6 +245,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         limpiarTabla();
         numeroOrden = 0;
         entNumeroOrden.setText("# Orden");
+        ventanaOrdenC.numeroOrden();
         ventanaOrdenC.setVisible(true);
     }//GEN-LAST:event_btnInsertarActionPerformed
 

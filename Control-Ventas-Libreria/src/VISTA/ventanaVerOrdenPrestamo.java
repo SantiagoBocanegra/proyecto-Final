@@ -263,6 +263,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
         limpiarTabla();
         numeroOrden = 0;
         entNumeroOrden.setText("# Orden");
+        ventanaOrdenP.numeroOrden();
         ventanaOrdenP.setVisible(true);
     }//GEN-LAST:event_btnInsertarActionPerformed
 

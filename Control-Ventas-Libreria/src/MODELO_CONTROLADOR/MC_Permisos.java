@@ -7,6 +7,7 @@ package MODELO_CONTROLADOR;
 
 import CONTROLADOR.PermisosJpaController;
 import MODELO.Permisos;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -72,6 +73,9 @@ public class MC_Permisos {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Buscar Los Permisos: "+e.getMessage(), "Error", 0, null);
             System.out.println("Error MC_Permisos.buscarTodosPermisos(): "+e.getMessage());
+        }finally {
+            em.close();
+            emf.close();
         }
         return permisos;
     }
@@ -87,6 +91,9 @@ public class MC_Permisos {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Buscar El Permiso: "+e.getMessage(), "Error", 0, null);
             System.out.println("Error MC_Permisos.buscarPermiso(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return permiso;
     }
@@ -106,9 +113,23 @@ public class MC_Permisos {
         }
         return estado;
     }
-
-    public EntityTransaction getEmt() {
-        return emt;
+    
+    public List<Permisos> buscarPermisosRolId ( int rolId ) {
+        PermisosJpaController control = new PermisosJpaController(emf);
+        List<Permisos> permisos = new ArrayList<>();
+        try {
+            emt.begin();
+            permisos = control.buscarPermisosRolId(rolId);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar Los Permisos: "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Permisos.buscarPermisosRolId(): "+e.getMessage());
+        }finally {
+            em.close();
+            emf.close();
+        }
+        return permisos;
     }
     
     public void close () {

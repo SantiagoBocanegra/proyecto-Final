@@ -8,13 +8,14 @@ package VISTA;
 import MODELO.Empleado;
 import MODELO.RolUsuario;
 import MODELO.Usuario;
+import MODELO_CONTROLADOR.MC_RolUsuario;
 import MODELO_CONTROLADOR.MC_Usuario;
 import MODELO_CONTROLADOR.funciones;
-import java.awt.Color;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
                             Funciones De La Clase ventanaUuario
@@ -37,17 +38,26 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private List<RolUsuario> rolesUsuario;
     // nombreTabla -> identifica  a la tabla usuario para validar permisos
     private final String  nombreTabla = "Usuario";
+    private int idRol;
+    DefaultTableModel modelo;
     
     public ventanaUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        entPimerNombre.setBackground(Color.WHITE);
-        entApellidoPaterno.setBackground(Color.WHITE);
-        entCedula.setBackground(Color.WHITE);
+        idRol = 0;
+        modelo = (DefaultTableModel)tablaRol.getModel();
+        entPimerNombre.setEditable(false);
+        entApellidoPaterno.setEditable(false);;
+        entCedula.setEditable(false);
         entEstadoUsuario.setSelected(true);
         this.setSize(620,500);
     }
 
+    public void limpiarTabla () {
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(modelo.getRowCount()-1);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +69,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         fotoEmpleado = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaRol = new javax.swing.JTable();
         entApellidoPaterno = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -73,13 +85,15 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entEstadoUsuario = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        cajaRolesUsuario = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         btnVer = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         entConfirmarContraseña = new javax.swing.JPasswordField();
         entContraseña = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        entIdRol = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuario");
@@ -93,8 +107,28 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(fotoEmpleado);
         fotoEmpleado.setBounds(4, 4, 165, 215);
 
+        tablaRol.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Nombre Rol"
+            }
+        ));
+        tablaRol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaRolMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaRol);
+        if (tablaRol.getColumnModel().getColumnCount() > 0) {
+            tablaRol.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(150, 319, 325, 45);
+
         entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entApellidoPaterno.setEnabled(false);
         jPanel1.add(entApellidoPaterno);
         entApellidoPaterno.setBounds(295, 85, 285, 30);
 
@@ -109,7 +143,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jLabel4.setBounds(170, 85, 120, 30);
 
         entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entCedula.setEnabled(false);
         jPanel1.add(entCedula);
         entCedula.setBounds(295, 120, 285, 30);
 
@@ -138,7 +171,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jLabel8.setBounds(10, 259, 170, 30);
 
         entPimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entPimerNombre.setEnabled(false);
         jPanel1.add(entPimerNombre);
         entPimerNombre.setBounds(295, 50, 285, 30);
 
@@ -160,17 +192,17 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(173, 165, 420, 10);
 
-        cajaRolesUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Roles Por Defecto" }));
-        jPanel1.add(cajaRolesUsuario);
-        cajaRolesUsuario.setBounds(155, 329, 370, 30);
-
         jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel11.setText("Primer Nombre");
         jPanel1.add(jLabel11);
         jLabel11.setBounds(170, 50, 120, 30);
 
         btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnVer);
         btnVer.setBounds(530, 319, 50, 50);
 
@@ -181,7 +213,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(455, 374, 70, 70);
+        btnGuardar.setBounds(515, 374, 70, 70);
 
         btnEditar.setText("Edit");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +222,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnEditar);
-        btnEditar.setBounds(380, 374, 70, 70);
+        btnEditar.setBounds(440, 374, 70, 70);
 
         entConfirmarContraseña.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entConfirmarContraseña);
@@ -199,6 +231,26 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entContraseña.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entContraseña);
         entContraseña.setBounds(100, 224, 480, 30);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(30, 370, 73, 23);
+
+        entIdRol.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        entIdRol.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        entIdRol.setText("Id");
+        jPanel1.add(entIdRol);
+        entIdRol.setBounds(482, 335, 40, 30);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel1.setText("Id Rol");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(480, 310, 50, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(3, 3, 599, 456);
@@ -251,6 +303,22 @@ public class ventanaUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MC_Usuario co = new MC_Usuario();
+        usuario = co.buscarUsuario(1);
+        mostrarElementos(usuario);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tablaRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRolMouseClicked
+        idRol = Integer.parseInt(modelo.getValueAt(tablaRol.getSelectedRow(), 0).toString());
+        entIdRol.setText(String.valueOf(idRol));
+    }//GEN-LAST:event_tablaRolMouseClicked
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        idRol = 0;
+        entIdRol.setText("Id");
+    }//GEN-LAST:event_btnVerActionPerformed
+
     public void obtenerElementosVentana () {
         String Usuario = "";
         Usuario = entUsuario.getText();
@@ -292,9 +360,13 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entUsuario.setText(usuario.getUsuario());
         entContraseña.setText(usuario.getContraseña());
         entEstadoUsuario.setSelected(usuario.getEstado());
+        MC_RolUsuario controlRol = new MC_RolUsuario();
+        rolesUsuario = controlRol.buscarRolUsuarioId(usuario.getId());
+        limpiarTabla();
         for (RolUsuario roles : rolesUsuario) {
-            String rolesDelUsuario = roles.getId()+","+roles.getNombrerol();
-            cajaRolesUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { rolesDelUsuario }));
+            int id = roles.getId();
+            String nombre = roles.getNombrerol();
+            modelo.addRow(new Object[]{id,nombre});
         }
     }
 
@@ -370,15 +442,17 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVer;
-    private javax.swing.JComboBox<String> cajaRolesUsuario;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCedula;
     private javax.swing.JPasswordField entConfirmarContraseña;
     private javax.swing.JPasswordField entContraseña;
     private javax.swing.JRadioButton entEstadoUsuario;
+    private javax.swing.JTextField entIdRol;
     private javax.swing.JTextField entPimerNombre;
     private javax.swing.JTextField entUsuario;
     private javax.swing.JLabel fotoEmpleado;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
@@ -389,6 +463,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tablaRol;
     // End of variables declaration//GEN-END:variables
 }

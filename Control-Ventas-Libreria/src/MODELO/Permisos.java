@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p")
     , @NamedQuery(name = "Permisos.findByIdpermisos", query = "SELECT p FROM Permisos p WHERE p.idpermisos = :idpermisos")
+    ,@NamedQuery(name = "Permisos.finByRolIdPermisos", query = "SELECT p FROM Permisos p WHERE p.rolUsuarioId.id = :rolId")
     , @NamedQuery(name = "Permisos.findByNombreTabla", query = "SELECT p FROM Permisos p WHERE p.nombreTabla = :nombreTabla")
     , @NamedQuery(name = "Permisos.findByVer", query = "SELECT p FROM Permisos p WHERE p.ver = :ver")
     , @NamedQuery(name = "Permisos.findByInsertar", query = "SELECT p FROM Permisos p WHERE p.insertar = :insertar")

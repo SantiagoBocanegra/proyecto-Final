@@ -76,6 +76,9 @@ public class MC_RolUsuario {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.buscarRolUsuario(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return rolUsuario;
     }
@@ -115,9 +118,24 @@ public class MC_RolUsuario {
         }
         return estado;
     }
-
-    public EntityTransaction getEmt() {
-        return emt;
+    
+    //Funcion numero 5
+    public List<RolUsuario>  buscarRolUsuarioId ( int idUsuario) {
+        RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);
+        List<RolUsuario> rolesUsuario = new ArrayList<>();
+        try {
+            emt.begin();
+            rolesUsuario = servicio.buscarRolUsuarioId(idUsuario);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarRolUsuarioId(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return rolesUsuario;
     }
     
     public void close () {

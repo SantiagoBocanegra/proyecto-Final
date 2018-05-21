@@ -13,9 +13,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import MODELO.RolUsuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -165,4 +167,22 @@ public class PermisosJpaController implements Serializable {
         }
     }
     
+    //Consultas Prompias
+    public List<Permisos> buscarPermisosRolId (int idPermisos) {
+        EntityManager em = getEntityManager();
+        List<Permisos> permisos = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Permisos> q = em.createNamedQuery("Permisos.finByRolIdPermisos", Permisos.class);
+            q.setParameter("rolId", idPermisos);
+            permisos = q.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error PermisosJpaController.buscarPermisosRolId(): "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return permisos;
+    }
 }

@@ -10,7 +10,6 @@ import MODELO.Empleado;
 import MODELO.Libro;
 import MODELO.Ordencompra;
 import MODELO.Ordenitem;
-import MODELO.OrdenitemPK;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.MC_Empleado;
 import MODELO_CONTROLADOR.MC_Libro;
@@ -18,7 +17,6 @@ import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.MC_OrdenItem;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -56,15 +54,17 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         initComponents();
         this.setSize(600, 570);
 
-        entNombreEmpledo.setEditable(true);
-        entApellidoEmpleado.setEditable(true);
-        entTelefonoEmpleado.setEditable(true);
-        entCedulaEmpleado.setEditable(true);
-        entNombreCliente.setEditable(true);
-        entApellidoCliente.setEditable(true);
-        entTelefonoCliente.setEditable(true);
-        entCedulaCliente.setEditable(true);
-        entNumeroOrden.setEditable(true);
+        entNombreEmpledo.setEditable(false);
+        entApellidoEmpleado.setEditable(false);
+        entTelefonoEmpleado.setEditable(false);
+        entCedulaEmpleado.setEditable(false);
+        entNombreCliente.setEditable(false);
+        entApellidoCliente.setEditable(false);
+        entTelefonoCliente.setEditable(false);
+        entCedulaCliente.setEditable(false);
+        entNumeroOrden.setEditable(false);
+        entCantidadTotal.setEditable(false);
+        entPrecioTotal.setEditable(false);
 
         modeloTablaItem = (DefaultTableModel) tablaOrdenCompra.getModel();
 
@@ -161,22 +161,18 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel11.setBounds(254, 55, 50, 30);
 
         entNombreEmpledo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entNombreEmpledo.setEnabled(false);
         jPanel2.add(entNombreEmpledo);
         entNombreEmpledo.setBounds(59, 20, 180, 30);
 
         entTelefonoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entTelefonoEmpleado.setEnabled(false);
         jPanel2.add(entTelefonoEmpleado);
         entTelefonoEmpleado.setBounds(309, 55, 180, 30);
 
         entCedulaEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entCedulaEmpleado.setEnabled(false);
         jPanel2.add(entCedulaEmpleado);
         entCedulaEmpleado.setBounds(59, 55, 180, 30);
 
         entApellidoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entApellidoEmpleado.setEnabled(false);
         jPanel2.add(entApellidoEmpleado);
         entApellidoEmpleado.setBounds(309, 20, 180, 30);
 
@@ -217,22 +213,18 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel12.setBounds(254, 55, 50, 30);
 
         entNombreCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entNombreCliente.setEnabled(false);
         jPanel4.add(entNombreCliente);
         entNombreCliente.setBounds(59, 20, 180, 30);
 
         entTelefonoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entTelefonoCliente.setEnabled(false);
         jPanel4.add(entTelefonoCliente);
         entTelefonoCliente.setBounds(309, 55, 180, 30);
 
         entCedulaCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entCedulaCliente.setEnabled(false);
         jPanel4.add(entCedulaCliente);
         entCedulaCliente.setBounds(59, 55, 180, 30);
 
         entApellidoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entApellidoCliente.setEnabled(false);
         jPanel4.add(entApellidoCliente);
         entApellidoCliente.setBounds(309, 20, 180, 30);
 
@@ -263,10 +255,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel13.setBounds(35, 5, 90, 30);
 
         entNumeroOrden.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        entNumeroOrden.setEnabled(false);
         jPanel3.add(entNumeroOrden);
         entNumeroOrden.setBounds(130, 5, 155, 30);
 
+        entFechaOrden.setEnabled(false);
         entFechaOrden.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel3.add(entFechaOrden);
         entFechaOrden.setBounds(374, 5, 155, 30);
