@@ -27,7 +27,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        entId.setBackground(Color.WHITE);
+        entId.setEditable(false);
         JCalendar calendario = entFecha.getJCalendar();
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);

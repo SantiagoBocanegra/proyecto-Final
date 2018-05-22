@@ -5,12 +5,16 @@
  */
 package VISTA;
 
+import MODELO.Genero;
 import MODELO.Libro;
+import MODELO_CONTROLADOR.MC_Genero;
 import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
 import java.awt.Image;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -37,6 +41,8 @@ public class ventanaLibro extends javax.swing.JDialog {
     Libro libro;
     //Comprobar que el usuario si aya ingresado el isbn del libro 
     int caso = 0;
+    List<Genero> generos  = new ArrayList<>();
+    List<Integer> idGenero;
 
     public ventanaLibro(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -89,6 +95,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         jSeparator5 = new javax.swing.JSeparator();
         entGeneros = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -230,6 +237,16 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(jLabel10);
         jLabel10.setBounds(10, 406, 70, 30);
 
+        btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(390, 405, 30, 30);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(4, 4, 585, 480);
 
@@ -273,6 +290,21 @@ public class ventanaLibro extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        ventanaverGenero ventanaGenero = new ventanaverGenero(new javax.swing.JDialog(), true);
+        ventanaGenero.setVisible(true);
+        idGenero = ventanaGenero.getIdGenero();
+        MC_Genero controlGenero = new MC_Genero();
+        String NombreGenero = "";
+        for (int id : idGenero) {
+            Genero genero = controlGenero.buscarGenero(id);
+            NombreGenero = NombreGenero+" "+genero.getNombre();
+            generos.add(genero);
+        }
+        controlGenero.close();
+        entGeneros.setText(NombreGenero);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void obtenerElementos() {
         if (entIsbn.getText() == null || entIsbn.getText().isEmpty() ) {
@@ -395,6 +427,7 @@ public class ventanaLibro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgreso;
+    private javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSubir;
