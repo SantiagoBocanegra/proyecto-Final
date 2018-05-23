@@ -6,6 +6,7 @@
 package VISTA;
 
 import MODELO.Empleado;
+import MODELO.Permisos;
 import MODELO.Usuario;
 import MODELO_CONTROLADOR.MC_Empleado;
 import MODELO_CONTROLADOR.MC_Usuario;
@@ -24,12 +25,14 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
      */
     private final String nombreTabla = "Usuario";
     DefaultTableModel modelo;
+    Permisos permiso;
     int id;
 
     public ventanaVerUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         id = 0;
+        
         modelo = (DefaultTableModel) tablaUsuario.getModel();
     }
 
@@ -255,45 +258,60 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (id > 0) {
-            ventanaUsuario ventanaUsu = new ventanaUsuario(new javax.swing.JDialog(), true);
-            MC_Usuario controlUsu = new MC_Usuario();
-            Usuario usuarioAux = controlUsu.buscarUsuario(id);
-            ventanaUsu.btnGuardar.setVisible(false);
-            ventanaUsu.setUsuario(usuarioAux);
-            ventanaUsu.mostrarElementos(usuarioAux);
-            ventanaUsu.setVisible(true);
-            btnVerTodoActionPerformed(evt);
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getEditar()) {
+            if (id > 0) {
+                ventanaUsuario ventanaUsu = new ventanaUsuario(new javax.swing.JDialog(), true);
+                MC_Usuario controlUsu = new MC_Usuario();
+                Usuario usuarioAux = controlUsu.buscarUsuario(id);
+                ventanaUsu.btnGuardar.setVisible(false);
+                ventanaUsu.setUsuario(usuarioAux);
+                ventanaUsu.mostrarElementos(usuarioAux);
+                ventanaUsu.setVisible(true);
+                btnVerTodoActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        int idEmpleado = Integer.parseInt(JOptionPane.showInputDialog(this, "Id De Empleado"));
-        MC_Empleado controlEmpleado = new MC_Empleado();
-        Empleado empleado = controlEmpleado.buscarEmpleado(idEmpleado);
-        if (empleado.getId() != null && empleado.getId() > 0) {
-            ventanaUsuario ventanaUsuario = new ventanaUsuario(new javax.swing.JDialog(), true);
-            ventanaUsuario.btnEditar.setVisible(false);
-            limpiarTabla();
-            id = 0;
-            entId.setText("Id");
-            String nombre = "Sin Nombre";
-            String apellido = "Sin Apellido";
-            if (empleado.getNombre() != null && !empleado.getNombre().isEmpty()) {
-                nombre = empleado.getNombre();
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            int idEmpleado = Integer.parseInt(JOptionPane.showInputDialog(this, "Id De Empleado"));
+            MC_Empleado controlEmpleado = new MC_Empleado();
+            Empleado empleado = controlEmpleado.buscarEmpleado(idEmpleado);
+            if (empleado.getId() != null && empleado.getId() > 0) {
+                ventanaUsuario ventanaUsuario = new ventanaUsuario(new javax.swing.JDialog(), true);
+                ventanaUsuario.btnEditar.setVisible(false);
+                limpiarTabla();
+                id = 0;
+                entId.setText("Id");
+                String nombre = "Sin Nombre";
+                String apellido = "Sin Apellido";
+                if (empleado.getNombre() != null && !empleado.getNombre().isEmpty()) {
+                    nombre = empleado.getNombre();
+                }
+                if (empleado.getApellidoPaterno() != null && !empleado.getApellidoPaterno().isEmpty()) {
+                    apellido = empleado.getApellidoPaterno();
+                }
+                ventanaUsuario.mostrarEmpleado(empleado);
+                ventanaUsuario.entUsuario.setText(nombre + apellido);
+                ventanaUsuario.setVisible(true);
+                btnVerTodoActionPerformed(evt);
             }
-            if (empleado.getApellidoPaterno() != null && !empleado.getApellidoPaterno().isEmpty()) {
-                apellido = empleado.getApellidoPaterno();
-            }
-            ventanaUsuario.mostrarEmpleado(empleado);
-            ventanaUsuario.entUsuario.setText(nombre + apellido);
-            ventanaUsuario.setVisible(true);
-            btnVerTodoActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
-
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments

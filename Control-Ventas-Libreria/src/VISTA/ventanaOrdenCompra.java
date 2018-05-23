@@ -46,13 +46,16 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     List<Libro> libroOrden;
     //variable de los Item a comprar 
     List<Ordenitem> ordenItem = new ArrayList<>();
+    List<Libro> ordenLibros = new ArrayList<>();
     // modelo de la tablaOrdenCompra
     DefaultTableModel modeloTablaItem;
+    private int isbn = 0;
+    private int numeroFila  = 0 ;
 
     public ventanaOrdenCompra(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setSize(600, 570);
+        this.setSize(600, 583);
 
         entNombreEmpledo.setEditable(false);
         entApellidoEmpleado.setEditable(false);
@@ -86,6 +89,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -120,7 +124,8 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        entIsbn = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,6 +140,15 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jLabel5.setText("Orden De Compra");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(5, 0, 150, 30);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(300, 10, 73, 23);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -282,28 +296,33 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                 "Isbn", "Titulo", "Precio C/U", "cantidad", "Precio Total"
             }
         ));
+        tablaOrdenCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaOrdenCompraMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaOrdenCompra);
 
         jPanel5.add(jScrollPane1);
-        jScrollPane1.setBounds(5, 5, 480, 200);
+        jScrollPane1.setBounds(5, 5, 480, 215);
 
         entCantidadTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel5.add(entCantidadTotal);
-        entCantidadTotal.setBounds(105, 210, 140, 30);
+        entCantidadTotal.setBounds(105, 225, 140, 30);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("Cantidad Total");
         jPanel5.add(jLabel4);
-        jLabel4.setBounds(10, 210, 90, 30);
+        jLabel4.setBounds(10, 225, 90, 30);
 
         entPrecioTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel5.add(entPrecioTotal);
-        entPrecioTotal.setBounds(329, 210, 155, 30);
+        entPrecioTotal.setBounds(329, 225, 155, 30);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel1.setText("Precio Total");
         jPanel5.add(jLabel1);
-        jLabel1.setBounds(254, 210, 80, 30);
+        jLabel1.setBounds(254, 225, 80, 30);
 
         btnEditar.setText("Edit");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +331,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             }
         });
         jPanel5.add(btnEditar);
-        btnEditar.setBounds(490, 100, 70, 70);
+        btnEditar.setBounds(490, 115, 70, 70);
 
         btnGuardar.setText("guar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -321,24 +340,30 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             }
         });
         jPanel5.add(btnGuardar);
-        btnGuardar.setBounds(490, 175, 70, 70);
+        btnGuardar.setBounds(490, 190, 70, 70);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Canc");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton1);
-        jButton1.setBounds(490, 50, 73, 23);
+        jPanel5.add(btnCancelar);
+        btnCancelar.setBounds(490, 40, 70, 70);
+
+        entIsbn.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        entIsbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        entIsbn.setText("Isbn");
+        jPanel5.add(entIsbn);
+        entIsbn.setBounds(490, 5, 70, 30);
 
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(5, 265, 564, 250);
+        jPanel5.setBounds(5, 265, 564, 265);
         jPanel1.add(jSeparator2);
         jSeparator2.setBounds(160, 15, 410, 2);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(5, 5, 575, 522);
+        jPanel1.setBounds(5, 5, 575, 535);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -384,7 +409,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         mostrarElementosEmpleado(empleadoOrden);
         MC_OrdenItem controlItem = new MC_OrdenItem();
         List<Ordenitem> itemsAux = controlItem.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
-        if ( !itemsAux.isEmpty() ) {
+        if (!itemsAux.isEmpty()) {
             mostraItem(itemsAux);
         }
     }
@@ -466,17 +491,18 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                 MC_OrdenCompra controlCompra = new MC_OrdenCompra();
                 if (controlCompra.nuevaOrdenCompra(ordenCompra)) {
                     MC_OrdenItem controlItem = new MC_OrdenItem();
+                    
                     //Almacenar Los Item de la orden
                     for (Ordenitem item : ordenItem) {
                         item.setOrdencompra(ordenCompra);
                         controlItem.nuevaOrdenItem(item);
                     }
-                    controlCompra.close();
+                    
+                    funciones.eliminarLibros(libroOrden);
+                    
                     controlItem.close();
                     JOptionPane.showMessageDialog(this, "Orden De Compra Almacenada", "Informacion", 1, null);
                     limpiarOrden();
-                } else {
-                    controlCompra.close();
                 }
             }
         } else {
@@ -490,11 +516,8 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             //Editar la orden de compra
             MC_OrdenCompra controlCompra = new MC_OrdenCompra();
             if (controlCompra.editarOrdenCompra(ordenCompra)) {
-                controlCompra.close();
                 JOptionPane.showMessageDialog(this, "Orden De Compra Editada", "Informacion", 1, null);
                 limpiarOrden();
-            } else {
-                controlCompra.close();
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -503,11 +526,34 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         MC_Libro contro = new MC_Libro();
         List<Libro> ordenItem3 = new ArrayList<>();
         ordenItem3.add(contro.buscarLibro(1));
-        ordenItem3.add(contro.buscarLibro(2));
-        contro.close();
         //Actualiza la  lista de orden de item para modificar 
         mostraLibro(ordenItem3);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        if (isbn != 0) {
+
+            for (int i = 0; i < ordenLibros.size(); i++) {
+                
+                if (ordenLibros.get(i).getIsbn() == isbn) {
+                    ordenLibros.remove(i);
+                    modeloTablaItem.removeRow(numeroFila);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Ha Selecionado Nada", "Informacion", 1, null);
+        }
+
+        isbn = 0;
+        entIsbn.setText("Isbn");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void tablaOrdenCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaOrdenCompraMouseClicked
+        isbn = Integer.parseInt(modeloTablaItem.getValueAt(tablaOrdenCompra.getSelectedRow(), 0).toString());
+        numeroFila = tablaOrdenCompra.getSelectedRow();
+        entIsbn.setText(""+isbn);
+    }//GEN-LAST:event_tablaOrdenCompraMouseClicked
 
     public void numeroOrden() {
         int numeroOrden;
@@ -552,12 +598,37 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             if (!entrada.isEmpty()) {
                 cantidad = Integer.parseInt(entrada);
             }
-            int precioTotalLibro = cantidad * precio;
-            Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
-            ordenItem.add(ordenI);
-            modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
-            cantidadTotal += cantidad;
-            precioTotal += precioTotalLibro;
+            int precioTotalLibro = 0;
+            if (Integer.parseInt(libro.getEstadolibro()) > 0) {
+                if (cantidad > Integer.parseInt(libro.getEstadolibro())) {
+                    if (JOptionPane.showConfirmDialog(this, "Solo Tenemos " + Integer.parseInt(libro.getEstadolibro()) + " Desea Llevarlos",
+                            "Informacion", 1, 3, null) == 0) {
+                        cantidad = Integer.parseInt(libro.getEstadolibro());
+                        precioTotalLibro = cantidad * precio;
+                        Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
+                        ordenItem.add(ordenI);
+                        modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+                        cantidadTotal += cantidad;
+                        precioTotal += precioTotalLibro;
+                        libro.setEstadolibro("0");
+                        ordenLibros.add(libro);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Libro Cancelado: "+titulo, "Informacion", 1, null);
+                    }
+                } else {
+                    precioTotalLibro = cantidad * precio;
+                    Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
+                    ordenItem.add(ordenI);
+                    modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+                    cantidadTotal += cantidad;
+                    precioTotal += precioTotalLibro;
+                    cantidad = Integer.parseInt(libro.getEstadolibro()) - cantidad;
+                    libro.setEstadolibro(String.valueOf(cantidad));
+                    ordenLibros.add(libro);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay Ejemplares Del Libro "+titulo, "Informacion", 1, null);
+            }
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
         entPrecioTotal.setText(String.valueOf(precioTotal));
@@ -669,6 +740,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscarCliente;
     public javax.swing.JButton btnBuscarEmpleado;
+    private javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JTextField entApellidoCliente;
@@ -677,6 +749,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     private javax.swing.JTextField entCedulaCliente;
     private javax.swing.JTextField entCedulaEmpleado;
     private com.toedter.calendar.JDateChooser entFechaOrden;
+    private javax.swing.JTextField entIsbn;
     private javax.swing.JTextField entNombreCliente;
     private javax.swing.JTextField entNombreEmpledo;
     private javax.swing.JTextField entNumeroOrden;

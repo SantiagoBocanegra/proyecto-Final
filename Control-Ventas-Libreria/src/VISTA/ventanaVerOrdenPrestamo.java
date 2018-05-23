@@ -6,6 +6,7 @@
 package VISTA;
 
 import MODELO.Ordenprestamo;
+import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_OrdenPrestamo;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
     private final String nombreTabla = "OrdenPrestamo";
     DefaultTableModel modelo;
     int numeroOrden;
+    Permisos permiso;
 
     public ventanaVerOrdenPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -241,31 +243,49 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (numeroOrden > 0) {
-            ventanaOrdenPrestamo ventanaOrdenP = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
-            limpiarTabla();
-            MC_OrdenPrestamo controlOrdenP = new MC_OrdenPrestamo();
-            Ordenprestamo ordenPrestamoAux = controlOrdenP.buscarOrdenPrestamo(numeroOrden);
-            numeroOrden = 0;
-            entNumeroOrden.setText("# Orden");
-            ventanaOrdenP.btnGuardar.setVisible(false);
-            ventanaOrdenP.setOrdenPrestamo(ordenPrestamoAux);
-            ventanaOrdenP.mostrarElementos(ordenPrestamoAux);
-            ventanaOrdenP.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+            if (numeroOrden > 0) {
+                ventanaOrdenPrestamo ventanaOrdenP = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+                limpiarTabla();
+                MC_OrdenPrestamo controlOrdenP = new MC_OrdenPrestamo();
+                Ordenprestamo ordenPrestamoAux = controlOrdenP.buscarOrdenPrestamo(numeroOrden);
+                numeroOrden = 0;
+                entNumeroOrden.setText("# Orden");
+                ventanaOrdenP.btnGuardar.setVisible(false);
+                ventanaOrdenP.setOrdenPrestamo(ordenPrestamoAux);
+                ventanaOrdenP.mostrarElementos(ordenPrestamoAux);
+                ventanaOrdenP.setVisible(true);
+                btnVerTodoActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        ventanaOrdenPrestamo ventanaOrdenP = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
-        ventanaOrdenP.btnEditar.setVisible(false);
-        limpiarTabla();
-        numeroOrden = 0;
-        entNumeroOrden.setText("# Orden");
-        ventanaOrdenP.numeroOrden();
-        ventanaOrdenP.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaOrdenPrestamo ventanaOrdenP = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+            ventanaOrdenP.btnEditar.setVisible(false);
+            limpiarTabla();
+            numeroOrden = 0;
+            entNumeroOrden.setText("# Orden");
+            ventanaOrdenP.numeroOrden();
+            ventanaOrdenP.setVisible(true);
+            btnVerTodoActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments

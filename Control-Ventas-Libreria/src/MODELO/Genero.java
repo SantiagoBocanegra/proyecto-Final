@@ -14,11 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,11 +51,8 @@ public class Genero implements Serializable {
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
-    @JoinTable(name = "genero_libros", joinColumns = {
-        @JoinColumn(name = "genero_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "libro_isbn", referencedColumnName = "isbn")})
-    @ManyToMany
-    private Collection<Libro> libroCollection;
+    @OneToMany(mappedBy = "id")
+    private Collection<GeneroLibro> generoLibroCollection;
 
     public Genero() {
     }
@@ -99,12 +94,12 @@ public class Genero implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Libro> getLibroCollection() {
-        return libroCollection;
+    public Collection<GeneroLibro> getGeneroLibroCollection() {
+        return generoLibroCollection;
     }
 
-    public void setLibroCollection(Collection<Libro> libroCollection) {
-        this.libroCollection = libroCollection;
+    public void setGeneroLibroCollection(Collection<GeneroLibro> generoLibroCollection) {
+        this.generoLibroCollection = generoLibroCollection;
     }
 
     @Override

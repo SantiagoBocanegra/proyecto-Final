@@ -6,8 +6,9 @@
 package VISTA;
 
 import MODELO.Genero;
+import MODELO.GeneroLibro;
 import MODELO.Libro;
-import MODELO_CONTROLADOR.MC_Genero;
+import MODELO_CONTROLADOR.MC_GeneroLibro;
 import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
@@ -41,7 +42,7 @@ public class ventanaLibro extends javax.swing.JDialog {
     Libro libro;
     //Comprobar que el usuario si aya ingresado el isbn del libro 
     int caso = 0;
-    List<Genero> generos  = new ArrayList<>();
+    List<GeneroLibro> generosLibro = new ArrayList<>();
     List<Integer> idGenero;
 
     public ventanaLibro(javax.swing.JDialog parent, boolean modal) {
@@ -267,8 +268,15 @@ public class ventanaLibro extends javax.swing.JDialog {
                 if (JOptionPane.showConfirmDialog(this, "Guardar Libro", "Escudo", 1, 3, null) == 0) {
                     MC_Libro control = new MC_Libro();
                     if (control.nuevoLibro(libro)) {
+                        if (!generosLibro.isEmpty()) {
+                            MC_GeneroLibro controlGeneroL = new MC_GeneroLibro();
+                            for (GeneroLibro generoL : generosLibro) {
+                                generoL.setIsbn(libro);
+                                controlGeneroL.nuevoGeneroLibro(generoL);
+                            }
+                            controlGeneroL.close();
+                        }
                         JOptionPane.showMessageDialog(this, "Libro Guardado", "Informacion", 1, null);
-                        this.setVisible(false);
                     }
                 }
                 break;
@@ -284,8 +292,11 @@ public class ventanaLibro extends javax.swing.JDialog {
         if (JOptionPane.showConfirmDialog(this, "Editar Libro", "Escudo", 1, 3, null) == 0) {
             MC_Libro control = new MC_Libro();
             if (control.editarLibro(libro)) {
+                control.close();
                 JOptionPane.showMessageDialog(this, "Libro Editado", "Informacion", 1, null);
                 this.setVisible(false);
+            } else {
+                control.close();
             }
         }
 
@@ -294,20 +305,19 @@ public class ventanaLibro extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         ventanaverGenero ventanaGenero = new ventanaverGenero(new javax.swing.JDialog(), true);
         ventanaGenero.setVisible(true);
-        idGenero = ventanaGenero.getIdGenero();
-        MC_Genero controlGenero = new MC_Genero();
+        List<Genero> generos = ventanaGenero.getIdGenero();
         String NombreGenero = "";
-        for (int id : idGenero) {
-            Genero genero = controlGenero.buscarGenero(id);
-            NombreGenero = NombreGenero+" "+genero.getNombre();
-            generos.add(genero);
+        for (Genero genero : generos) {
+            NombreGenero = NombreGenero + " " + genero.getNombre();
+            GeneroLibro generoLibro = new GeneroLibro();
+            generoLibro.setId(genero);
+            generosLibro.add(generoLibro);
         }
-        controlGenero.close();
         entGeneros.setText(NombreGenero);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void obtenerElementos() {
-        if (entIsbn.getText() == null || entIsbn.getText().isEmpty() ) {
+        if (entIsbn.getText() == null || entIsbn.getText().isEmpty()) {
             caso = 1;
         } else {
             libro.setIsbn(Integer.parseInt(entIsbn.getText()));
@@ -342,7 +352,7 @@ public class ventanaLibro extends javax.swing.JDialog {
             } else {
                 entTitulo.setText(libro.getTitulo());
             }
-            if (libro.getSipnosis() == null || libro.getSipnosis().isEmpty() ) {
+            if (libro.getSipnosis() == null || libro.getSipnosis().isEmpty()) {
                 entSipnosis.setText("Sin Sipnosis");
             } else {
                 entSipnosis.setText(libro.getSipnosis());

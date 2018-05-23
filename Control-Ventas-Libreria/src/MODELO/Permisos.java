@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p")
     , @NamedQuery(name = "Permisos.findByIdpermisos", query = "SELECT p FROM Permisos p WHERE p.idpermisos = :idpermisos")
-    ,@NamedQuery(name = "Permisos.finByRolIdPermisos", query = "SELECT p FROM Permisos p WHERE p.rolUsuarioId.id = :rolId")
+    , @NamedQuery(name = "Permisos.findByRolId", query = "SELECT p FROM Permisos p  WHERE p.rolUsuarioId.id = :rolId")
     , @NamedQuery(name = "Permisos.findByNombreTabla", query = "SELECT p FROM Permisos p WHERE p.nombreTabla = :nombreTabla")
     , @NamedQuery(name = "Permisos.findByVer", query = "SELECT p FROM Permisos p WHERE p.ver = :ver")
     , @NamedQuery(name = "Permisos.findByInsertar", query = "SELECT p FROM Permisos p WHERE p.insertar = :insertar")
@@ -60,16 +60,16 @@ public class Permisos implements Serializable {
     public Permisos() {
     }
 
+    public Permisos(Integer idpermisos) {
+        this.idpermisos = idpermisos;
+    }
+
     public Permisos(String nombreTabla, Boolean ver, Boolean insertar, Boolean editar, Boolean borrar) {
         this.nombreTabla = nombreTabla;
         this.ver = ver;
         this.insertar = insertar;
         this.editar = editar;
         this.borrar = borrar;
-    }
-
-    public Permisos(Integer idpermisos) {
-        this.idpermisos = idpermisos;
     }
 
     public Integer getIdpermisos() {

@@ -48,18 +48,18 @@ public class Ordenitem implements Serializable {
     public Ordenitem() {
     }
 
-    public Ordenitem(Integer cantidadorden, Integer valororden, Libro libro) {
-        this.cantidadorden = cantidadorden;
-        this.valororden = valororden;
-        this.libro = libro;
-    }
-
     public Ordenitem(OrdenitemPK ordenitemPK) {
         this.ordenitemPK = ordenitemPK;
     }
 
     public Ordenitem(int ordencompraNumeroorden, int libroIsbn) {
         this.ordenitemPK = new OrdenitemPK(ordencompraNumeroorden, libroIsbn);
+    }
+
+    public Ordenitem(Integer cantidadorden, Integer valororden, Libro libro) {
+        this.cantidadorden = cantidadorden;
+        this.valororden = valororden;
+        this.libro = libro;
     }
 
     public OrdenitemPK getOrdenitemPK() {

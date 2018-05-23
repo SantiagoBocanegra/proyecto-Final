@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import MODELO.Libro;
+import MODELO.GeneroLibro;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,23 +35,28 @@ public class GeneroJpaController implements Serializable {
     }
 
     public void create(Genero genero) {
-        if (genero.getLibroCollection() == null) {
-            genero.setLibroCollection(new ArrayList<Libro>());
+        if (genero.getGeneroLibroCollection() == null) {
+            genero.setGeneroLibroCollection(new ArrayList<GeneroLibro>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Libro> attachedLibroCollection = new ArrayList<Libro>();
-            for (Libro libroCollectionLibroToAttach : genero.getLibroCollection()) {
-                libroCollectionLibroToAttach = em.getReference(libroCollectionLibroToAttach.getClass(), libroCollectionLibroToAttach.getIsbn());
-                attachedLibroCollection.add(libroCollectionLibroToAttach);
+            Collection<GeneroLibro> attachedGeneroLibroCollection = new ArrayList<GeneroLibro>();
+            for (GeneroLibro generoLibroCollectionGeneroLibroToAttach : genero.getGeneroLibroCollection()) {
+                generoLibroCollectionGeneroLibroToAttach = em.getReference(generoLibroCollectionGeneroLibroToAttach.getClass(), generoLibroCollectionGeneroLibroToAttach.getIdGenero());
+                attachedGeneroLibroCollection.add(generoLibroCollectionGeneroLibroToAttach);
             }
-            genero.setLibroCollection(attachedLibroCollection);
+            genero.setGeneroLibroCollection(attachedGeneroLibroCollection);
             em.persist(genero);
-            for (Libro libroCollectionLibro : genero.getLibroCollection()) {
-                libroCollectionLibro.getGeneroCollection().add(genero);
-                libroCollectionLibro = em.merge(libroCollectionLibro);
+            for (GeneroLibro generoLibroCollectionGeneroLibro : genero.getGeneroLibroCollection()) {
+                Genero oldIdOfGeneroLibroCollectionGeneroLibro = generoLibroCollectionGeneroLibro.getId();
+                generoLibroCollectionGeneroLibro.setId(genero);
+                generoLibroCollectionGeneroLibro = em.merge(generoLibroCollectionGeneroLibro);
+                if (oldIdOfGeneroLibroCollectionGeneroLibro != null) {
+                    oldIdOfGeneroLibroCollectionGeneroLibro.getGeneroLibroCollection().remove(generoLibroCollectionGeneroLibro);
+                    oldIdOfGeneroLibroCollectionGeneroLibro = em.merge(oldIdOfGeneroLibroCollectionGeneroLibro);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -67,26 +72,31 @@ public class GeneroJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Genero persistentGenero = em.find(Genero.class, genero.getId());
-            Collection<Libro> libroCollectionOld = persistentGenero.getLibroCollection();
-            Collection<Libro> libroCollectionNew = genero.getLibroCollection();
-            Collection<Libro> attachedLibroCollectionNew = new ArrayList<Libro>();
-            for (Libro libroCollectionNewLibroToAttach : libroCollectionNew) {
-                libroCollectionNewLibroToAttach = em.getReference(libroCollectionNewLibroToAttach.getClass(), libroCollectionNewLibroToAttach.getIsbn());
-                attachedLibroCollectionNew.add(libroCollectionNewLibroToAttach);
+            Collection<GeneroLibro> generoLibroCollectionOld = persistentGenero.getGeneroLibroCollection();
+            Collection<GeneroLibro> generoLibroCollectionNew = genero.getGeneroLibroCollection();
+            Collection<GeneroLibro> attachedGeneroLibroCollectionNew = new ArrayList<GeneroLibro>();
+            for (GeneroLibro generoLibroCollectionNewGeneroLibroToAttach : generoLibroCollectionNew) {
+                generoLibroCollectionNewGeneroLibroToAttach = em.getReference(generoLibroCollectionNewGeneroLibroToAttach.getClass(), generoLibroCollectionNewGeneroLibroToAttach.getIdGenero());
+                attachedGeneroLibroCollectionNew.add(generoLibroCollectionNewGeneroLibroToAttach);
             }
-            libroCollectionNew = attachedLibroCollectionNew;
-            genero.setLibroCollection(libroCollectionNew);
+            generoLibroCollectionNew = attachedGeneroLibroCollectionNew;
+            genero.setGeneroLibroCollection(generoLibroCollectionNew);
             genero = em.merge(genero);
-            for (Libro libroCollectionOldLibro : libroCollectionOld) {
-                if (!libroCollectionNew.contains(libroCollectionOldLibro)) {
-                    libroCollectionOldLibro.getGeneroCollection().remove(genero);
-                    libroCollectionOldLibro = em.merge(libroCollectionOldLibro);
+            for (GeneroLibro generoLibroCollectionOldGeneroLibro : generoLibroCollectionOld) {
+                if (!generoLibroCollectionNew.contains(generoLibroCollectionOldGeneroLibro)) {
+                    generoLibroCollectionOldGeneroLibro.setId(null);
+                    generoLibroCollectionOldGeneroLibro = em.merge(generoLibroCollectionOldGeneroLibro);
                 }
             }
-            for (Libro libroCollectionNewLibro : libroCollectionNew) {
-                if (!libroCollectionOld.contains(libroCollectionNewLibro)) {
-                    libroCollectionNewLibro.getGeneroCollection().add(genero);
-                    libroCollectionNewLibro = em.merge(libroCollectionNewLibro);
+            for (GeneroLibro generoLibroCollectionNewGeneroLibro : generoLibroCollectionNew) {
+                if (!generoLibroCollectionOld.contains(generoLibroCollectionNewGeneroLibro)) {
+                    Genero oldIdOfGeneroLibroCollectionNewGeneroLibro = generoLibroCollectionNewGeneroLibro.getId();
+                    generoLibroCollectionNewGeneroLibro.setId(genero);
+                    generoLibroCollectionNewGeneroLibro = em.merge(generoLibroCollectionNewGeneroLibro);
+                    if (oldIdOfGeneroLibroCollectionNewGeneroLibro != null && !oldIdOfGeneroLibroCollectionNewGeneroLibro.equals(genero)) {
+                        oldIdOfGeneroLibroCollectionNewGeneroLibro.getGeneroLibroCollection().remove(generoLibroCollectionNewGeneroLibro);
+                        oldIdOfGeneroLibroCollectionNewGeneroLibro = em.merge(oldIdOfGeneroLibroCollectionNewGeneroLibro);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -118,10 +128,10 @@ public class GeneroJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The genero with id " + id + " no longer exists.", enfe);
             }
-            Collection<Libro> libroCollection = genero.getLibroCollection();
-            for (Libro libroCollectionLibro : libroCollection) {
-                libroCollectionLibro.getGeneroCollection().remove(genero);
-                libroCollectionLibro = em.merge(libroCollectionLibro);
+            Collection<GeneroLibro> generoLibroCollection = genero.getGeneroLibroCollection();
+            for (GeneroLibro generoLibroCollectionGeneroLibro : generoLibroCollection) {
+                generoLibroCollectionGeneroLibro.setId(null);
+                generoLibroCollectionGeneroLibro = em.merge(generoLibroCollectionGeneroLibro);
             }
             em.remove(genero);
             em.getTransaction().commit();

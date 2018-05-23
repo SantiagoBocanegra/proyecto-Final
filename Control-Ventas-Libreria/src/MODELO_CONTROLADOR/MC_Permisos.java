@@ -46,7 +46,7 @@ public class MC_Permisos {
         return estado;
     }
     
-    public boolean editarPermiso (Permisos permisos) {
+    public boolean editarPermiso(Permisos permisos) {
         PermisosJpaController control = new PermisosJpaController(emf);
         boolean estado = true;
         try {

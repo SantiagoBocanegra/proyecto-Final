@@ -6,6 +6,7 @@
 package VISTA;
 
 import MODELO.Empleado;
+import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_Empleado;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,13 +25,14 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     private final String nombreTabla = "Empleado";
     private int id;
     DefaultTableModel modelo;
+    Permisos permiso;
 
     public ventanaVerEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        id = 0;
-        this.setSize(868, 564);
         modelo = (DefaultTableModel) tablaEmpleado.getModel();
+        this.setSize(868, 564);
+        id = 0;
     }
 
     /**
@@ -140,17 +142,17 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         entId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         entId.setText("Id");
         jPanel4.add(entId);
-        entId.setBounds(5, 75, 70, 30);
+        entId.setBounds(5, 45, 70, 30);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setText("Id");
         jPanel4.add(jLabel1);
-        jLabel1.setBounds(30, 20, 30, 30);
+        jLabel1.setBounds(30, 5, 30, 30);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("Empleado");
         jPanel4.add(jLabel2);
-        jLabel2.setBounds(13, 35, 60, 30);
+        jLabel2.setBounds(13, 20, 60, 30);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(757, 100, 80, 410);
@@ -184,6 +186,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
             modelo.removeRow(modelo.getRowCount() - 1);
         }
     }
+
     private void tablaEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadoMouseClicked
         id = Integer.parseInt(modelo.getValueAt(tablaEmpleado.getSelectedRow(), 0).toString());
         entId.setText(String.valueOf(id));
@@ -245,31 +248,47 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (id > 0) {
-            ventanaEmpleado ventanaEmpleado = new ventanaEmpleado(new javax.swing.JDialog(), true);
-            limpiarTabla();
-            MC_Empleado controlEmpleado = new MC_Empleado();
-            Empleado empleadoAux = controlEmpleado.buscarEmpleado(id);
-            id = 0;
-            entId.setText("Id");
-            ventanaEmpleado.btnGuardar.setVisible(false);
-            ventanaEmpleado.entFechaContrato.setEnabled(false);
-            ventanaEmpleado.setEmpleado(empleadoAux);
-            ventanaEmpleado.mostrarElementos(empleadoAux);
-            ventanaEmpleado.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+            if (id > 0) {
+                ventanaEmpleado ventanaEmpleado = new ventanaEmpleado(new javax.swing.JDialog(), true);
+                limpiarTabla();
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                Empleado empleadoAux = controlEmpleado.buscarEmpleado(id);
+                id = 0;
+                entId.setText("Id");
+                ventanaEmpleado.btnGuardar.setVisible(false);
+                ventanaEmpleado.entFechaContrato.setEnabled(false);
+                ventanaEmpleado.setEmpleado(empleadoAux);
+                ventanaEmpleado.mostrarElementos(empleadoAux);
+                ventanaEmpleado.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        ventanaEmpleado ventanaEmp = new ventanaEmpleado(new javax.swing.JDialog(), true);
-        ventanaEmp.btnEditar.setVisible(false);
-        limpiarTabla();
-        id = 0;
-        entId.setText("Id");
-        ventanaEmp.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaEmpleado ventanaEmp = new ventanaEmpleado(new javax.swing.JDialog(), true);
+            ventanaEmp.btnEditar.setVisible(false);
+            limpiarTabla();
+            id = 0;
+            entId.setText("Id");
+            ventanaEmp.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments

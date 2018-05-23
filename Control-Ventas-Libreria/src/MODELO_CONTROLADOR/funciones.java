@@ -2,6 +2,8 @@
 package MODELO_CONTROLADOR;
 
 
+import MODELO.Libro;
+import MODELO.Permisos;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -11,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -24,6 +27,9 @@ import javax.swing.JOptionPane;
  * 3 bytes -> jpg -> Convertir un arreglo de bytes en imagen 
  * 4 cargarImagen -> Cargar una imagen de el pc
  * 5 sumarRestarFecha -> sumar o restar dias de la fecha actual
+ * 6 eliminarLibro -> editar cantidad de lisbros 
+ * 7 permisosRol -> obtener los permisos de un rol especifico 
+ * 8 getHast -> encriptar un String con md5
  */
 public class funciones {
     
@@ -93,4 +99,42 @@ public class funciones {
             cal.add(Calendar.YEAR, año);
         return cal.getTime();
     }
+    //Funcion numero 6
+    public static void eliminarLibros ( List<Libro> libros ) {
+        MC_Libro controlLibro =  new MC_Libro(); 
+        for ( Libro libro : libros ) {
+            controlLibro.editarLibro(libro);
+        }
+        controlLibro.close();
+    }
+    //Funcion numero 7
+    public static Permisos permisosRol ( int idRol, String nombreTabla ) {
+        MC_Permisos controlPermisos = new MC_Permisos();
+        List<Permisos> permisosAux = controlPermisos.buscarPermisosRolId(idRol);
+        Permisos permiso = new Permisos();
+        for (Permisos permisoA : permisosAux) {
+            if (permisoA.getNombreTabla().equals(nombreTabla)) {
+                permiso = permisoA;
+                break;
+            }
+        }
+        return permiso;
+    }
+    
+    //Funcion numero 8
+    public static String getHash(String txt) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(txt.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            System.out.println("Error funciones.getHash(): "+e.getMessage());
+        }
+        return null;
+    }
+    
 }

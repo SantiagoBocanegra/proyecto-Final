@@ -12,11 +12,11 @@ import MODELO.Ordenitemprestamo;
 import MODELO.Ordenprestamo;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.MC_OrdenItemPrestamo;
 import MODELO_CONTROLADOR.MC_OrdenPrestamo;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -40,11 +40,18 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     private Cliente cliente;
     private Ordenprestamo ordenPrestamo;
     private List<Ordenitemprestamo> ordenItemPrestamo = new ArrayList<>();
+    private List<Libro> librosOrden = new ArrayList<>();
+    private int isbn;
+    private int numeroFila;
     private DefaultTableModel modelo;
 
     public ventanaOrdenPrestamo(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setSize(600, 594);
+        
+        isbn = 0;
+        numeroFila = 0;
         
         entFechaOrden.setEnabled(false);
         entNombreEmpledo.setEditable(false);
@@ -83,6 +90,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -117,13 +125,16 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         cajaEstadoOrden = new javax.swing.JComboBox<>();
+        btnCancelar = new javax.swing.JButton();
+        entIsbn = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         entNumeroOrden = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(570, 600));
+        setMinimumSize(new java.awt.Dimension(400, 400));
         setPreferredSize(new java.awt.Dimension(620, 530));
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
@@ -133,6 +144,15 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         jLabel5.setText("Orden De Prestamo");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(10, 5, 160, 30);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(210, 10, 73, 23);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -279,6 +299,11 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 "Isbn", "Titulo", "Estado Del Libro"
             }
         ));
+        tablaItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaItemMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaItem);
         if (tablaItem.getColumnModel().getColumnCount() > 0) {
             tablaItem.getColumnModel().getColumn(0).setPreferredWidth(1);
@@ -287,16 +312,16 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         }
 
         jPanel5.add(jScrollPane1);
-        jScrollPane1.setBounds(5, 5, 480, 200);
+        jScrollPane1.setBounds(5, 5, 480, 215);
 
         entCantidadTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel5.add(entCantidadTotal);
-        entCantidadTotal.setBounds(305, 210, 180, 30);
+        entCantidadTotal.setBounds(305, 225, 180, 30);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("Cantidad Total");
         jPanel5.add(jLabel4);
-        jLabel4.setBounds(210, 210, 90, 30);
+        jLabel4.setBounds(210, 225, 90, 30);
 
         btnGuardar.setText("guar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -305,7 +330,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             }
         });
         jPanel5.add(btnGuardar);
-        btnGuardar.setBounds(490, 170, 70, 70);
+        btnGuardar.setBounds(490, 190, 70, 70);
 
         btnEditar.setText("Edit");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -314,19 +339,34 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             }
         });
         jPanel5.add(btnEditar);
-        btnEditar.setBounds(490, 95, 70, 70);
+        btnEditar.setBounds(490, 115, 70, 70);
 
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel15.setText("Estado Orden");
         jPanel5.add(jLabel15);
-        jLabel15.setBounds(5, 210, 80, 30);
+        jLabel15.setBounds(5, 225, 80, 30);
 
         cajaEstadoOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin Cancelar", "Cancelada" }));
         jPanel5.add(cajaEstadoOrden);
-        cajaEstadoOrden.setBounds(90, 210, 115, 30);
+        cajaEstadoOrden.setBounds(90, 225, 115, 30);
+
+        btnCancelar.setText("Canc");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnCancelar);
+        btnCancelar.setBounds(490, 40, 70, 70);
+
+        entIsbn.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        entIsbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        entIsbn.setText("Isbn");
+        jPanel5.add(entIsbn);
+        entIsbn.setBounds(490, 5, 70, 30);
 
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(5, 275, 564, 250);
+        jPanel5.setBounds(5, 275, 564, 265);
         jPanel1.add(jSeparator2);
         jSeparator2.setBounds(165, 20, 145, 2);
 
@@ -339,22 +379,8 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         jPanel1.add(entNumeroOrden);
         entNumeroOrden.setBounds(410, 5, 155, 30);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(5, 5, 575, 545);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -412,12 +438,22 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 entrada = "Sin Especificar";
             }
             //prepara la lista con los item que se van a guardar en la base de datos
-            Ordenitemprestamo ordenI = new Ordenitemprestamo();
-            ordenI.setEstadolibro(entrada);
-            ordenI.setLibro(libro);
-            ordenItemPrestamo.add(ordenI);
-            modelo.addRow(new Object[]{isbn, titulo, entrada});
-            cantidadTotal += 1;
+            int cantidad = Integer.parseInt(libro.getEstadolibro());
+
+            if (cantidad > 5) {
+                Ordenitemprestamo ordenI = new Ordenitemprestamo();
+                ordenI.setEstadolibro(entrada);
+                ordenI.setLibro(libro);
+                ordenItemPrestamo.add(ordenI);
+                modelo.addRow(new Object[]{isbn, titulo, entrada});
+                int cantidadNueva = Integer.parseInt(libro.getEstadolibro()) - 1;
+                libro.setEstadolibro(String.valueOf(cantidadNueva));
+                librosOrden.add(libro);
+                cantidadTotal += 1;
+            } else {
+                JOptionPane.showMessageDialog(this, "No Hay Suficientes Ejemplares Del libro: " + titulo, "Informacion", 1, null);
+            }
+
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
     }
@@ -552,6 +588,9 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                         MC_OrdenItemPrestamo controlItem = new MC_OrdenItemPrestamo();
                         controlItem.nuevaOrdenItemPrestamo(item);
                     }
+
+                    funciones.eliminarLibros(librosOrden);
+
                     JOptionPane.showMessageDialog(this, "Orden De Prestamo Almacenada", "Informacion", 1, null);
                     this.setVisible(false);
                 }
@@ -574,6 +613,39 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MC_Libro contro = new MC_Libro();
+        List<Libro> ordenItem3 = new ArrayList<>();
+        ordenItem3.add(contro.buscarLibro(4));
+        //Actualiza la  lista de orden de item para modificar
+        mostraLibro(ordenItem3);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tablaItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaItemMouseClicked
+        isbn = Integer.parseInt(modelo.getValueAt(tablaItem.getSelectedRow(), 0).toString());
+        numeroFila = tablaItem.getSelectedRow();
+        entIsbn.setText("" + isbn);
+    }//GEN-LAST:event_tablaItemMouseClicked
+
+    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        if (isbn != 0) {
+            
+            for (int i = 0; i < librosOrden.size(); i++) {
+                if (librosOrden.get(i).getIsbn() == isbn) {
+                    librosOrden.remove(i);
+                    modelo.removeRow(numeroFila);
+                }
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Ha Selecionado Nada", "Informacion", 1, null);
+        }
+        
+        isbn = 0;
+        entIsbn.setText("Isbn");
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     public Ordenprestamo getOrdenPrestamo() {
         return ordenPrestamo;
@@ -628,6 +700,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscarCliente;
     public javax.swing.JButton btnBuscarEmpleado;
+    private javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cajaEstadoOrden;
@@ -638,11 +711,13 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     private javax.swing.JTextField entCedulaEmpleado;
     private com.toedter.calendar.JDateChooser entFechaEntrega;
     private com.toedter.calendar.JDateChooser entFechaOrden;
+    private javax.swing.JTextField entIsbn;
     private javax.swing.JTextField entNombreCliente;
     private javax.swing.JTextField entNombreEmpledo;
     private javax.swing.JTextField entNumeroOrden;
     private javax.swing.JTextField entTelefonoCliente;
     private javax.swing.JTextField entTelefonoEmpleado;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

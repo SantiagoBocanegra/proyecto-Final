@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,7 +7,9 @@
 package VISTA;
 
 import MODELO.Cliente;
+import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_Cliente;
+import MODELO_CONTROLADOR.funciones;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,15 +26,17 @@ public class ventanaVerCliente extends javax.swing.JDialog {
      */
     private final String nombreTabla = "Cliente";
     DefaultTableModel modelo;
+    Permisos permiso;
     private int id;
 
     public ventanaVerCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        id = 0;
-        this.setSize(867, 564);
         modelo = (DefaultTableModel) tablaCliente.getModel();
+        permiso = funciones.permisosRol(9, nombreTabla);
         entId.setEditable(false);
+        this.setSize(867, 564);
+        id = 0;
     }
 
     /**
@@ -143,12 +148,12 @@ public class ventanaVerCliente extends javax.swing.JDialog {
         entId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         entId.setText("Id");
         jPanel4.add(entId);
-        entId.setBounds(5, 75, 70, 30);
+        entId.setBounds(5, 35, 70, 30);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setText("Id Cliente");
         jPanel4.add(jLabel1);
-        jLabel1.setBounds(5, 40, 70, 30);
+        jLabel1.setBounds(5, 5, 70, 30);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(757, 100, 80, 410);
@@ -164,6 +169,7 @@ public class ventanaVerCliente extends javax.swing.JDialog {
             modelo.removeRow(modelo.getRowCount() - 1);
         }
     }
+
     private void btnVerTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodoActionPerformed
         limpiarTabla();
         id = 0;
@@ -221,31 +227,50 @@ public class ventanaVerCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaClienteMouseClicked
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
-        ventanaCli.btnEditar.setVisible(false);
-        limpiarTabla();
-        id = 0;
-        entId.setText("Id");
-        ventanaCli.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
+            ventanaCli.btnEditar.setVisible(false);
+            limpiarTabla();
+            id = 0;
+            entId.setText("Id");
+            ventanaCli.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (id > 0) {
-            ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
-            limpiarTabla();
-            MC_Cliente controlCliente = new MC_Cliente();
-            Cliente clienteAux = controlCliente.buscarCliente(id);
-            id = 0;
-            entId.setText("Id");
-            ventanaCli.btnGuargar.setVisible(false);
-            ventanaCli.entFecha.setEnabled(false);
-            ventanaCli.setCliente(clienteAux);
-            ventanaCli.mostrarDatosVentana(clienteAux);
-            ventanaCli.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+            if (id > 0) {
+                ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
+                limpiarTabla();
+                MC_Cliente controlCliente = new MC_Cliente();
+                Cliente clienteAux = controlCliente.buscarCliente(id);
+                id = 0;
+                entId.setText("Id");
+                ventanaCli.btnGuargar.setVisible(false);
+                ventanaCli.entFecha.setEnabled(false);
+                ventanaCli.setCliente(clienteAux);
+                ventanaCli.mostrarDatosVentana(clienteAux);
+                ventanaCli.setVisible(true);
+                if (permiso.getVer()) {
+                    btnVerTodoActionPerformed(evt);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments

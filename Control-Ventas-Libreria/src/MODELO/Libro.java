@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -69,12 +68,12 @@ public class Libro implements Serializable {
     private String estadolibro;
     @Column(name = "precio")
     private Integer precio;
-    @ManyToMany(mappedBy = "libroCollection")
-    private Collection<Genero> generoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
     private Collection<Ordenitem> ordenitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
     private Collection<Ordenitemprestamo> ordenitemprestamoCollection;
+    @OneToMany(mappedBy = "isbn")
+    private Collection<GeneroLibro> generoLibroCollection;
 
     public Libro() {
     }
@@ -156,15 +155,6 @@ public class Libro implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Genero> getGeneroCollection() {
-        return generoCollection;
-    }
-
-    public void setGeneroCollection(Collection<Genero> generoCollection) {
-        this.generoCollection = generoCollection;
-    }
-
-    @XmlTransient
     public Collection<Ordenitem> getOrdenitemCollection() {
         return ordenitemCollection;
     }
@@ -180,6 +170,15 @@ public class Libro implements Serializable {
 
     public void setOrdenitemprestamoCollection(Collection<Ordenitemprestamo> ordenitemprestamoCollection) {
         this.ordenitemprestamoCollection = ordenitemprestamoCollection;
+    }
+
+    @XmlTransient
+    public Collection<GeneroLibro> getGeneroLibroCollection() {
+        return generoLibroCollection;
+    }
+
+    public void setGeneroLibroCollection(Collection<GeneroLibro> generoLibroCollection) {
+        this.generoLibroCollection = generoLibroCollection;
     }
 
     @Override

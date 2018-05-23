@@ -63,9 +63,6 @@ public class MC_Libro {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Editar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Libro.editarLibro(): "+e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
         return estado;
     }
@@ -82,6 +79,9 @@ public class MC_Libro {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Libro.buscarLibro(): "+e.getMessage());
+        }finally {
+            em.close();
+            emf.close();
         }
         return libro;
     }

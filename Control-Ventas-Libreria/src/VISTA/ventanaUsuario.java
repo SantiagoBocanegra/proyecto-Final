@@ -276,7 +276,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         switch (caso) {
             case 0:
-                if (usuario.getContraseña().equals(JOptionPane.showInputDialog(this, "Confirmar Contraseña"))) {
+                String contraseña = JOptionPane.showInputDialog(this, "Confirmar Contraseña");
+                if (validarContraseña(contraseña, usuario)) {
                     MC_Usuario control = new MC_Usuario();
                     obtenerElementosVentana();
                     if (JOptionPane.showConfirmDialog(this, "Editar Usuario", "Escudo", 1, 2, null) == 0) {
@@ -285,9 +286,6 @@ public class ventanaUsuario extends javax.swing.JDialog {
                             this.setVisible(false);
                         }
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", 0, null);
-                    this.setVisible(false);
                 }
                 break;
             case 1:
@@ -319,19 +317,26 @@ public class ventanaUsuario extends javax.swing.JDialog {
         String confirmarContraseña = "";
         confirmarContraseña = entConfirmarContraseña.getText();
         boolean estadoUsuario = entEstadoUsuario.isSelected();
-        if (Usuario.isEmpty() || contraseña.isEmpty() || contraseña.isEmpty()) {
+        if (!Usuario.isEmpty()) {
+            usuario.setUsuario(Usuario);
+        } else {
             caso = 1;
         }
-        if (contraseña.equals(confirmarContraseña)) {
-            caso = 2;
+
+        if (!confirmarContraseña.isEmpty() && !contraseña.isEmpty()) {
+            if (!contraseña.equals(confirmarContraseña)) {
+                usuario.setContraseña(funciones.getHash(contraseña));
+            } else {
+                caso = 2;
+            }
+        } else {
+            caso = 1;
         }
-        usuario.setUsuario(Usuario);
-        usuario.setContraseña(contraseña);
         usuario.setEstado(estadoUsuario);
         usuario.setEmpleadoId(empleado);
     }
 
-    public void mostrarEmpleado (Empleado emp) {
+    public void mostrarEmpleado(Empleado emp) {
         empleado = new Empleado();
         empleado = emp;
         if (emp.getFoto() == null || emp.getFoto().length > 0) {
@@ -350,6 +355,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         }
         entCedula.setText(emp.getCedula());
     }
+
     public void mostrarElementos(Usuario usuario) {
         Empleado emp = usuario.getEmpleadoId();
         mostrarEmpleado(emp);
@@ -365,6 +371,20 @@ public class ventanaUsuario extends javax.swing.JDialog {
             String nombre = roles.getNombrerol();
             modelo.addRow(new Object[]{id, nombre});
         }
+    }
+
+    public boolean validarContraseña(String contraseña, Usuario usuario) {
+        boolean validacion = true;
+        if (contraseña != null && !contraseña.isEmpty()) {
+            if (!usuario.getContraseña().equals(funciones.getHash(contraseña))) {
+                JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", 0, null);
+                validacion = false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", 0, null);
+            validacion = false;
+        }
+        return validacion;
     }
 
     public Empleado getEmpleado() {

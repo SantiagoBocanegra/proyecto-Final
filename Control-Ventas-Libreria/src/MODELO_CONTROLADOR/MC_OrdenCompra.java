@@ -41,9 +41,12 @@ public class MC_OrdenCompra {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Guardar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Guardar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.nuevaOrdenCompra(): " + e.getMessage());
-        } 
+        } finally {
+            em.close();
+            emf.close();
+        }
         return estado;
     }
 
@@ -58,8 +61,11 @@ public class MC_OrdenCompra {
         } catch (Exception e) {
             estado = false;
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Editar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Editar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.EditarOrdenCompra(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return estado;
     }
@@ -74,7 +80,7 @@ public class MC_OrdenCompra {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.buscarOrdenCompra(): " + e.getMessage());
         } finally {
             em.close();
@@ -93,7 +99,7 @@ public class MC_OrdenCompra {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.buscarTodasOrdenesCompra(): " + e.getMessage());
         } finally {
             em.close();
@@ -101,7 +107,7 @@ public class MC_OrdenCompra {
         }
         return ordenesCompra;
     }
-    
+
     //FUNCION NUMERO 4
     public boolean borrarOrdenCompra(int numeroOrdenCompra) {
         OrdencompraJpaController servicio = new OrdencompraJpaController(emf);
@@ -112,18 +118,13 @@ public class MC_OrdenCompra {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
-            estado =  false;
-            JOptionPane.showMessageDialog(null, "Error Al Borrar La Orden De Compra\n"+e.getMessage(), "Error", 0, null);
+            estado = false;
+            JOptionPane.showMessageDialog(null, "Error Al Borrar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_OrdenCompra.borrarOrdenCompra(): " + e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return estado;
-    }
-    
-    public void close () {
-        em.close();
-        emf.close();
     }
 }

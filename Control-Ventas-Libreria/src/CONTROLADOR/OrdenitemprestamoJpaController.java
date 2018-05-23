@@ -16,6 +16,7 @@ import MODELO.Libro;
 import MODELO.Ordenitemprestamo;
 import MODELO.OrdenitemprestamoPK;
 import MODELO.Ordenprestamo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,8 +41,8 @@ public class OrdenitemprestamoJpaController implements Serializable {
         if (ordenitemprestamo.getOrdenitemprestamoPK() == null) {
             ordenitemprestamo.setOrdenitemprestamoPK(new OrdenitemprestamoPK());
         }
-        ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
         ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
+        ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,8 +80,8 @@ public class OrdenitemprestamoJpaController implements Serializable {
     }
 
     public void edit(Ordenitemprestamo ordenitemprestamo) throws NonexistentEntityException, Exception {
-        ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
         ordenitemprestamo.getOrdenitemprestamoPK().setLibroIsbn(ordenitemprestamo.getLibro().getIsbn());
+        ordenitemprestamo.getOrdenitemprestamoPK().setOrdenprestamoNumeroorden(ordenitemprestamo.getOrdenprestamo().getNumeroorden());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -209,22 +210,22 @@ public class OrdenitemprestamoJpaController implements Serializable {
         }
     }
     
-    //Busquedas Propias
-    public List<Ordenitemprestamo> buscarOrdenItemNumeroOrden(int numeroOrden){
-        List<Ordenitemprestamo> ordenItem = null;
-        EntityManager em = getEntityManager();
-        try{
-            em.getTransaction().begin();
-            TypedQuery<Ordenitemprestamo>  q = em.createNamedQuery("Ordenitemprestamo.findByOrdenprestamoNumeroorden", Ordenitemprestamo.class);
-            q.setParameter("ordenprestamoNumeroorden", numeroOrden);
-            ordenItem = q.getResultList();
-            em.getTransaction().commit();
-        }catch(Exception e){
-            em.getTransaction().rollback();
-            System.out.println("ERROR ordenitemprestamoJpaController.buscarOrdenItemNumeroOrden: "+e.getMessage());
-        }finally{
-            em.close();
-        }
-        return ordenItem;
+    //busquedas propias 
+    public List<Ordenitemprestamo> buscarOrdenItemNumeroOrden(int itemNumeroOrden){
+       EntityManager em = getEntityManager();
+       List<Ordenitemprestamo> itemOrden = new ArrayList<>();
+       try {
+           em.getTransaction().begin();
+           TypedQuery<Ordenitemprestamo> q = em.createNamedQuery("Ordenitemprestamo.findByOrdenprestamoNumeroorden", Ordenitemprestamo.class);
+           q.setParameter("ordenprestamoNumeroorden", itemNumeroOrden);
+           itemOrden = q.getResultList();
+           em.getTransaction().commit();
+       }catch (Exception e) {
+           em.getTransaction().rollback();
+           System.out.println("Error OrdenitemprestamoJpaController.buscarOrdenItemNumeroOrden(): "+e.getMessage());
+       } finally {
+           em.close();
+       }
+       return itemOrden;
     }
 }

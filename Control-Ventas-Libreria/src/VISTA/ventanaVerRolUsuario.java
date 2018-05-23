@@ -5,8 +5,10 @@
  */
 package VISTA;
 
+import MODELO.Permisos;
 import MODELO.RolUsuario;
 import MODELO_CONTROLADOR.MC_RolUsuario;
+import MODELO_CONTROLADOR.funciones;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,14 +23,17 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     /**
      * Creates new form ventanaVerRolUsuario
      */
-    private final String nombreTabla =  "Rol";
+    private final String nombreTabla = "Rol";
     DefaultTableModel modelo;
+    Permisos permiso;
     int id;
+
     public ventanaVerRolUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         id = 0;
-        modelo = (DefaultTableModel)tablaRol.getModel();
+        modelo = (DefaultTableModel) tablaRol.getModel();
+        permiso = funciones.permisosRol(9, "Rol");
     }
 
     /**
@@ -172,9 +177,9 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void limpiarTabla () {
+    public void limpiarTabla() {
         while (modelo.getRowCount() > 0) {
-            modelo.removeRow(modelo.getRowCount()-1);
+            modelo.removeRow(modelo.getRowCount() - 1);
         }
     }
     private void tablaRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRolMouseClicked
@@ -208,7 +213,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
             for (RolUsuario rol : RolUsuario) {
                 int idRol = rol.getId();
                 SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
-                
+
                 String nombreUsuario = "Sin Nombre";
                 if (rol.getUsuarioId().getUsuario() != null && !rol.getUsuarioId().getUsuario().isEmpty()) {
                     nombreUsuario = rol.getUsuarioId().getUsuario();
@@ -217,7 +222,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
                 if (rol.getNombrerol() != null && !rol.getNombrerol().isEmpty()) {
                     tipoRol = rol.getNombrerol();
                 }
-                
+
                 String fechaCreacion = "Sin Fecha";
                 if (rol.getFechacreacion() != null) {
                     fechaCreacion = formato.format(rol.getFechacreacion());
@@ -230,33 +235,50 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (id > 0) {
-            ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
-            limpiarTabla();
-            MC_RolUsuario controlRol = new MC_RolUsuario();
-            RolUsuario RolUsuarioAux = controlRol.buscarRolUsuario(id);
-            id = 0;
-            entNumeroOrden.setText("Id");
-            ventanaRol.entFechaRegistro.setEnabled(false);
-            ventanaRol.btnGuardar.setVisible(false);
-            ventanaRol.setRolUsuario(RolUsuarioAux);
-            ventanaRol.mostrarElementos(RolUsuarioAux);
-            ventanaRol.setVisible(true);
-            btnVerTodoActionPerformed(evt);
+        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+            if (id > 0) {
+                ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
+                limpiarTabla();
+                MC_RolUsuario controlRol = new MC_RolUsuario();
+                RolUsuario RolUsuarioAux = controlRol.buscarRolUsuario(id);
+                id = 0;
+                entNumeroOrden.setText("Id");
+                ventanaRol.entFechaRegistro.setEnabled(false);
+                ventanaRol.btnGuardar.setVisible(false);
+                ventanaRol.setRolUsuario(RolUsuarioAux);
+                ventanaRol.mostrarElementos(RolUsuarioAux);
+                ventanaRol.setVisible(true);
+                btnVerTodoActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
-        ventanaRol.btnEditar.setVisible(false);
-        limpiarTabla();
-        id = 0;
-        entNumeroOrden.setText("Id");
-        ventanaRol.setVisible(true);
-        btnVerTodoActionPerformed(evt);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
+            ventanaRol.btnEditar.setVisible(false);
+            limpiarTabla();
+            id = 0;
+            entNumeroOrden.setText("Id");
+            ventanaRol.setVisible(true);
+            btnVerTodoActionPerformed(evt);
+            btnVerTodoActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments

@@ -167,22 +167,23 @@ public class PermisosJpaController implements Serializable {
         }
     }
     
-    //Consultas Prompias
-    public List<Permisos> buscarPermisosRolId (int idPermisos) {
+    //BUSQUEDAD PROPIAS
+    public List<Permisos> buscarPermisosRolId (int rolId) {
         EntityManager em = getEntityManager();
-        List<Permisos> permisos = new ArrayList<>();
+        List<Permisos> permisosRol = new ArrayList<>();
         try {
             em.getTransaction().begin();
-            TypedQuery<Permisos> q = em.createNamedQuery("Permisos.finByRolIdPermisos", Permisos.class);
-            q.setParameter("rolId", idPermisos);
-            permisos = q.getResultList();
+            TypedQuery<Permisos> q = em.createNamedQuery("Permisos.findByRolId", Permisos.class);
+            q.setParameter("rolId", rolId);
+            permisosRol = q.getResultList();
             em.getTransaction().commit();
-        } catch (Exception e) {
+        }catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("Error PermisosJpaController.buscarPermisosRolId(): "+e.getMessage());
+            System.out.println("Error PermisosJoaController.buscarPermisosRolId(): "+e.getMessage());
         } finally {
             em.close();
         }
-        return permisos;
+        return permisosRol;
     }
+    
 }

@@ -6,7 +6,9 @@
 package VISTA;
 
 import MODELO.Genero;
+import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_Genero;
+import MODELO_CONTROLADOR.funciones;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,13 +26,14 @@ public class ventanaverGenero extends javax.swing.JDialog {
     private final String nombreTabla = "Genero";
     private int id;
     DefaultTableModel modelo;
-    List<Integer> idGenero = new ArrayList<>();
-    
+    List<Genero> Generos = new ArrayList<>();
+    Permisos permiso;
+
     public ventanaverGenero(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         id = 0;
-        this.setSize(597,460);
+        this.setSize(597, 460);
         modelo = (DefaultTableModel) tablaGenero.getModel();
     }
 
@@ -55,6 +58,7 @@ public class ventanaverGenero extends javax.swing.JDialog {
         btnVerTodo = new javax.swing.JButton();
         entId = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -98,12 +102,12 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jScrollPane1.setBounds(5, 5, 450, 280);
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(10, 60, 460, 290);
+        jPanel2.setBounds(5, 60, 460, 290);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
         jLabel1.setText("Generos");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(190, 10, 170, 40);
+        jLabel1.setBounds(10, 10, 170, 40);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
@@ -151,7 +155,7 @@ public class ventanaverGenero extends javax.swing.JDialog {
         entId.setBounds(5, 5, 70, 30);
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(480, 60, 80, 340);
+        jPanel3.setBounds(470, 60, 80, 340);
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -160,20 +164,22 @@ public class ventanaverGenero extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnAgregar);
-        btnAgregar.setBounds(200, 358, 90, 40);
+        btnAgregar.setBounds(5, 358, 460, 40);
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(180, 35, 365, 10);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(5, 5, 570, 410);
+        jPanel1.setBounds(5, 5, 555, 405);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         if (id > 0) {
-            limpiarTabla();
             ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
             MC_Genero controlGenero = new MC_Genero();
             Genero generoAux = controlGenero.buscarGenero(id);
+            controlGenero.close();
             id = 0;
             entId.setText("Id");
             if (generoAux.getId() != null && generoAux.getId() > 0) {
@@ -192,25 +198,30 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (id > 0) {
-            limpiarTabla();
-            ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
-            MC_Genero controlGenero = new MC_Genero();
-            Genero generoAux = controlGenero.buscarGenero(id);
-            id = 0;
-            entId.setText("Id");
-            if (generoAux.getId() != null && generoAux.getId() > 0) {
-                ventanaGenero.btnGuardar.setVisible(false);
-                ventanaGenero.entFechaCrecion.setEnabled(false);
-                ventanaGenero.setGenero(generoAux);
-                ventanaGenero.mostrarElementos(generoAux);
-                ventanaGenero.setVisible(true);
-                btnVerTodoActionPerformed(evt);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            if (id > 0) {
+                limpiarTabla();
+                ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
+                MC_Genero controlGenero = new MC_Genero();
+                Genero generoAux = controlGenero.buscarGenero(id);
+                controlGenero.close();
+                id = 0;
+                entId.setText("Id");
+                if (generoAux.getId() != null && generoAux.getId() > 0) {
+                    ventanaGenero.btnGuardar.setVisible(false);
+                    ventanaGenero.entFechaCrecion.setEnabled(false);
+                    ventanaGenero.setGenero(generoAux);
+                    ventanaGenero.mostrarElementos(generoAux);
+                    ventanaGenero.setVisible(true);
+                    btnVerTodoActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Se Ha Encontrado Nada", "Informacion", 1, null);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No Se Ha Encontrado Nada", "Informacion", 1, null);
+                JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -239,12 +250,17 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
-        limpiarTabla();
-        id = 0;
-        entId.setText("Id");
-        ventanaGenero.btnEditar.setEnabled(false);
-        ventanaGenero.setVisible(true);
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
+            limpiarTabla();
+            id = 0;
+            entId.setText("Id");
+            ventanaGenero.btnEditar.setEnabled(false);
+            ventanaGenero.setVisible(true);
+            btnVerTodoActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void tablaGeneroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaGeneroMouseClicked
@@ -253,13 +269,16 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaGeneroMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        MC_Genero controlGenero = new MC_Genero();
         for (int i = 0; i < modelo.getRowCount(); i++) {
             boolean seleccion = (boolean) modelo.getValueAt(i, 3);
             if (seleccion) {
                 int idS = Integer.parseInt(modelo.getValueAt(i, 0).toString());
-                idGenero.add(idS);
+                Genero generoAux = controlGenero.buscarGenero(idS);
+                Generos.add(generoAux);
             }
         }
+        controlGenero.close();
         this.setVisible(false);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -269,14 +288,21 @@ public class ventanaverGenero extends javax.swing.JDialog {
         }
     }
 
-    public List<Integer> getIdGenero() {
-        return idGenero;
+    public List<Genero> getIdGenero() {
+        return Generos;
     }
 
-    public void setIdGenero(List<Integer> idGenero) {
-        this.idGenero = idGenero;
+    public void setIdGenero(List<Genero> Genero) {
+        this.Generos = Genero;
     }
-    
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments
@@ -332,6 +358,7 @@ public class ventanaverGenero extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tablaGenero;
     // End of variables declaration//GEN-END:variables
 }

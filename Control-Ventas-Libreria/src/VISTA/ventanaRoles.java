@@ -49,7 +49,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
         entFechaRegistro.setDate(funciones.fecha());
-
+        
     }
 
     /**
@@ -484,19 +484,19 @@ public class ventanaRoles extends javax.swing.JDialog {
         switch (caso) {
             case 0:
                 if (JOptionPane.showConfirmDialog(this, "Guardar Rol", "Escudo", 1, 3, null) == 0) {
+                    
                     MC_RolUsuario control = new MC_RolUsuario();
                     if (control.nuevoRolUsuario(rolUsuario)) {
+                        
                         MC_Permisos controlPermisos = new MC_Permisos();
                         for (Permisos permisosR : permisos) {
                             permisosR.setRolUsuarioId(rolUsuario);
                             controlPermisos.nuevoPermiso(permisosR);
                         }
                         controlPermisos.close();
-                        control.close();
+                        
                         JOptionPane.showMessageDialog(this, "Rol Guardado", "Informacion", 1, null);
                         this.setVisible(false);
-                    } else {
-                        control.close();
                     }
                 }
                 break;
@@ -542,11 +542,8 @@ public class ventanaRoles extends javax.swing.JDialog {
                             controlPermiso.nuevoPermiso(permisoRolU);
                         }
                         controlPermiso.close();
-                        controlRol.close();
                         JOptionPane.showMessageDialog(this, "Rol Editado", "Informacion", 1, null);
                         this.setVisible(false);
-                    } else {
-                        controlRol.close();
                     }
                 }
                 break;

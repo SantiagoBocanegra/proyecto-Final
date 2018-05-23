@@ -9,7 +9,6 @@ import MODELO.Cliente;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**

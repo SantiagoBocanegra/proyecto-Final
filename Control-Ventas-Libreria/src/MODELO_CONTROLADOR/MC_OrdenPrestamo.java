@@ -107,13 +107,4 @@ public class MC_OrdenPrestamo {
         }
         return ordenesPrestamo;
     }
-
-    public EntityTransaction getEmt() {
-        return emt;
-    }
-    
-    public void close () {
-        em.close();
-        emf.close();
-    }
 }

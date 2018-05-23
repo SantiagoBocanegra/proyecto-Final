@@ -231,22 +231,23 @@ public class RolUsuarioJpaController implements Serializable {
         }
     }
     
-    public List<RolUsuario>  buscarRolUsuarioId (int idUsuario) {
-        List<RolUsuario> roles = new ArrayList<>();
+    //busquedad propia
+    public List<RolUsuario> buscarRolUsuarioId(int idUsuario){
         EntityManager em = getEntityManager();
+        List<RolUsuario> rolUsuario = new ArrayList<>();
         try {
             em.getTransaction().begin();
-            TypedQuery<RolUsuario> q = em.createNamedQuery("RolUsuario.findByRolUsuarioId" ,  RolUsuario.class);
+            TypedQuery<RolUsuario> q =em.createNamedQuery("RolUsuario.findByUsuarioId", RolUsuario.class);
             q.setParameter("usuarioId", idUsuario);
-            roles = q.getResultList();
+            rolUsuario = q.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("Error RolUsuarioJpaController.buscarRolUsuarioId(): "+e.getMessage());
+            System.out.println("Error RolUsuarioJpaController.buscarrolUsuarioId(): "+e.getMessage());
         } finally {
             em.close();
         }
-        return roles;
+        return rolUsuario;
     }
     
 }

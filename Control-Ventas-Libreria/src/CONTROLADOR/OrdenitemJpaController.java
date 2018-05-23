@@ -16,6 +16,7 @@ import MODELO.Libro;
 import MODELO.Ordencompra;
 import MODELO.Ordenitem;
 import MODELO.OrdenitemPK;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,8 +41,8 @@ public class OrdenitemJpaController implements Serializable {
         if (ordenitem.getOrdenitemPK() == null) {
             ordenitem.setOrdenitemPK(new OrdenitemPK());
         }
-        ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
         ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
+        ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,8 +80,8 @@ public class OrdenitemJpaController implements Serializable {
     }
 
     public void edit(Ordenitem ordenitem) throws NonexistentEntityException, Exception {
-        ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
         ordenitem.getOrdenitemPK().setOrdencompraNumeroorden(ordenitem.getOrdencompra().getNumeroorden());
+        ordenitem.getOrdenitemPK().setLibroIsbn(ordenitem.getLibro().getIsbn());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -209,23 +210,23 @@ public class OrdenitemJpaController implements Serializable {
         }
     }
     
-    //Busquedas Propias
-    public List<Ordenitem> buscarOrdenItemNumeroOrden(int numeroOrden){
-        List<Ordenitem> ordenItem = null;
-        EntityManager em = getEntityManager();
-        try{
-            em.getTransaction().begin();
-            TypedQuery<Ordenitem>  q = em.createNamedQuery("Ordenitem.findByOrdencompraNumeroorden", Ordenitem.class);
-            q.setParameter("ordencompraNumeroorden", numeroOrden);
-            ordenItem = q.getResultList();
-            em.getTransaction().commit();
-        }catch(Exception e){
-            em.getTransaction().rollback();
-            System.out.println("ERROR ordenitemJpaController.buscarOrdenItemNumeroOrden: "+e.getMessage());
-        }finally{
-            em.close();
-        }
-        return ordenItem;
+    //busquedas propias 
+    public List<Ordenitem> buscarOrdenItemNumeroOrden(int itemNumeroOrden){
+       EntityManager em = getEntityManager();
+       List<Ordenitem> itemOrden = new ArrayList<>();
+       try {
+           em.getTransaction().begin();
+           TypedQuery<Ordenitem> q = em.createNamedQuery("Ordenitem.findByOrdencompraNumeroorden", Ordenitem.class);
+           q.setParameter("ordencompraNumeroorden", itemNumeroOrden);
+           itemOrden = q.getResultList();
+           em.getTransaction().commit();
+       }catch (Exception e) {
+           em.getTransaction().rollback();
+           System.out.println("Error OrdenitemJpaController.buscarOrdenItemNumeroOrden(): "+e.getMessage());
+       } finally {
+           em.close();
+       }
+       return itemOrden;
     }
     
 }

@@ -43,6 +43,9 @@ public class MC_RolUsuario {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Guardar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.nuevoRolUsuario(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return estado;
     }
@@ -60,6 +63,9 @@ public class MC_RolUsuario {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Editar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.editarRolUsuario(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return estado;
     }
@@ -115,6 +121,9 @@ public class MC_RolUsuario {
             estado = false;
             JOptionPane.showMessageDialog(null, "Error Al Borrar El Rol: \n"+e.getMessage(), "Error", 0,null);
             System.err.print("ERROR MC_RolUsuario.borrarRolUsuario(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
         return estado;
     }
@@ -136,10 +145,5 @@ public class MC_RolUsuario {
             emf.close();
         }
         return rolesUsuario;
-    }
-    
-    public void close () {
-        em.close();
-        emf.close();
     }
 }
