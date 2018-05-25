@@ -407,9 +407,11 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         empleado = empleadoOrden;
         mostrarElemetnosCliente(clienteOrden);
         mostrarElementosEmpleado(empleadoOrden);
+        
         MC_OrdenItem controlItem = new MC_OrdenItem();
         List<Ordenitem> itemsAux = controlItem.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
-        if (!itemsAux.isEmpty()) {
+        
+        if (itemsAux != null && !itemsAux.isEmpty()) {
             mostraItem(itemsAux);
         }
     }
@@ -502,7 +504,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                     
                     controlItem.close();
                     JOptionPane.showMessageDialog(this, "Orden De Compra Almacenada", "Informacion", 1, null);
-                    limpiarOrden();
+                    this.setVisible(false);
                 }
             }
         } else {
@@ -517,17 +519,16 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             MC_OrdenCompra controlCompra = new MC_OrdenCompra();
             if (controlCompra.editarOrdenCompra(ordenCompra)) {
                 JOptionPane.showMessageDialog(this, "Orden De Compra Editada", "Informacion", 1, null);
-                limpiarOrden();
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MC_Libro contro = new MC_Libro();
-        List<Libro> ordenItem3 = new ArrayList<>();
-        ordenItem3.add(contro.buscarLibro(1));
+        MC_OrdenItem controlOrdenItem = new MC_OrdenItem();
+        List<Ordenitem> itemsAux = controlOrdenItem.buscarOrdenItemNumeroOrden(1);
         //Actualiza la  lista de orden de item para modificar 
-        mostraLibro(ordenItem3);
+        mostraItem(itemsAux);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -637,10 +638,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     public void mostraItem(List<Ordenitem> items) {
         for (Ordenitem item : items) {
             Libro libro = item.getLibro();
-            int isbn = libro.getIsbn();
+            int isbnP = libro.getIsbn();
             String titulo = "Sin Titulo";
             int precio = 0;
-            int cantidad = 1;
 
             if (!libro.getTitulo().isEmpty()) {
                 titulo = libro.getTitulo();
@@ -648,10 +648,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             if (libro.getPrecio() > 0) {
                 precio = libro.getPrecio();
             }
-            cantidad = item.getCantidadorden();
+            int cantidad = item.getCantidadorden();
             int precioTotalLibro = item.getValororden();
             ordenItem.add(item);
-            modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+            modeloTablaItem.addRow(new Object[]{isbnP, titulo, precio, cantidad, precioTotalLibro});
         }
     }
 

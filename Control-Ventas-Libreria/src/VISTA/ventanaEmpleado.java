@@ -420,10 +420,9 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         obtenerElementos();
         if (JOptionPane.showConfirmDialog(this, "Guardar Empleado", "Alerta", 1, 2, null) == 0) {
             if (control.nuevoEmmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Empleado Guardado Con Exito", "Informacion", 1, null);
-                limpiar();
                 foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
-
+                JOptionPane.showMessageDialog(this, "Empleado Guardado Con Exito", "Informacion", 1, null);
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -435,10 +434,8 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         if (JOptionPane.showConfirmDialog(this, "Editar Empleado", "Alerta", 1, 2, null) == 0) {
             if (control.editarEmpleado(empleado)) {
                 JOptionPane.showMessageDialog(this, "Empleado Editado Con Exito", "Informacion", 1, null);
-                limpiar();
-                this.setVisible(false);
                 foto.setIcon(new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png")));
-
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed

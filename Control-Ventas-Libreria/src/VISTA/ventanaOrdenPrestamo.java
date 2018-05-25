@@ -416,9 +416,11 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         empleado = orden.getEmpleadoId();
         mostraElementosEmpleado(orden.getEmpleadoId());
         mostrarElementosCliente(orden.getClienteId());
+        
         MC_OrdenItemPrestamo control = new MC_OrdenItemPrestamo();
         List<Ordenitemprestamo> items = control.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
-        if (!items.isEmpty()) {
+        
+        if (items != null && !items.isEmpty()) {
             mostrarItem(items);
         }
     }
@@ -462,7 +464,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         if (!items.isEmpty()) {
             for (Ordenitemprestamo item : items) {
                 Libro libro = item.getLibro();
-                int isbn = libro.getIsbn();
+                int isbnP = libro.getIsbn();
                 String titulo = "Sin Titulo";
                 //Validar los campos del libro que no esten vacios
                 if (!libro.getTitulo().isEmpty()) {
@@ -471,7 +473,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 //Pedir el estado del libro que se va a prestar
                 String entrada = item.getEstadolibro();
                 ordenItemPrestamo.add(item);
-                modelo.addRow(new Object[]{isbn, titulo, entrada});
+                modelo.addRow(new Object[]{isbnP, titulo, entrada});
             }
         } else {
             JOptionPane.showMessageDialog(this, "No Hay Items", "Informacion", 1, null);
@@ -608,7 +610,6 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             MC_OrdenPrestamo control = new MC_OrdenPrestamo();
             if (control.editarOrdenPrestamo(ordenPrestamo)) {
                 JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
-                limpiarOrdenPrestamo();
                 this.setVisible(false);
             }
         }

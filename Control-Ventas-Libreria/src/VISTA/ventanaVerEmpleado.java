@@ -248,7 +248,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getEditar()) {
             if (id > 0) {
                 ventanaEmpleado ventanaEmpleado = new ventanaEmpleado(new javax.swing.JDialog(), true);
                 limpiarTabla();
@@ -270,7 +270,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             ventanaEmpleado ventanaEmp = new ventanaEmpleado(new javax.swing.JDialog(), true);
             ventanaEmp.btnEditar.setVisible(false);
             limpiarTabla();

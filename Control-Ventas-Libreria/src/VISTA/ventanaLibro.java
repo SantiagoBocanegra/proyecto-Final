@@ -43,13 +43,16 @@ public class ventanaLibro extends javax.swing.JDialog {
     //Comprobar que el usuario si aya ingresado el isbn del libro 
     int caso = 0;
     List<GeneroLibro> generosLibro = new ArrayList<>();
+    List<GeneroLibro> EditargenerosLibro = new ArrayList<>();
     List<Integer> idGenero;
 
     public ventanaLibro(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(610, 527);
+        
         estadoPortada = false;
+        
         JCalendar calendario = entFechaPublicacion.getJCalendar();
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
@@ -277,6 +280,7 @@ public class ventanaLibro extends javax.swing.JDialog {
                             controlGeneroL.close();
                         }
                         JOptionPane.showMessageDialog(this, "Libro Guardado", "Informacion", 1, null);
+                        this.setVisible(false);
                     }
                 }
                 break;
@@ -315,7 +319,13 @@ public class ventanaLibro extends javax.swing.JDialog {
         }
         entGeneros.setText(NombreGenero);
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    public void sacarGeneroLista (int id, List<GeneroLibro> librosAnteriores) {
+        for (int i = 0; i < librosAnteriores.size(); i++) {
+                if (id == librosAnteriores.get(i).getId().getId()) {
+                    librosAnteriores.remove(i);
+                }
+            }
+    }
     public void obtenerElementos() {
         if (entIsbn.getText() == null || entIsbn.getText().isEmpty()) {
             caso = 1;
@@ -380,11 +390,27 @@ public class ventanaLibro extends javax.swing.JDialog {
             } else {
                 entPrecio.setText(String.valueOf(libro.getPrecio()));
             }
+            
+            mostrarGeneroLibro(libro);
+            
         } else {
             JOptionPane.showMessageDialog(this, "No se Encontro Ningun Libro", "Informacion", 1, null);
         }
     }
-
+    
+    public void mostrarGeneroLibro (Libro libro) {
+        EditargenerosLibro = new ArrayList<>();
+        String generos = "";
+        if (libro != null && libro.getIsbn() != null) {
+            MC_GeneroLibro controlGeneroLibro = new MC_GeneroLibro();
+            EditargenerosLibro = controlGeneroLibro.buscarGeneroLibroIsbn(libro.getIsbn());
+            for (GeneroLibro generoLibro : EditargenerosLibro) {
+                generos = generoLibro.getId().getNombre()+","+generos;
+            }
+            entGeneros.setText(generos);
+        } 
+    }
+    
     public Libro getLibro() {
         return libro;
     }

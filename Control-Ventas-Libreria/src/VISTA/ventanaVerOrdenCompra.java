@@ -225,7 +225,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getEditar()) {
             if (numeroOrden > 0) {
                 ventanaOrdenCompra ventanaOrdenC = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
                 limpiarTabla();
@@ -247,7 +247,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             ventanaOrdenCompra ventanaOrdenC = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
             ventanaOrdenC.btnEditar.setVisible(false);
             limpiarTabla();

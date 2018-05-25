@@ -305,8 +305,22 @@ public class ventanaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaRolMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        idRol = 0;
-        entIdRol.setText("Id");
+        if (idRol > 0) {
+            ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
+            MC_RolUsuario controlRol = new MC_RolUsuario();
+            RolUsuario RolAux = controlRol.buscarRolUsuario(idRol);
+            
+            idRol = 0;
+            entIdRol.setText("Id");
+            
+            ventanaRol.btnGuardar.setVisible(false);
+            ventanaRol.btnEditar.setVisible(false);
+            ventanaRol.setRolUsuario(RolAux);
+            ventanaRol.mostrarElementos(RolAux);
+            ventanaRol.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
+        }
     }//GEN-LAST:event_btnVerActionPerformed
 
     public void obtenerElementosVentana() {

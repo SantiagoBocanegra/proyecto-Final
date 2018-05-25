@@ -8,7 +8,6 @@ package VISTA;
 import MODELO.Genero;
 import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_Genero;
-import MODELO_CONTROLADOR.funciones;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -198,7 +197,7 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             if (id > 0) {
                 limpiarTabla();
                 ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
@@ -250,7 +249,7 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             ventanaGenero ventanaGenero = new ventanaGenero(new javax.swing.JDialog(), true);
             limpiarTabla();
             id = 0;

@@ -227,7 +227,7 @@ public class ventanaVerCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaClienteMouseClicked
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
             ventanaCli.btnEditar.setVisible(false);
             limpiarTabla();
@@ -240,7 +240,7 @@ public class ventanaVerCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (permiso.getIdpermisos() != null && permiso.getEditar()) {
+        if (permiso != null && permiso.getIdpermisos() != null && permiso.getEditar()) {
             if (id > 0) {
                 ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
                 limpiarTabla();

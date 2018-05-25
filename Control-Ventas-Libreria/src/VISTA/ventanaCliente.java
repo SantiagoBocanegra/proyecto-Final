@@ -336,7 +336,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             MC_Cliente control = new MC_Cliente();
             if (control.nuevoCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion", 1, null);
-                limpiar();
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnGuargarActionPerformed
@@ -348,7 +348,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             MC_Cliente control = new MC_Cliente();
             if (control.editarCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion", 1, null);
-                limpiar();
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
