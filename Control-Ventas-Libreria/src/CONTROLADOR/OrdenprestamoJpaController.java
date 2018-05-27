@@ -18,9 +18,11 @@ import MODELO.Ordenitemprestamo;
 import MODELO.Ordenprestamo;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -259,4 +261,22 @@ public class OrdenprestamoJpaController implements Serializable {
         }
     }
     
+    //consultas propias 
+    public List<Ordenprestamo> buscarOrdenPrestamoFechaEntrega (Date fechaEntrega) {
+        EntityManager em = getEntityManager();
+        List<Ordenprestamo> ordenEntrega = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Ordenprestamo> q = em.createNamedQuery("Ordenprestamo.findByFechaentrega", Ordenprestamo.class);
+            q.setParameter("fechaentrega", fechaEntrega);
+            ordenEntrega = q.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error OrdenprestamoJpaController.buscarOrdenPrestamoFechaEntrega(): "+e.getMessage());
+        }  finally {
+            em.close();
+        }
+        return ordenEntrega;
+    }
 }

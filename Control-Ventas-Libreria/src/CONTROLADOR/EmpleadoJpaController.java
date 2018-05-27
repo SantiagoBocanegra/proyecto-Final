@@ -21,6 +21,7 @@ import MODELO.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -307,6 +308,25 @@ public class EmpleadoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    //consultas propias
+    public Empleado buscarEmpleadoCc (String empleadoCc) {
+        EntityManager em = getEntityManager();
+        Empleado empleado = new Empleado ();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByCedula", Empleado.class);
+            q.setParameter("cedula",  empleadoCc);
+            empleado = q.getSingleResult();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error EmpleadoJpaController.buscarEmpleadoCc(): "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return empleado;
     }
     
 }

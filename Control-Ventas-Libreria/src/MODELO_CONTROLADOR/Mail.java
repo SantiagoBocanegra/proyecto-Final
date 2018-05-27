@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package MODELO_CONTROLADOR;
 
 import java.io.File;
 import java.util.Properties;
@@ -33,7 +33,7 @@ public class Mail {
 
     }
 
-    public void enviarEmail(String personaEnvia, String contraseñaEnvia, String personaRecive, String asunto, String mensaje) {
+    public void enviarEmail(String personaEnvia, String contraseñaEnvia, String personaRecive, String asunto, String mensaje, boolean notificar) {
         //si requiere o no usuario y pasword para conectarse
         props.put("mail.smtp.auth", "true");
         //TLS si esta disponible
@@ -42,14 +42,12 @@ public class Mail {
         props.put("mail.smtp.host", "smtp.gmail.com");
         //Puerto de gmail para envio de correos
         props.put("mail.smtp.port", "587");
-
         //instancia de seccion validar Autenticacion de contraseña
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(personaEnvia, contraseñaEnvia);
             }
         });
-
         try {
             //Construir mensaje 
             Message EnviarMensaje = new MimeMessage(session);
@@ -61,19 +59,21 @@ public class Mail {
             EnviarMensaje.setSubject(asunto);
             //Mensaje plano
             EnviarMensaje.setText(mensaje);
-
             //Envio del mensaje 
             Transport t = session.getTransport("smtp");
             t.connect(personaEnvia, contraseñaEnvia);
             t.sendMessage(EnviarMensaje, EnviarMensaje.getAllRecipients());
             t.close();
-            JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
+            if (notificar) {
+                JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
+            }
         } catch (MessagingException e) {
             JOptionPane.showMessageDialog(null, "Mail.enviarEmail(): "+e.getMessage());
             }
     }
     
-    public void enviarEmail(String personaEnvia, String contraseñaEnvia, String personaRecive, String asunto, String mensaje, File archivo, String nombreArchivo) {
+    public void enviarEmail(String personaEnvia, String contraseñaEnvia, String personaRecive, 
+            String asunto, String mensaje, File archivo, String nombreArchivo, boolean notificar) {
         //si requiere o no usuario y pasword para conectarse
         props.put("mail.smtp.auth", "true");
         //TLS si esta disponible
@@ -118,7 +118,9 @@ public class Mail {
             t.connect(personaEnvia, contraseñaEnvia);
             t.sendMessage(EnviarMensaje, EnviarMensaje.getAllRecipients());
             t.close();
-            JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
+            if (notificar) {
+                JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
+            }
         } catch (MessagingException e) {
             JOptionPane.showMessageDialog(null, "Mail.enviarEmail(): "+e.getMessage());
             }
@@ -126,10 +128,9 @@ public class Mail {
 
     public static void main(String[] args) {
       try {
-            File Imagen = new File("C:\\Users\\ayenni42\\Documents\\UNIVERSIDAD\\SEMESTRE 5\\DIU\\proyectoIntegrador (1).pdf");
             Mail mensaje = new Mail();
             mensaje.enviarEmail("bocanegrasantiago18@gmail.com", "santiagobocanegra1998", 
-                    "santiago.bocanegra@correounivalle.edu.co", "prueba", "mensaje de prueba 2");
+                    "santiago.bocanegra@correounivalle.edu.co", "prueba", "mensaje de prueba 2",true);
         } catch (Exception e) {
             System.out.println("MODELO.Mail.main(): " + e.getMessage());
         }

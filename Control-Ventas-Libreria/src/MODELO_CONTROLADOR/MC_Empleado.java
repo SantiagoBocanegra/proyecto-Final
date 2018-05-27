@@ -107,4 +107,23 @@ public class MC_Empleado {
         } 
         return empleados; 
     }
+    
+    //Funcion Numero 3.2
+    public Empleado buscarEmpleadoCc (String empleadoCc) {
+        EmpleadoJpaController control = new EmpleadoJpaController(emf);
+        Empleado empleado = new Empleado();
+        try {
+            emt.begin();
+            empleado = control.buscarEmpleadoCc(empleadoCc);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Empleado "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Empleado.buscarEmpleadoCc(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return empleado;
+    }
 }

@@ -56,6 +56,8 @@ public class Ordenprestamo implements Serializable {
     private Date fechaentrega;
     @Column(name = "cantidadtotal")
     private Integer cantidadtotal;
+    @Column(name = "multa")
+    private Integer multa;
     @Column(name = "estadoorden")
     private String estadoorden;
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
@@ -104,6 +106,14 @@ public class Ordenprestamo implements Serializable {
 
     public void setCantidadtotal(Integer cantidadtotal) {
         this.cantidadtotal = cantidadtotal;
+    }
+
+    public Integer getMulta() {
+        return multa;
+    }
+
+    public void setMulta(Integer multa) {
+        this.multa = multa;
     }
 
     public String getEstadoorden() {

@@ -9,7 +9,10 @@ import MODELO.Cliente;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -22,6 +25,10 @@ public class ventanaCliente extends javax.swing.JDialog {
      */
     private final String nombreTabla = "Cliente";
     private Cliente cliente;
+    Timer tiempo;
+    int contador;
+    public static final int TWO_SECONDS = 5;
+    String tipoAccion;
 
     public ventanaCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -32,6 +39,28 @@ public class ventanaCliente extends javax.swing.JDialog {
         calendario.setMaxDayCharacters(2);
         entFecha.setDate(funciones.fecha());
         barraProgreso.setVisible(false);
+        
+    }
+
+    class TimeListemer implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            contador++;
+            barraProgreso.setValue(contador);
+            if (contador == 100) {
+                tiempo.stop();
+                barraProgreso.setVisible(false);
+                switch (tipoAccion) {
+                    case "Guardar":
+                        guardar();
+                        break;
+                    case "Editar":
+                        editar();
+                        break;
+                }
+            }
+        }
     }
 
     public void obtenerElementosVentana() {
@@ -96,7 +125,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             } else {
                 entTelefono.setText(cliente.getTelefono());
             }
-            if  (cliente.getFechaRegistro() != null ) {
+            if (cliente.getFechaRegistro() != null) {
                 entFecha.setDate(cliente.getFechaRegistro());
             }
             if (cliente.getDireccion() == null || cliente.getDireccion().isEmpty()) {
@@ -108,7 +137,7 @@ public class ventanaCliente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No Se Encontro Ningun Cliente", "Informacion", 1, null);
         }
     }
-    
+
     public void limpiar() {
         entId.setText(" ");
         entPrimerNombre.setText(" ");
@@ -164,6 +193,7 @@ public class ventanaCliente extends javax.swing.JDialog {
         barraProgreso = new javax.swing.JProgressBar();
         btnGuargar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnMensaje = new javax.swing.JButton();
 
         jLabel7.setFont(new java.awt.Font("Bodoni MT Black", 0, 14)); // NOI18N
         jLabel7.setText("SEGUNDO NOMBRE");
@@ -273,7 +303,7 @@ public class ventanaCliente extends javax.swing.JDialog {
 
         entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCorreo);
-        entCorreo.setBounds(65, 297, 495, 30);
+        entCorreo.setBounds(65, 297, 420, 30);
 
         entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCiudad);
@@ -288,8 +318,14 @@ public class ventanaCliente extends javax.swing.JDialog {
         entFecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(entFecha);
         entFecha.setBounds(120, 332, 200, 30);
+
+        barraProgreso.setBackground(new java.awt.Color(255, 255, 255));
+        barraProgreso.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        barraProgreso.setForeground(new java.awt.Color(0, 0, 0));
+        barraProgreso.setToolTipText("Procesando");
+        barraProgreso.setStringPainted(true);
         jPanel1.add(barraProgreso);
-        barraProgreso.setBounds(10, 372, 400, 30);
+        barraProgreso.setBounds(10, 370, 400, 30);
 
         btnGuargar.setText("GUAR");
         btnGuargar.addActionListener(new java.awt.event.ActionListener() {
@@ -308,6 +344,15 @@ public class ventanaCliente extends javax.swing.JDialog {
         });
         jPanel1.add(btnEditar);
         btnEditar.setBounds(420, 332, 70, 70);
+
+        btnMensaje.setText("M");
+        btnMensaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMensajeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMensaje);
+        btnMensaje.setBounds(500, 297, 40, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -333,25 +378,53 @@ public class ventanaCliente extends javax.swing.JDialog {
         cliente = new Cliente();
         obtenerElementosVentana();
         if (JOptionPane.showConfirmDialog(this, "Guardar Cliente", "Alerta", 1, 2, null) == 0) {
-            MC_Cliente control = new MC_Cliente();
-            if (control.nuevoCliente(cliente)) {
-                JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion", 1, null);
-                this.setVisible(false);
-            }
+            tipoAccion = "Guardar";
+            barraProgreso.setVisible(true);
+            contador = -1;
+            barraProgreso.setValue(0);
+            barraProgreso.setStringPainted(true);
+            tiempo = new Timer(TWO_SECONDS, new TimeListemer());
+            tiempo.start();
         }
     }//GEN-LAST:event_btnGuargarActionPerformed
 
+    public void guardar() {
+        MC_Cliente control = new MC_Cliente();
+        if (control.nuevoCliente(cliente)) {
+            JOptionPane.showMessageDialog(this, "Cliente Guardado Con Exito", "Informacion", 1, null);
+            this.setVisible(false);
+        }
+    }
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerElementosVentana();
-
         if (JOptionPane.showConfirmDialog(this, "Editar Cliente", "Alerta", 1, 2, null) == 0) {
-            MC_Cliente control = new MC_Cliente();
-            if (control.editarCliente(cliente)) {
-                JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion", 1, null);
-                this.setVisible(false);
-            }
+            tipoAccion = "Editar";
+            barraProgreso.setVisible(true);
+            contador = -1;
+            barraProgreso.setValue(0);
+            barraProgreso.setStringPainted(true);
+            tiempo = new Timer(TWO_SECONDS, new TimeListemer());
+            tiempo.start();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
+        String correo = entCorreo.getText();
+        if (correo != null && !correo.isEmpty()){
+            ventanaMail ventana = new ventanaMail(new javax.swing.JDialog(), true);
+            ventana.entPara.setText(correo);
+            ventana.setPara(correo);
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_btnMensajeActionPerformed
+
+    public void editar() {
+        MC_Cliente control = new MC_Cliente();
+        if (control.editarCliente(cliente)) {
+            JOptionPane.showMessageDialog(this, "Cliente Editado Con Exito", "Informacion", 1, null);
+            this.setVisible(false);
+        }
+    }
 
     public Cliente getCliente() {
         return cliente;
@@ -407,6 +480,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     private javax.swing.JProgressBar barraProgreso;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuargar;
+    public javax.swing.JButton btnMensaje;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCedula;

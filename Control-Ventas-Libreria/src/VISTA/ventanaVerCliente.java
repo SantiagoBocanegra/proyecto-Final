@@ -210,6 +210,8 @@ public class ventanaVerCliente extends javax.swing.JDialog {
             ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
             MC_Cliente controlCliente = new MC_Cliente();
             Cliente clienteAux = controlCliente.buscarCliente(id);
+            id = 0;
+            entId.setText("Id");
             ventanaCli.btnGuargar.setVisible(false);
             ventanaCli.btnEditar.setVisible(false);
             ventanaCli.entFecha.setEnabled(false);
@@ -229,6 +231,7 @@ public class ventanaVerCliente extends javax.swing.JDialog {
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         if (permiso != null && permiso.getIdpermisos() != null && permiso.getInsertar()) {
             ventanaCliente ventanaCli = new ventanaCliente(new javax.swing.JDialog(), true);
+            ventanaCli.btnMensaje.setEnabled(false);
             ventanaCli.btnEditar.setVisible(false);
             limpiarTabla();
             id = 0;
@@ -248,6 +251,7 @@ public class ventanaVerCliente extends javax.swing.JDialog {
                 Cliente clienteAux = controlCliente.buscarCliente(id);
                 id = 0;
                 entId.setText("Id");
+                ventanaCli.btnMensaje.setEnabled(false);
                 ventanaCli.btnGuargar.setVisible(false);
                 ventanaCli.entFecha.setEnabled(false);
                 ventanaCli.setCliente(clienteAux);

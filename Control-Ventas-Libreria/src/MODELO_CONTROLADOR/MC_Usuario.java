@@ -106,4 +106,23 @@ public class MC_Usuario {
         } 
         return usuarios;
     }
+    
+    //funcione numero 3.2
+    public List<Usuario> buscarUsuarioEmpleadoId (int id) {
+        UsuarioJpaController servicio = new UsuarioJpaController(emf);
+        List<Usuario> usuarios = new ArrayList<>();
+        try {
+            emt.begin();
+            usuarios = servicio.buscarUsuarioEmpledoId(id);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Buscando Usuarios "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Usuario.buscarUsuarioEmpleadoId(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return usuarios;
+    }
 }

@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -230,4 +232,23 @@ public class UsuarioJpaController implements Serializable {
         }
     }
     
+    //consultas propias
+    public List<Usuario> buscarUsuarioEmpledoId (int id) {
+        List<Usuario> empleados = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByEmpleadoId", Usuario.class);
+            q.setParameter("empleadoId", id);
+            empleados = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error UsuarioJpaController.buscarUsuarioEmpledoId(): "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return empleados;
+    }
 }

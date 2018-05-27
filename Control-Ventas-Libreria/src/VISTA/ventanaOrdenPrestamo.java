@@ -609,8 +609,11 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
             //editar la orden de prestamo
             MC_OrdenPrestamo control = new MC_OrdenPrestamo();
             if (control.editarOrdenPrestamo(ordenPrestamo)) {
+                control.close();
                 JOptionPane.showMessageDialog(this, "Orden De Prestamo Editada", "Informacion", 1, null);
                 this.setVisible(false);
+            } else {
+                control.close();
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
