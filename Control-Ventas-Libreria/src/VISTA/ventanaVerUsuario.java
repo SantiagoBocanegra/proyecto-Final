@@ -31,7 +31,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     int id;
     procesosSegundario pro;
     
-    public ventanaVerUsuario(java.awt.Frame parent, boolean modal) {
+    public ventanaVerUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         id = 0;
@@ -55,8 +55,6 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaUsuario = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -122,18 +120,6 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel9.setLayout(null);
-        jPanel9.add(jDateChooser1);
-        jDateChooser1.setBounds(617, 30, 130, 30);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel9.add(jButton1);
-        jButton1.setBounds(540, 30, 73, 23);
-
         jPanel7.add(jPanel9);
         jPanel9.setBounds(5, 5, 830, 90);
 
@@ -141,7 +127,9 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel10.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion Del Usuario");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -150,7 +138,9 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel10.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todos Los Usuarios");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -159,7 +149,9 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel10.add(btnVerTodo);
         btnVerTodo.setBounds(5, 335, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Usuario");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -168,7 +160,9 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel10.add(btnEditar);
         btnEditar.setBounds(5, 260, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
+        btnInsertar.setToolTipText("Registrar Nuevo Usuario");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -324,12 +318,6 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pro.setFechaActual(jDateChooser1.getCalendar());
-        pro.start();
-        Date fecha =  jDateChooser1.getDate();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public Permisos getPermiso() {
         return permiso;
     }
@@ -368,7 +356,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaVerUsuario dialog = new ventanaVerUsuario(new javax.swing.JFrame(), true);
+                ventanaVerUsuario dialog = new ventanaVerUsuario(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -381,13 +369,11 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnVer;
-    private javax.swing.JButton btnVerTodo;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnVer;
+    public javax.swing.JButton btnVerTodo;
     private javax.swing.JTextField entId;
-    private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel10;

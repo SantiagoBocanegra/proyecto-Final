@@ -27,7 +27,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     DefaultTableModel modelo;
     Permisos permiso;
 
-    public ventanaVerEmpleado(java.awt.Frame parent, boolean modal) {
+    public ventanaVerEmpleado(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         modelo = (DefaultTableModel) tablaEmpleado.getModel();
@@ -102,7 +102,9 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion Del Empleado");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -111,7 +113,9 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jPanel4.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todos Los Empleados");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -120,7 +124,9 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jPanel4.add(btnVerTodo);
         btnVerTodo.setBounds(5, 335, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Empleado");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -129,7 +135,9 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jPanel4.add(btnEditar);
         btnEditar.setBounds(5, 260, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
+        btnInsertar.setToolTipText("Registrar Nuevo Empleado");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -320,7 +328,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaVerEmpleado dialog = new ventanaVerEmpleado(new javax.swing.JFrame(), true);
+                ventanaVerEmpleado dialog = new ventanaVerEmpleado(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

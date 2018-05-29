@@ -164,6 +164,11 @@ public class ventanaLibro extends javax.swing.JDialog {
         jLabel9.setBounds(10, 371, 170, 30);
 
         entIsbn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entIsbn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entIsbnKeyTyped(evt);
+            }
+        });
         jPanel1.add(entIsbn);
         entIsbn.setBounds(335, 45, 150, 30);
 
@@ -180,10 +185,20 @@ public class ventanaLibro extends javax.swing.JDialog {
         entEditorial.setBounds(85, 336, 200, 30);
 
         entCantidadInventario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCantidadInventario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entCantidadInventarioKeyTyped(evt);
+            }
+        });
         jPanel1.add(entCantidadInventario);
         entCantidadInventario.setBounds(185, 371, 200, 30);
 
         entPrecio.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entPrecioKeyTyped(evt);
+            }
+        });
         jPanel1.add(entPrecio);
         entPrecio.setBounds(445, 371, 130, 30);
 
@@ -199,7 +214,9 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(entFechaPublicacion);
         entFechaPublicacion.setBounds(430, 336, 145, 30);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("Guar");
+        btnGuardar.setToolTipText("Guardar Informacion Del Libro");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -208,7 +225,9 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(505, 406, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Libro");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -217,7 +236,9 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(425, 406, 70, 70);
 
+        btnSubir.setMnemonic('S');
         btnSubir.setText("Subir");
+        btnSubir.setToolTipText("Subir Portada Del Libro");
         btnSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubirActionPerformed(evt);
@@ -242,7 +263,9 @@ public class ventanaLibro extends javax.swing.JDialog {
         jLabel10.setBounds(10, 406, 70, 30);
 
         btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
+        btnBuscar.setMnemonic('I');
         btnBuscar.setText("B");
+        btnBuscar.setToolTipText("Escoger Generos Del Libro");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -319,6 +342,19 @@ public class ventanaLibro extends javax.swing.JDialog {
         }
         entGeneros.setText(NombreGenero);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void entIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entIsbnKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entIsbnKeyTyped
+
+    private void entCantidadInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCantidadInventarioKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entCantidadInventarioKeyTyped
+
+    private void entPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entPrecioKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entPrecioKeyTyped
+    
     public void sacarGeneroLista (int id, List<GeneroLibro> librosAnteriores) {
         for (int i = 0; i < librosAnteriores.size(); i++) {
                 if (id == librosAnteriores.get(i).getId().getId()) {
@@ -463,7 +499,7 @@ public class ventanaLibro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgreso;
-    private javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSubir;

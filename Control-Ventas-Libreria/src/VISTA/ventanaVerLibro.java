@@ -31,7 +31,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     private int isbn;
     Permisos permiso;
 
-    public ventanaVerLibro(java.awt.Frame parent, boolean modal) {
+    public ventanaVerLibro(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(868, 564);
@@ -112,7 +112,9 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion Del libro");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -121,7 +123,9 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel4.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todos Los Libros");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -130,7 +134,9 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel4.add(btnVerTodo);
         btnVerTodo.setBounds(5, 335, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Libro");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -139,7 +145,9 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel4.add(btnEditar);
         btnEditar.setBounds(5, 260, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
+        btnInsertar.setToolTipText("Registrar Nuevo Libro");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -305,7 +313,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaVerLibro dialog = new ventanaVerLibro(new javax.swing.JFrame(), true);
+                ventanaVerLibro dialog = new ventanaVerLibro(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -318,10 +326,10 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnVer;
-    private javax.swing.JButton btnVerTodo;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnVer;
+    public javax.swing.JButton btnVerTodo;
     private javax.swing.JTextField entId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

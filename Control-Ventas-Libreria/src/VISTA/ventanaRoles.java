@@ -11,7 +11,6 @@ import MODELO_CONTROLADOR.MC_RolUsuario;
 import MODELO_CONTROLADOR.MC_Usuario;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -49,7 +48,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         calendario.setWeekOfYearVisible(false);
         calendario.setMaxDayCharacters(2);
         entFechaRegistro.setDate(funciones.fecha());
-        
+
     }
 
     /**
@@ -453,7 +452,9 @@ public class ventanaRoles extends javax.swing.JDialog {
         jPanel1.add(foto);
         foto.setBounds(10, 10, 175, 140);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del rol");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -462,7 +463,9 @@ public class ventanaRoles extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(450, 5, 70, 70);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("Guar");
+        btnGuardar.setToolTipText("Guardar Informacion Del Rol ");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -484,17 +487,17 @@ public class ventanaRoles extends javax.swing.JDialog {
         switch (caso) {
             case 0:
                 if (JOptionPane.showConfirmDialog(this, "Guardar Rol", "Escudo", 1, 3, null) == 0) {
-                    
+
                     MC_RolUsuario control = new MC_RolUsuario();
                     if (control.nuevoRolUsuario(rolUsuario)) {
-                        
+
                         MC_Permisos controlPermisos = new MC_Permisos();
                         for (Permisos permisosR : permisos) {
                             permisosR.setRolUsuarioId(rolUsuario);
                             controlPermisos.nuevoPermiso(permisosR);
                         }
                         controlPermisos.close();
-                        
+
                         JOptionPane.showMessageDialog(this, "Rol Guardado", "Informacion", 1, null);
                         this.setVisible(false);
                     }
@@ -510,10 +513,9 @@ public class ventanaRoles extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerElementos();
         List<Permisos> permisos = obtenerElementoPermisos();
-
+        
         switch (caso) {
             case 0:
-
                 if (JOptionPane.showConfirmDialog(this, "Editar Rol", "Escudo", 1, 3, null) == 0) {
                     MC_RolUsuario controlRol = new MC_RolUsuario();
                     //validar si el rol de usuario se edito

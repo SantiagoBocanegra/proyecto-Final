@@ -28,7 +28,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     Permisos permiso;
     int id;
 
-    public ventanaVerRolUsuario(java.awt.Frame parent, boolean modal) {
+    public ventanaVerRolUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         id = 0;
@@ -102,7 +102,9 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel8.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion Del Rol ");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -111,7 +113,9 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jPanel8.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todos Los Rol");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -120,7 +124,9 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jPanel8.add(btnVerTodo);
         btnVerTodo.setBounds(5, 335, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Rol");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -129,7 +135,9 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jPanel8.add(btnEditar);
         btnEditar.setBounds(5, 260, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
+        btnInsertar.setToolTipText("Registrar Nuevo Rol");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -182,6 +190,19 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
             modelo.removeRow(modelo.getRowCount() - 1);
         }
     }
+
+    public void buscarRolActivo(List<RolUsuario> rol) {
+        if (permiso != null && permiso.getIdpermisos() != null && !permiso.getNombreTabla().isEmpty()) {
+            for (int i = 0; i < rol.size(); i++) {
+                int idRol = rol.get(i).getId();
+                int idPermisoRol = permiso.getRolUsuarioId().getId();
+                if (idRol == idPermisoRol) {
+                    rol.remove(i);
+                }
+            }
+        }
+    }
+
     private void tablaRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRolMouseClicked
         id = Integer.parseInt(modelo.getValueAt(tablaRol.getSelectedRow(), 0).toString());
         entNumeroOrden.setText(String.valueOf(id));
@@ -210,6 +231,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         MC_RolUsuario controlRol = new MC_RolUsuario();
         RolUsuario = controlRol.buscarTodosRolUsuario();
         if (RolUsuario != null && !RolUsuario.isEmpty()) {
+            buscarRolActivo(RolUsuario);
             for (RolUsuario rol : RolUsuario) {
                 int idRol = rol.getId();
                 SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
@@ -310,7 +332,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaVerRolUsuario dialog = new ventanaVerRolUsuario(new javax.swing.JFrame(), true);
+                ventanaVerRolUsuario dialog = new ventanaVerRolUsuario(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -323,25 +345,17 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnVer;
-    private javax.swing.JButton btnVerTodo;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnVer;
+    public javax.swing.JButton btnVerTodo;
     private javax.swing.JTextField entNumeroOrden;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tablaNumeroOrdenPrestamo;
-    private javax.swing.JTable tablaNumeroOrdenPrestamo1;
     private javax.swing.JTable tablaRol;
     // End of variables declaration//GEN-END:variables
 }

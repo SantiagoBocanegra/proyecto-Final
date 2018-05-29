@@ -290,6 +290,11 @@ public class ventanaCliente extends javax.swing.JDialog {
         entApellidoMaterno.setBounds(310, 152, 250, 30);
 
         entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entCedulaKeyTyped(evt);
+            }
+        });
         jPanel1.add(entCedula);
         entCedula.setBounds(235, 187, 200, 30);
 
@@ -298,6 +303,11 @@ public class ventanaCliente extends javax.swing.JDialog {
         entDireccion.setBounds(325, 227, 235, 30);
 
         entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entTelefonoKeyTyped(evt);
+            }
+        });
         jPanel1.add(entTelefono);
         entTelefono.setBounds(325, 262, 235, 30);
 
@@ -327,7 +337,9 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 370, 400, 30);
 
+        btnGuargar.setMnemonic('G');
         btnGuargar.setText("GUAR");
+        btnGuargar.setToolTipText("Guardar Informacion Del Cliente");
         btnGuargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuargarActionPerformed(evt);
@@ -336,7 +348,9 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(btnGuargar);
         btnGuargar.setBounds(495, 332, 70, 70);
 
-        btnEditar.setText("EDIT");
+        btnEditar.setMnemonic('E');
+        btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Cliente");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -345,7 +359,9 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(420, 332, 70, 70);
 
+        btnMensaje.setMnemonic('M');
         btnMensaje.setText("M");
+        btnMensaje.setToolTipText("Enviar Imail Al Cliente");
         btnMensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMensajeActionPerformed(evt);
@@ -418,6 +434,14 @@ public class ventanaCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnMensajeActionPerformed
 
+    private void entCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCedulaKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entCedulaKeyTyped
+
+    private void entTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entTelefonoKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entTelefonoKeyTyped
+
     public void editar() {
         MC_Cliente control = new MC_Cliente();
         if (control.editarCliente(cliente)) {
@@ -483,7 +507,7 @@ public class ventanaCliente extends javax.swing.JDialog {
     public javax.swing.JButton btnMensaje;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
-    private javax.swing.JTextField entCedula;
+    public javax.swing.JTextField entCedula;
     private javax.swing.JTextField entCiudad;
     private javax.swing.JTextField entCorreo;
     private javax.swing.JTextField entDireccion;

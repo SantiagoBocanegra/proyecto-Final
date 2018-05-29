@@ -137,4 +137,13 @@ public class funciones {
         return null;
     }
     
+    //Fucion numero 9
+    public static void validarDigito (java.awt.event.KeyEvent evt) {
+        char entrada = evt.getKeyChar();
+        if (!Character.isDigit(entrada)){
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Este Campo Solo Recibe Digitos Del 1 Al 9", "Error", 0, null);
+        }
+    }
+    
 }

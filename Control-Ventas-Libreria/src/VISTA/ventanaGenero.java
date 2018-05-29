@@ -94,7 +94,7 @@ public class ventanaGenero extends javax.swing.JDialog {
         jPanel1.add(entFechaCrecion);
         entFechaCrecion.setBounds(145, 328, 130, 30);
         jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(310, 25, 135, 10);
+        jSeparator1.setBounds(310, 25, 135, 2);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Descripcion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 24))); // NOI18N
@@ -110,7 +110,9 @@ public class ventanaGenero extends javax.swing.JDialog {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(20, 93, 532, 230);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("Guar");
+        btnGuardar.setToolTipText("Guardar Informacion Del Genero");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -119,7 +121,9 @@ public class ventanaGenero extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(480, 330, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Genero");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);

@@ -197,7 +197,9 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel11);
         jLabel11.setBounds(170, 50, 120, 30);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion Del rol");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -206,7 +208,9 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(btnVer);
         btnVer.setBounds(530, 319, 50, 50);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("Guar");
+        btnGuardar.setToolTipText("Guardar Informacion Del Usuario");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -215,7 +219,9 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(515, 374, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Usuario");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);

@@ -40,8 +40,10 @@ public class ventanaLogin extends javax.swing.JDialog {
     RolUsuario rolSeleccionado;
     List<Usuario> usuarios = new ArrayList<>();
     List<RolUsuario> roles = new ArrayList<>();
+    ventanaMenu ventana;
+    
 
-    public ventanaLogin(java.awt.Frame parent, boolean modal) {
+    public ventanaLogin(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(461, 513);
@@ -94,7 +96,9 @@ public class ventanaLogin extends javax.swing.JDialog {
         jPanel1.add(fotoUsuario);
         fotoUsuario.setBounds(125, 10, 190, 190);
 
+        btnCancelar.setMnemonic('C');
         btnCancelar.setText("Cance");
+        btnCancelar.setToolTipText("Cancelar Operacion");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -103,7 +107,9 @@ public class ventanaLogin extends javax.swing.JDialog {
         jPanel1.add(btnCancelar);
         btnCancelar.setBounds(280, 380, 70, 70);
 
+        btnAceptar.setMnemonic('A');
         btnAceptar.setText("Acepta");
+        btnAceptar.setToolTipText("Ingresar Al Sistema");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -132,6 +138,9 @@ public class ventanaLogin extends javax.swing.JDialog {
         entCcEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 entCcEmpleadoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entCcEmpleadoKeyTyped(evt);
             }
         });
         jPanel2.add(entCcEmpleado);
@@ -270,6 +279,8 @@ public class ventanaLogin extends javax.swing.JDialog {
                     entCcEmpleado.setEditable(false);
                     entCcEmpleado.requestFocus(false);
                 } else {
+                    entCcEmpleado.selectAll();
+                    entCcEmpleado.requestFocus();
                     JOptionPane.showMessageDialog(this, "No Se Encontro Ningun Empleado Con La Cedula " + cedulaEmpleado, "Informacion", 1, null);
                 }
             }
@@ -316,7 +327,6 @@ public class ventanaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaRolMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        ventanaMenu ventana = new ventanaMenu(new javax.swing.JDialog(), true);
         Image imagen = funciones.byte_jpg(empleado.getFoto()).getScaledInstance(ventana.fotoUsuario.getWidth(), ventana.fotoUsuario.getHeight(), Image.SCALE_SMOOTH);
         buscarRolSeleccion(id);
         MC_Permisos controlPermisos = new MC_Permisos();
@@ -325,12 +335,21 @@ public class ventanaLogin extends javax.swing.JDialog {
         ventana.setRol(rolSeleccionado);
         ventana.setPermisosRol(permisos);
         ventana.PerfilUsuario.setToolTipText("Rol Activo: "+rolSeleccionado.getNombrerol());
+        ventana.Desconectar.setEnabled(true);
         ventana.Conectar.setEnabled(false);
         this.setVisible(false);
-        ventana.setVisible(true);
+        //ventana.setVisible(true);
         
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void entCcEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+        }else {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entCcEmpleadoKeyTyped
 
     public void buscarUsuarioSeleccion(int id) {
         if (!usuarios.isEmpty()) {
@@ -387,6 +406,14 @@ public class ventanaLogin extends javax.swing.JDialog {
         }
     }
 
+    public ventanaMenu getVentana() {
+        return ventana;
+    }
+
+    public void setVentana(ventanaMenu ventana) {
+        this.ventana = ventana;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -417,7 +444,7 @@ public class ventanaLogin extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaLogin dialog = new ventanaLogin(new javax.swing.JFrame(), true);
+                ventanaLogin dialog = new ventanaLogin(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

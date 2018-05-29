@@ -100,6 +100,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         btnGuardar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         barraProgreso = new javax.swing.JProgressBar();
+        btnMensaje = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -195,6 +196,11 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         entApellidoMaterno.setBounds(350, 190, 250, 30);
 
         entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entCedulaKeyTyped(evt);
+            }
+        });
         jPanel1.add(entCedula);
         entCedula.setBounds(350, 225, 250, 30);
 
@@ -203,12 +209,17 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         entDireccion.setBounds(355, 305, 245, 30);
 
         entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entTelefonoKeyTyped(evt);
+            }
+        });
         jPanel1.add(entTelefono);
         entTelefono.setBounds(80, 340, 195, 30);
 
         entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCorreo);
-        entCorreo.setBounds(80, 410, 520, 30);
+        entCorreo.setBounds(80, 410, 460, 30);
 
         entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entCiudad);
@@ -224,7 +235,9 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(entFechaContrato);
         entFechaContrato.setBounds(405, 340, 190, 30);
 
+        btnSubirFoto.setMnemonic('S');
         btnSubirFoto.setText("Subir");
+        btnSubirFoto.setToolTipText("Subir Imagen Del Empleado");
         btnSubirFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubirFotoActionPerformed(evt);
@@ -239,6 +252,11 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jLabel15.setBounds(285, 375, 60, 30);
 
         entSalario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entSalario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entSalarioKeyTyped(evt);
+            }
+        });
         jPanel1.add(entSalario);
         entSalario.setBounds(350, 375, 245, 30);
 
@@ -266,7 +284,9 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(jSeparator6);
         jSeparator6.setBounds(510, 60, 95, 2);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("Guarda");
+        btnGuardar.setToolTipText("Guardar Informacion Del Empleado");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -275,7 +295,9 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(530, 450, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Empleado");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -285,6 +307,17 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         btnEditar.setBounds(455, 450, 70, 70);
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 470, 440, 30);
+
+        btnMensaje.setMnemonic('M');
+        btnMensaje.setText("M");
+        btnMensaje.setToolTipText("Enviar Imail Al Cliente");
+        btnMensaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMensajeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMensaje);
+        btnMensaje.setBounds(550, 410, 40, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(4, 4, 610, 530);
@@ -440,6 +473,28 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void entCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCedulaKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entCedulaKeyTyped
+
+    private void entTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entTelefonoKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entTelefonoKeyTyped
+
+    private void entSalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entSalarioKeyTyped
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entSalarioKeyTyped
+
+    private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
+        String correo = entCorreo.getText();
+        if (correo != null && !correo.isEmpty()){
+            ventanaMail ventana = new ventanaMail(new javax.swing.JDialog(), true);
+            ventana.entPara.setText(correo);
+            ventana.setPara(correo);
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_btnMensajeActionPerformed
+
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -502,6 +557,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     private javax.swing.JProgressBar barraProgreso;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnMensaje;
     private javax.swing.JButton btnSubirFoto;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;

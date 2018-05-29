@@ -98,7 +98,9 @@ public class ventanaMail extends javax.swing.JDialog {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 160, 490, 195);
 
+        btnCancelar.setMnemonic('C');
         btnCancelar.setText("Cance");
+        btnCancelar.setToolTipText("Cancelar Envia De Mensaje");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -107,7 +109,9 @@ public class ventanaMail extends javax.swing.JDialog {
         jPanel1.add(btnCancelar);
         btnCancelar.setBounds(340, 360, 70, 70);
 
+        btnMail.setMnemonic('E');
         btnMail.setText("Envi");
+        btnMail.setToolTipText("Envair Mensaje");
         btnMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMailActionPerformed(evt);
@@ -116,7 +120,9 @@ public class ventanaMail extends javax.swing.JDialog {
         jPanel1.add(btnMail);
         btnMail.setBounds(420, 360, 70, 70);
 
+        btnCambiarCuenta.setMnemonic('E');
         btnCambiarCuenta.setText("C");
+        btnCambiarCuenta.setToolTipText("Escoger Persona Que Envia El Mensaje");
         jPanel1.add(btnCambiarCuenta);
         btnCambiarCuenta.setBounds(445, 5, 40, 30);
 

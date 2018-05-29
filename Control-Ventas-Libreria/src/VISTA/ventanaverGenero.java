@@ -111,7 +111,9 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion De Un Genero");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -120,7 +122,9 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnVer);
         btnVer.setBounds(5, 40, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Inser");
+        btnInsertar.setToolTipText("Registrar Nuevo Genero");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -129,7 +133,9 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnInsertar);
         btnInsertar.setBounds(5, 115, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion Del Genero ");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -138,7 +144,9 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnEditar);
         btnEditar.setBounds(5, 190, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todos Los Generos");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -156,16 +164,18 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(470, 60, 80, 340);
 
+        btnAgregar.setMnemonic('A');
         btnAgregar.setText("Agregar");
+        btnAgregar.setToolTipText("Agregar Generos Al Libro");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
         jPanel1.add(btnAgregar);
-        btnAgregar.setBounds(5, 358, 460, 40);
+        btnAgregar.setBounds(5, 355, 460, 40);
         jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(180, 35, 365, 10);
+        jSeparator1.setBounds(180, 35, 365, 2);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(5, 5, 555, 405);
@@ -346,11 +356,11 @@ public class ventanaverGenero extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnVer;
-    private javax.swing.JButton btnVerTodo;
+    public javax.swing.JButton btnAgregar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnVer;
+    public javax.swing.JButton btnVerTodo;
     private javax.swing.JTextField entId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

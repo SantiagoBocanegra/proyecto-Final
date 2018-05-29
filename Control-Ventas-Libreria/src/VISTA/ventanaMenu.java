@@ -5,11 +5,22 @@
  */
 package VISTA;
 
+import MODELO.Cliente;
+import MODELO.Empleado;
+import MODELO.Libro;
+import MODELO.Ordencompra;
+import MODELO.Ordenprestamo;
 import MODELO.Permisos;
 import MODELO.RolUsuario;
+import MODELO_CONTROLADOR.MC_Cliente;
+import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.MC_Libro;
+import MODELO_CONTROLADOR.MC_OrdenCompra;
+import MODELO_CONTROLADOR.MC_OrdenPrestamo;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,15 +32,16 @@ public class ventanaMenu extends javax.swing.JDialog {
      * Creates new form ventanaMenu
      */
     RolUsuario rol = new RolUsuario();
+    Permisos permiso = new Permisos();
     List<Permisos> permisosRol = new ArrayList<>();
 
     public ventanaMenu(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setTitle("Libreria ¡Yo Si Compro Libros!");
-        this.setSize(1015,529);
-        this.setMaximumSize(new Dimension(1015,529));
-        this.setMinimumSize(new Dimension(1015,529));
+        this.setSize(1015, 529);
+        this.setMaximumSize(new Dimension(1015, 529));
+        this.setMinimumSize(new Dimension(1015, 529));
 
         btnSesion.setComponentPopupMenu(MenuSesion);
         btnEmpleados.setComponentPopupMenu(menuEmpleados);
@@ -38,6 +50,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         btnRol.setComponentPopupMenu(menuRol);
         btnUsuario.setComponentPopupMenu(menuUsuario);
         btnGenero.setComponentPopupMenu(menuGenero);
+        Desconectar.setEnabled(false);
     }
 
     /**
@@ -148,6 +161,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
 
         PerfilUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        PerfilUsuario.setMnemonic('P');
         PerfilUsuario.setText("Perfil Usuario");
         PerfilUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,208 +174,413 @@ public class ventanaMenu extends javax.swing.JDialog {
         MenuSesion.add(jSeparator1);
 
         InformacionEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        InformacionEmpleado.setMnemonic('I');
         InformacionEmpleado.setText("Informacion Empleado");
         MenuSesion.add(InformacionEmpleado);
         MenuSesion.add(jSeparator2);
 
         Desconectar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        Desconectar.setMnemonic('D');
         Desconectar.setText("Desconectar");
         MenuSesion.add(Desconectar);
         MenuSesion.add(jSeparator13);
 
         Conectar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        Conectar.setMnemonic('C');
         Conectar.setText("Conectar");
+        Conectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConectarActionPerformed(evt);
+            }
+        });
         MenuSesion.add(Conectar);
 
         nuevoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoEmpleado.setMnemonic('N');
         nuevoEmpleado.setText("Nuevo Empleado");
+        nuevoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoEmpleadoActionPerformed(evt);
+            }
+        });
         menuEmpleados.add(nuevoEmpleado);
         menuEmpleados.add(jSeparator3);
 
+        editarEmpleado.setMnemonic('E');
         editarEmpleado.setText("Editar Empleados");
 
         buscarIdEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIdEmpleado.setMnemonic('I');
         buscarIdEmpleado.setText("Buscar Empleado Por Id");
+        buscarIdEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIdEmpleadoActionPerformed(evt);
+            }
+        });
         editarEmpleado.add(buscarIdEmpleado);
         editarEmpleado.add(jSeparator14);
 
         buscarTodosEmpleados.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosEmpleados.setMnemonic('T');
         buscarTodosEmpleados.setText("Buscar Todos Los Empleados");
+        buscarTodosEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosEmpleadosActionPerformed(evt);
+            }
+        });
         editarEmpleado.add(buscarTodosEmpleados);
 
         menuEmpleados.add(editarEmpleado);
         menuEmpleados.add(jSeparator4);
 
         verEmpleados.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verEmpleados.setMnemonic('V');
         verEmpleados.setText("Ver Empleados");
+        verEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verEmpleadosActionPerformed(evt);
+            }
+        });
         menuEmpleados.add(verEmpleados);
 
         nuevoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoCliente.setMnemonic('N');
         nuevoCliente.setText("Nuevo Cliente");
+        nuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoClienteActionPerformed(evt);
+            }
+        });
         menuClientes.add(nuevoCliente);
         menuClientes.add(jSeparator5);
 
+        editarCliente.setMnemonic('E');
         editarCliente.setText("Editar Cliente");
 
         buscarIdCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIdCliente.setMnemonic('I');
         buscarIdCliente.setText("Buscar Cliente Por Id ");
+        buscarIdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIdClienteActionPerformed(evt);
+            }
+        });
         editarCliente.add(buscarIdCliente);
         editarCliente.add(jSeparator15);
 
         buscarTodosClientes.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosClientes.setMnemonic('T');
         buscarTodosClientes.setText("Buscar Todos Los Clientes");
+        buscarTodosClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosClientesActionPerformed(evt);
+            }
+        });
         editarCliente.add(buscarTodosClientes);
 
         menuClientes.add(editarCliente);
         menuClientes.add(jSeparator6);
 
         verClientes.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verClientes.setMnemonic('V');
         verClientes.setText("Ver Todos Los Clientes");
+        verClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verClientesActionPerformed(evt);
+            }
+        });
         menuClientes.add(verClientes);
 
         nuevoLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoLibro.setMnemonic('N');
         nuevoLibro.setText("Nuevo Libro");
+        nuevoLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoLibroActionPerformed(evt);
+            }
+        });
         menuLibros.add(nuevoLibro);
         menuLibros.add(jSeparator11);
 
+        editarLibro.setMnemonic('E');
         editarLibro.setText("Editar Libro");
 
         buscarIsbnLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIsbnLibro.setMnemonic('I');
         buscarIsbnLibro.setText("Buscar Libro Por Id");
+        buscarIsbnLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIsbnLibroActionPerformed(evt);
+            }
+        });
         editarLibro.add(buscarIsbnLibro);
         editarLibro.add(jSeparator18);
 
         buscarTodosLibros.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosLibros.setMnemonic('T');
         buscarTodosLibros.setText("Buscar Todos Los Libros");
+        buscarTodosLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosLibrosActionPerformed(evt);
+            }
+        });
         editarLibro.add(buscarTodosLibros);
 
         menuLibros.add(editarLibro);
         menuLibros.add(jSeparator12);
 
         verLibros.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verLibros.setMnemonic('V');
         verLibros.setText("Ver Todos Los Libros");
+        verLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verLibrosActionPerformed(evt);
+            }
+        });
         menuLibros.add(verLibros);
 
+        Ventas.setMnemonic('V');
         Ventas.setText("Venta");
+        Ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VentasActionPerformed(evt);
+            }
+        });
 
-        nuevaVenta.setText("jMenuItem1");
+        nuevaVenta.setMnemonic('N');
+        nuevaVenta.setText("Nueva Venta");
+        nuevaVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevaVentaActionPerformed(evt);
+            }
+        });
         Ventas.add(nuevaVenta);
         Ventas.add(jSeparator7);
 
+        editarVentas.setMnemonic('E');
         editarVentas.setText("Editar Libro");
 
         buscarNumeroVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarNumeroVentas.setMnemonic('N');
         buscarNumeroVentas.setText("Bucar Libro Por Id");
+        buscarNumeroVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarNumeroVentasActionPerformed(evt);
+            }
+        });
         editarVentas.add(buscarNumeroVentas);
         editarVentas.add(jSeparator16);
 
         buscarTodosVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosVentas.setMnemonic('T');
         buscarTodosVentas.setText("Buscar Todos Los Libros");
+        buscarTodosVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosVentasActionPerformed(evt);
+            }
+        });
         editarVentas.add(buscarTodosVentas);
 
         Ventas.add(editarVentas);
         Ventas.add(jSeparator8);
 
         verVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verVentas.setMnemonic('V');
         verVentas.setText("Ver Todas Las Ventas");
+        verVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verVentasActionPerformed(evt);
+            }
+        });
         Ventas.add(verVentas);
 
         menuVentas.add(Ventas);
 
+        Prestamos.setMnemonic('P');
         Prestamos.setText("Prestamo");
+        Prestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrestamosActionPerformed(evt);
+            }
+        });
 
         nuevoPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoPrestamo.setMnemonic('N');
         nuevoPrestamo.setText("Nuevo Prestamo");
+        nuevoPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoPrestamoActionPerformed(evt);
+            }
+        });
         Prestamos.add(nuevoPrestamo);
         Prestamos.add(jSeparator9);
 
+        editarPrestamo.setMnemonic('E');
         editarPrestamo.setText("Editar Prestamo");
 
         buscarNumeroPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarNumeroPrestamo.setMnemonic('N');
         buscarNumeroPrestamo.setText("Buscar Prestamo Por Id");
+        buscarNumeroPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarNumeroPrestamoActionPerformed(evt);
+            }
+        });
         editarPrestamo.add(buscarNumeroPrestamo);
         editarPrestamo.add(jSeparator17);
 
         buscarTodosPrestamos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosPrestamos.setMnemonic('T');
         buscarTodosPrestamos.setText("Buscar Todos Los Prestamo");
+        buscarTodosPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosPrestamosActionPerformed(evt);
+            }
+        });
         editarPrestamo.add(buscarTodosPrestamos);
 
         Prestamos.add(editarPrestamo);
         Prestamos.add(jSeparator10);
 
         verPrestamos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verPrestamos.setMnemonic('V');
         verPrestamos.setText("Ver Todos Los Prestamos");
+        verPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verPrestamosActionPerformed(evt);
+            }
+        });
         Prestamos.add(verPrestamos);
 
         menuVentas.add(Prestamos);
 
         nuevoRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoRol.setMnemonic('N');
         nuevoRol.setText("Nuevo Rol");
+        nuevoRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoRolActionPerformed(evt);
+            }
+        });
         menuRol.add(nuevoRol);
         menuRol.add(jSeparator19);
 
+        editarRol.setMnemonic('E');
         editarRol.setText("Editar Rol");
 
         buscarNombreRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarNombreRol.setMnemonic('N');
         buscarNombreRol.setText("Buscar Rol Por usuario");
         editarRol.add(buscarNombreRol);
         editarRol.add(jSeparator20);
 
         buscarTodosRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosRol.setMnemonic('T');
         buscarTodosRol.setText("Buscar Todos Los Rol ");
+        buscarTodosRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosRolActionPerformed(evt);
+            }
+        });
         editarRol.add(buscarTodosRol);
 
         menuRol.add(editarRol);
         menuRol.add(jSeparator21);
 
         verRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verRol.setMnemonic('V');
         verRol.setText("Ver Rol");
+        verRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verRolActionPerformed(evt);
+            }
+        });
         menuRol.add(verRol);
 
         nuevoUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoUsuario.setMnemonic('N');
         nuevoUsuario.setText("Nuevo Usuario");
+        nuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoUsuarioActionPerformed(evt);
+            }
+        });
         menuUsuario.add(nuevoUsuario);
         menuUsuario.add(jSeparator22);
 
+        editarUsuario.setMnemonic('E');
         editarUsuario.setText("Editar Empleados");
 
         buscarIdUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIdUsuario.setMnemonic('I');
         buscarIdUsuario.setText("Buscar Usuario Por Id");
         editarUsuario.add(buscarIdUsuario);
         editarUsuario.add(jSeparator23);
 
         buscarTodosUsuarios.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosUsuarios.setMnemonic('T');
         buscarTodosUsuarios.setText("Buscar Todos Los Usuario");
+        buscarTodosUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosUsuariosActionPerformed(evt);
+            }
+        });
         editarUsuario.add(buscarTodosUsuarios);
 
         menuUsuario.add(editarUsuario);
         menuUsuario.add(jSeparator24);
 
         verUsuarios.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verUsuarios.setMnemonic('V');
         verUsuarios.setText("Ver Usuarios");
+        verUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verUsuariosActionPerformed(evt);
+            }
+        });
         menuUsuario.add(verUsuarios);
 
         nuevoGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        nuevoGenero.setMnemonic('N');
         nuevoGenero.setText("Nuevo Genero");
+        nuevoGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoGeneroActionPerformed(evt);
+            }
+        });
         menuGenero.add(nuevoGenero);
         menuGenero.add(jSeparator25);
 
+        editarGenero.setMnemonic('E');
         editarGenero.setText("Editar Genero");
 
         buscarIdGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIdGenero.setMnemonic('I');
         buscarIdGenero.setText("Buscar Genero Por Id");
         editarGenero.add(buscarIdGenero);
         editarGenero.add(jSeparator26);
 
         buscarTodosGeneros.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarTodosGeneros.setMnemonic('T');
         buscarTodosGeneros.setText("Buscar Todos Los Generos");
+        buscarTodosGeneros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarTodosGenerosActionPerformed(evt);
+            }
+        });
         editarGenero.add(buscarTodosGeneros);
 
         menuGenero.add(editarGenero);
         menuGenero.add(jSeparator27);
 
         verGeneros.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        verGeneros.setMnemonic('V');
         verGeneros.setText("Ver Generos");
+        verGeneros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verGenerosActionPerformed(evt);
+            }
+        });
         menuGenero.add(verGeneros);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -377,120 +596,129 @@ public class ventanaMenu extends javax.swing.JDialog {
 
         btnEmpleados.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleados.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnEmpleados.setMnemonic('E');
         btnEmpleados.setText("Empleado ");
         btnEmpleados.setToolTipText("Informacion De Los Empleados");
         btnEmpleados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnEmpleados.setContentAreaFilled(false);
         btnEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEmpleadosMouseClicked(evt);
+        btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpleadosActionPerformed(evt);
             }
         });
         menu.add(btnEmpleados);
         btnEmpleados.setBounds(5, 2, 120, 36);
 
         btnClientes.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnClientes.setMnemonic('C');
         btnClientes.setText("Cliente ");
         btnClientes.setToolTipText("Informacion De Los Clientes");
         btnClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnClientes.setContentAreaFilled(false);
         btnClientes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnClientesMouseClicked(evt);
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
             }
         });
         menu.add(btnClientes);
         btnClientes.setBounds(130, 2, 120, 36);
 
         btnLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnLibro.setMnemonic('L');
         btnLibro.setText("Libro ");
         btnLibro.setToolTipText("Informacion De Libros");
         btnLibro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnLibro.setContentAreaFilled(false);
         btnLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnLibro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLibro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnLibroMouseClicked(evt);
+        btnLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLibroActionPerformed(evt);
             }
         });
         menu.add(btnLibro);
         btnLibro.setBounds(255, 2, 120, 36);
 
         btnVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnVentas.setMnemonic('V');
         btnVentas.setText("Venta-Prestamos ");
         btnVentas.setToolTipText("Informacion De Las Ventas");
         btnVentas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnVentas.setContentAreaFilled(false);
         btnVentas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVentasMouseClicked(evt);
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
             }
         });
         menu.add(btnVentas);
         btnVentas.setBounds(380, 2, 120, 36);
 
         btnRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnRol.setMnemonic('R');
         btnRol.setText("Rol ");
-        btnRol.setToolTipText("Informacion De Los Prestamos");
+        btnRol.setToolTipText("Informacion Del Rol");
         btnRol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnRol.setContentAreaFilled(false);
         btnRol.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnRol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRolMouseClicked(evt);
+        btnRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRolActionPerformed(evt);
             }
         });
         menu.add(btnRol);
         btnRol.setBounds(505, 2, 120, 36);
 
+        btnSesion.setMnemonic('S');
         btnSesion.setToolTipText("Informacion De Cuenta De Usuario");
         btnSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnSesion.setContentAreaFilled(false);
-        btnSesion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSesionMouseClicked(evt);
+        btnSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSesionActionPerformed(evt);
             }
         });
         menu.add(btnSesion);
         btnSesion.setBounds(960, 10, 20, 20);
 
         fotoUsuario.setText("");
+        fotoUsuario.setToolTipText("Foto Usuario");
         menu.add(fotoUsuario);
         fotoUsuario.setBounds(920, 2, 36, 36);
 
         btnUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnUsuario.setMnemonic('U');
         btnUsuario.setText("Usuario ");
-        btnUsuario.setToolTipText("Informacion De Los Prestamos");
+        btnUsuario.setToolTipText("Informacion De Usuario");
         btnUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnUsuario.setContentAreaFilled(false);
         btnUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUsuarioMouseClicked(evt);
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioActionPerformed(evt);
             }
         });
         menu.add(btnUsuario);
         btnUsuario.setBounds(630, 2, 120, 36);
 
         btnGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnGenero.setMnemonic('G');
         btnGenero.setText("Genero ");
-        btnGenero.setToolTipText("Informacion De Los Prestamos");
+        btnGenero.setToolTipText("Informacion De Genero");
         btnGenero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnGenero.setContentAreaFilled(false);
         btnGenero.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnGenero.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGenero.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGeneroMouseClicked(evt);
+        btnGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGeneroActionPerformed(evt);
             }
         });
         menu.add(btnGenero);
@@ -550,12 +778,220 @@ public class ventanaMenu extends javax.swing.JDialog {
         }
         return per;
     }
-    private void btnSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSesionMouseClicked
-        MenuSesion.show(evt.getComponent(), 1, 20);
-    }//GEN-LAST:event_btnSesionMouseClicked
+    private void PerfilUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilUsuarioActionPerformed
+        System.out.println("tamaño: " + this.getSize());
+    }//GEN-LAST:event_PerfilUsuarioActionPerformed
 
-    private void btnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseClicked
-        Permisos permiso = buscarPermiso("Empleado");
+    private void nuevoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoEmpleadoActionPerformed
+        ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoEmpleadoActionPerformed
+
+    private void verEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verEmpleadosActionPerformed
+        ventanaVerEmpleado ventana = new ventanaVerEmpleado(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verEmpleadosActionPerformed
+
+    private void buscarIdEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIdEmpleadoActionPerformed
+        ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
+        String idEmpleado = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Id Del Empleado", "Buscar Empleado Por Id", 3);
+        if (idEmpleado != null && !idEmpleado.isEmpty()) {
+            int id = Integer.parseInt(idEmpleado);
+            MC_Empleado controlEmpleado = new MC_Empleado();
+            Empleado empleado = controlEmpleado.buscarEmpleado(id);
+            if (empleado.getId() != null && empleado.getId() > 0) {
+                ventana.btnGuardar.setEnabled(false);
+                ventana.entFechaContrato.setEnabled(false);
+                ventana.setEmpleado(empleado);
+                ventana.mostrarElementos(empleado);
+                ventana.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro El Empleado", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarIdEmpleadoActionPerformed
+
+    private void buscarTodosEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosEmpleadosActionPerformed
+        verEmpleadosActionPerformed(evt);
+    }//GEN-LAST:event_buscarTodosEmpleadosActionPerformed
+
+    private void nuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteActionPerformed
+        ventanaCliente ventana = new ventanaCliente(new javax.swing.JDialog(), true);
+        ventana.btnMensaje.setEnabled(false);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoClienteActionPerformed
+
+    private void verClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verClientesActionPerformed
+        ventanaVerCliente ventana = new ventanaVerCliente(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verClientesActionPerformed
+
+    private void buscarIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIdClienteActionPerformed
+        ventanaCliente ventana = new ventanaCliente(new javax.swing.JDialog(), true);
+        String idCliente = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Id Del Cliente", "Buscar Cliente Por Id", 3);
+        if (idCliente != null && !idCliente.isEmpty()) {
+            int id = Integer.parseInt(idCliente);
+            MC_Cliente controlCliente = new MC_Cliente();
+            Cliente cliente = controlCliente.buscarCliente(id);
+            if (cliente.getId() != null && cliente.getId() > 0) {
+                ventana.btnMensaje.setEnabled(false);
+                ventana.entCedula.setEditable(false);
+                ventana.btnGuargar.setEnabled(false);
+                ventana.entFecha.setEnabled(false);
+                ventana.setCliente(cliente);
+                ventana.mostrarDatosVentana(cliente);
+                ventana.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro El Cliente", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarIdClienteActionPerformed
+
+    private void buscarTodosClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosClientesActionPerformed
+        ventanaVerCliente ventana = new ventanaVerCliente(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosClientesActionPerformed
+
+    private void nuevoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoLibroActionPerformed
+        ventanaLibro ventana = new ventanaLibro(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoLibroActionPerformed
+
+    private void verLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verLibrosActionPerformed
+        ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verLibrosActionPerformed
+
+    private void buscarIsbnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIsbnLibroActionPerformed
+        ventanaLibro ventana = new ventanaLibro(new javax.swing.JDialog(), true);
+        String isbnLibro = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Isbn Del Libro", "Buscar Libro Por Isbn", 3);
+        if (isbnLibro != null && !isbnLibro.isEmpty()) {
+            int id = Integer.parseInt(isbnLibro);
+            MC_Libro controlLibro = new MC_Libro();
+            Libro libro = controlLibro.buscarLibro(id);
+            if (libro.getIsbn() != null && libro.getIsbn() > 0) {
+                ventana.btnGuardar.setEnabled(false);
+                ventana.btnBuscar.setEnabled(false);
+                ventana.setLibro(libro);
+                ventana.mostrarElementos(libro);
+                ventana.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro El Libro", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarIsbnLibroActionPerformed
+
+    private void buscarTodosLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosLibrosActionPerformed
+        ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosLibrosActionPerformed
+
+    private void nuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaVentaActionPerformed
+        ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevaVentaActionPerformed
+
+    private void verVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verVentasActionPerformed
+        ventanaVerOrdenCompra ventana = new ventanaVerOrdenCompra(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verVentasActionPerformed
+
+    private void buscarNumeroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNumeroVentasActionPerformed
+        ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
+        String numeroOrden = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Numero De La Orden", "Buscar Orden Por Numero", 3);
+        if (numeroOrden != null && !numeroOrden.isEmpty()) {
+            int id = Integer.parseInt(numeroOrden);
+            MC_OrdenCompra controlOrden = new MC_OrdenCompra();
+            Ordencompra ordenCompra = controlOrden.buscarOrdenCompra(id);
+            if (ordenCompra.getNumeroorden() != null && ordenCompra.getNumeroorden() > 0) {
+                ventana.btnGuardar.setEnabled(false);
+                ventana.btnAgregarLibro.setEnabled(false);
+                ventana.btnCancelar.setEnabled(false);
+                ventana.setOrdenCompra(ordenCompra);
+                ventana.mostrarElementosOrdenCompra(ordenCompra);
+                ventana.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro Orden De Compra", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarNumeroVentasActionPerformed
+
+    private void buscarTodosVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosVentasActionPerformed
+        ventanaVerOrdenCompra ventana = new ventanaVerOrdenCompra(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosVentasActionPerformed
+
+    private void nuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoPrestamoActionPerformed
+        ventanaOrdenPrestamo ventana = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoPrestamoActionPerformed
+
+    private void buscarNumeroPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNumeroPrestamoActionPerformed
+        ventanaOrdenPrestamo ventana = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+        String numeroOrden = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Numero De La Orden", "Buscar Orden Por Numero", 3);
+        if (numeroOrden != null && !numeroOrden.isEmpty()) {
+            int id = Integer.parseInt(numeroOrden);
+            MC_OrdenPrestamo controlOrden = new MC_OrdenPrestamo();
+            Ordenprestamo ordenPrestamo = controlOrden.buscarOrdenPrestamo(id);
+            if (ordenPrestamo.getNumeroorden() != null && ordenPrestamo.getNumeroorden() > 0) {
+                ventana.btnGuardar.setEnabled(false);
+                ventana.btnAgregarLibro.setEnabled(false);
+                ventana.btnCancelar.setEnabled(false);
+                ventana.setOrdenPrestamo(ordenPrestamo);
+                ventana.mostrarElementos(ordenPrestamo);
+                ventana.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro Orden De Prestamo", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarNumeroPrestamoActionPerformed
+
+    private void buscarTodosPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosPrestamosActionPerformed
+        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(),true);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosPrestamosActionPerformed
+
+    private void verPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verPrestamosActionPerformed
+        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(),true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verPrestamosActionPerformed
+
+    private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConectarActionPerformed
+        ventanaLogin ventana = new ventanaLogin(new javax.swing.JDialog(), true);
+        ventana.setVentana(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_ConectarActionPerformed
+
+    private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
+        permiso = buscarPermiso("Empleado");
         if (permiso.getIdpermisos() != null) {
             nuevoEmpleado.setEnabled(permiso.getInsertar());
             editarEmpleado.setEnabled(permiso.getEditar());
@@ -567,11 +1003,11 @@ public class ventanaMenu extends javax.swing.JDialog {
             verEmpleados.setEnabled(false);
             buscarTodosEmpleados.setEnabled(false);
         }
-        menuEmpleados.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnEmpleadosMouseClicked
+        menuEmpleados.show(btnEmpleados, 1, 34);
+    }//GEN-LAST:event_btnEmpleadosActionPerformed
 
-    private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
-        Permisos permiso = buscarPermiso("Cliente");
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        permiso = buscarPermiso("Cliente");
         if (permiso.getIdpermisos() != null) {
             nuevoCliente.setEnabled(permiso.getInsertar());
             editarCliente.setEnabled(permiso.getEditar());
@@ -582,13 +1018,13 @@ public class ventanaMenu extends javax.swing.JDialog {
             editarCliente.setEnabled(false);
             verClientes.setEnabled(false);
             buscarTodosClientes.setEnabled(false);
-            
-        }
-        menuClientes.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnClientesMouseClicked
 
-    private void btnLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibroMouseClicked
-        Permisos permiso = buscarPermiso("Libro");
+        }
+        menuClientes.show(btnClientes, 1, 34);
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
+        permiso = buscarPermiso("Libro");
         if (permiso.getIdpermisos() != null) {
             nuevoLibro.setEnabled(permiso.getInsertar());
             editarLibro.setEnabled(permiso.getEditar());
@@ -599,13 +1035,13 @@ public class ventanaMenu extends javax.swing.JDialog {
             editarLibro.setEnabled(false);
             verLibros.setEnabled(false);
             buscarTodosLibros.setEnabled(false);
-            
-        }
-        menuLibros.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnLibroMouseClicked
 
-    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
-        Permisos permiso = buscarPermiso("OrdenCompra");
+        }
+        menuLibros.show(btnLibro, 1, 34);
+    }//GEN-LAST:event_btnLibroActionPerformed
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        permiso = buscarPermiso("OrdenCompra");
         if (permiso.getIdpermisos() != null) {
             nuevaVenta.setEnabled(permiso.getInsertar());
             editarVentas.setEnabled(permiso.getEditar());
@@ -615,7 +1051,7 @@ public class ventanaMenu extends javax.swing.JDialog {
             nuevaVenta.setEnabled(false);
             editarVentas.setEnabled(false);
             verVentas.setEnabled(false);
-            buscarTodosVentas.setEnabled(false);     
+            buscarTodosVentas.setEnabled(false);
         }
         Permisos permisoP = buscarPermiso("OrdenPrestamo");
         if (permisoP.getIdpermisos() != null) {
@@ -628,13 +1064,12 @@ public class ventanaMenu extends javax.swing.JDialog {
             editarPrestamo.setEnabled(false);
             verPrestamos.setEnabled(false);
             buscarTodosPrestamos.setEnabled(false);
-            
         }
-        menuVentas.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnVentasMouseClicked
+        menuVentas.show(btnVentas, 1, 34);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
-    private void btnRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRolMouseClicked
-        Permisos permiso = buscarPermiso("Rol");
+    private void btnRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolActionPerformed
+        permiso = buscarPermiso("Rol");
         if (permiso.getIdpermisos() != null) {
             nuevoRol.setEnabled(permiso.getInsertar());
             editarRol.setEnabled(permiso.getEditar());
@@ -644,13 +1079,13 @@ public class ventanaMenu extends javax.swing.JDialog {
             nuevoRol.setEnabled(false);
             editarRol.setEnabled(false);
             verRol.setEnabled(false);
-            buscarTodosRol.setEnabled(false);     
+            buscarTodosRol.setEnabled(false);
         }
-        menuRol.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnRolMouseClicked
+        menuRol.show(btnRol, 1, 34);
+    }//GEN-LAST:event_btnRolActionPerformed
 
-    private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
-        Permisos permiso = buscarPermiso("Usuario");
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
+        permiso = buscarPermiso("Usuario");
         if (permiso.getIdpermisos() != null) {
             nuevoUsuario.setEnabled(permiso.getInsertar());
             editarUsuario.setEnabled(permiso.getEditar());
@@ -660,13 +1095,13 @@ public class ventanaMenu extends javax.swing.JDialog {
             nuevoUsuario.setEnabled(false);
             editarUsuario.setEnabled(false);
             verUsuarios.setEnabled(false);
-            buscarTodosUsuarios.setEnabled(false);     
+            buscarTodosUsuarios.setEnabled(false);
         }
-        menuUsuario.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnUsuarioMouseClicked
+        menuUsuario.show(btnUsuario, 1, 34);
+    }//GEN-LAST:event_btnUsuarioActionPerformed
 
-    private void btnGeneroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGeneroMouseClicked
-        Permisos permiso = buscarPermiso("Genero");
+    private void btnGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneroActionPerformed
+        permiso = buscarPermiso("Genero");
         if (permiso.getIdpermisos() != null) {
             nuevoGenero.setEnabled(permiso.getInsertar());
             editarGenero.setEnabled(permiso.getEditar());
@@ -676,14 +1111,81 @@ public class ventanaMenu extends javax.swing.JDialog {
             nuevoGenero.setEnabled(false);
             editarGenero.setEnabled(false);
             verGeneros.setEnabled(false);
-            buscarTodosGeneros.setEnabled(false);     
+            buscarTodosGeneros.setEnabled(false);
         }
-        menuGenero.show(evt.getComponent(), 1, 34);
-    }//GEN-LAST:event_btnGeneroMouseClicked
+        menuGenero.show(btnGenero, 1, 34);
+    }//GEN-LAST:event_btnGeneroActionPerformed
 
-    private void PerfilUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilUsuarioActionPerformed
-        System.out.println("tamaño: "+this.getSize());
-    }//GEN-LAST:event_PerfilUsuarioActionPerformed
+    private void VentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentasActionPerformed
+        permiso = buscarPermiso("OrdenCompra");
+    }//GEN-LAST:event_VentasActionPerformed
+
+    private void PrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrestamosActionPerformed
+        permiso = buscarPermiso("OrdenPrestamo");
+    }//GEN-LAST:event_PrestamosActionPerformed
+
+    private void btnSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionActionPerformed
+        MenuSesion.show(btnSesion, 1, 20);
+    }//GEN-LAST:event_btnSesionActionPerformed
+
+    private void verRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verRolActionPerformed
+        ventanaVerRolUsuario ventana = new ventanaVerRolUsuario(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verRolActionPerformed
+
+    private void nuevoRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoRolActionPerformed
+        ventanaRoles ventana = new ventanaRoles (new javax.swing.JDialog(),true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoRolActionPerformed
+
+    private void buscarTodosRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosRolActionPerformed
+        ventanaVerRolUsuario ventana = new ventanaVerRolUsuario(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosRolActionPerformed
+
+    private void nuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoUsuarioActionPerformed
+        ventanaUsuario ventana = new ventanaUsuario(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoUsuarioActionPerformed
+
+    private void buscarTodosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosUsuariosActionPerformed
+        ventanaVerUsuario ventana = new ventanaVerUsuario(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosUsuariosActionPerformed
+
+    private void verUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verUsuariosActionPerformed
+        ventanaVerUsuario ventana = new ventanaVerUsuario(new javax.swing.JDialog(), true);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verUsuariosActionPerformed
+
+    private void nuevoGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoGeneroActionPerformed
+        ventanaGenero ventana = new ventanaGenero(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_nuevoGeneroActionPerformed
+
+    private void buscarTodosGenerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosGenerosActionPerformed
+        ventanaverGenero ventana = new ventanaverGenero(new javax.swing.JDialog(), true);
+        ventana.btnAgregar.setEnabled(false);
+        ventana.btnInsertar.setEnabled(false);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_buscarTodosGenerosActionPerformed
+
+    private void verGenerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGenerosActionPerformed
+        ventanaverGenero ventana = new ventanaverGenero(new javax.swing.JDialog(), true);
+        ventana.btnAgregar.setEnabled(false);
+        ventana.setPermiso(permiso);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verGenerosActionPerformed
 
     public RolUsuario getRol() {
         return rol;
@@ -745,7 +1247,7 @@ public class ventanaMenu extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem Conectar;
-    private javax.swing.JMenuItem Desconectar;
+    public javax.swing.JMenuItem Desconectar;
     private javax.swing.JMenuItem InformacionEmpleado;
     private javax.swing.JPopupMenu MenuSesion;
     public javax.swing.JMenuItem PerfilUsuario;

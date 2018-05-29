@@ -28,7 +28,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     int numeroOrden;
     Permisos permiso;
     
-    public ventanaVerOrdenCompra(java.awt.Frame parent, boolean modal) {
+    public ventanaVerOrdenCompra(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         numeroOrden = 0;
@@ -103,7 +103,9 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(null);
 
+        btnVer.setMnemonic('V');
         btnVer.setText("Ver");
+        btnVer.setToolTipText("Ver Informacion De Una Orden");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -112,7 +114,9 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel4.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
+        btnVerTodo.setToolTipText("Ver Todas Las Ordenes");
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);
@@ -121,7 +125,9 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel4.add(btnVerTodo);
         btnVerTodo.setBounds(5, 335, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Orden");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -130,7 +136,9 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel4.add(btnEditar);
         btnEditar.setBounds(5, 260, 70, 70);
 
+        btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
+        btnInsertar.setToolTipText("Registrar Una Nueva Orden ");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -233,6 +241,8 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
                 Ordencompra ordenCompraAux = controlOrdenC.buscarOrdenCompra(numeroOrden);
                 numeroOrden = 0;
                 entNumeroOrden.setText("# Orden");
+                ventanaOrdenC.btnAgregarLibro.setEnabled(false);
+                ventanaOrdenC.btnCancelar.setEnabled(false);
                 ventanaOrdenC.btnGuardar.setVisible(false);
                 ventanaOrdenC.setOrdenCompra(ordenCompraAux);
                 ventanaOrdenC.mostrarElementosOrdenCompra(ordenCompraAux);
@@ -260,6 +270,14 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "EL Rol No Tiene Permiso Para Esta Opcion", "Error", 0, null);
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    public Permisos getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permisos permiso) {
+        this.permiso = permiso;
+    }
 
     /**
      * @param args the command line arguments
@@ -291,7 +309,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ventanaVerOrdenCompra dialog = new ventanaVerOrdenCompra(new javax.swing.JFrame(), true);
+                ventanaVerOrdenCompra dialog = new ventanaVerOrdenCompra(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -304,10 +322,10 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnVer;
-    private javax.swing.JButton btnVerTodo;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnVer;
+    public javax.swing.JButton btnVerTodo;
     private javax.swing.JTextField entNumeroOrden;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

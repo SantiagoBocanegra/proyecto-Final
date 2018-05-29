@@ -43,14 +43,14 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     //variable para guardar la informacion de la orden de compra
     Ordencompra ordenCompra;
     //variable de los libros a comprar
-    List<Libro> libroOrden;
+    List<Libro> libroOrden = new ArrayList<>();
     //variable de los Item a comprar 
     List<Ordenitem> ordenItem = new ArrayList<>();
     List<Libro> ordenLibros = new ArrayList<>();
     // modelo de la tablaOrdenCompra
     DefaultTableModel modeloTablaItem;
     private int isbn = 0;
-    private int numeroFila  = 0 ;
+    private int numeroFila = 0;
 
     public ventanaOrdenCompra(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -126,6 +126,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         entIsbn = new javax.swing.JTextField();
+        btnAgregarLibro = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -191,6 +192,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         entApellidoEmpleado.setBounds(309, 20, 180, 30);
 
         btnBuscarEmpleado.setText("Busca");
+        btnBuscarEmpleado.setToolTipText("Buscar Empleado ");
         btnBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarEmpleadoActionPerformed(evt);
@@ -243,6 +245,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         entApellidoCliente.setBounds(309, 20, 180, 30);
 
         btnBuscarCliente.setText("Busca");
+        btnBuscarCliente.setToolTipText("Buscar Cliente");
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarClienteActionPerformed(evt);
@@ -324,7 +327,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(jLabel1);
         jLabel1.setBounds(254, 225, 80, 30);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Orden ");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -333,7 +338,9 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(btnEditar);
         btnEditar.setBounds(490, 115, 70, 70);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("guar");
+        btnGuardar.setToolTipText("Guardar Orden");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -342,20 +349,34 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(btnGuardar);
         btnGuardar.setBounds(490, 190, 70, 70);
 
+        btnCancelar.setMnemonic('-');
         btnCancelar.setText("Canc");
+        btnCancelar.setToolTipText("Quitar Libro De La Orden");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
         jPanel5.add(btnCancelar);
-        btnCancelar.setBounds(490, 40, 70, 70);
+        btnCancelar.setBounds(490, 75, 70, 35);
 
         entIsbn.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         entIsbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         entIsbn.setText("Isbn");
         jPanel5.add(entIsbn);
         entIsbn.setBounds(490, 5, 70, 30);
+
+        btnAgregarLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnAgregarLibro.setMnemonic('+');
+        btnAgregarLibro.setText("+");
+        btnAgregarLibro.setToolTipText("Agregar Libro A La Orden");
+        btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLibroActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnAgregarLibro);
+        btnAgregarLibro.setBounds(490, 40, 70, 35);
 
         jPanel1.add(jPanel5);
         jPanel5.setBounds(5, 265, 564, 265);
@@ -407,10 +428,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         empleado = empleadoOrden;
         mostrarElemetnosCliente(clienteOrden);
         mostrarElementosEmpleado(empleadoOrden);
-        
+
         MC_OrdenItem controlItem = new MC_OrdenItem();
         List<Ordenitem> itemsAux = controlItem.buscarOrdenItemNumeroOrden(orden.getNumeroorden());
-        
+
         if (itemsAux != null && !itemsAux.isEmpty()) {
             mostraItem(itemsAux);
         }
@@ -493,15 +514,15 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                 MC_OrdenCompra controlCompra = new MC_OrdenCompra();
                 if (controlCompra.nuevaOrdenCompra(ordenCompra)) {
                     MC_OrdenItem controlItem = new MC_OrdenItem();
-                    
+
                     //Almacenar Los Item de la orden
                     for (Ordenitem item : ordenItem) {
                         item.setOrdencompra(ordenCompra);
                         controlItem.nuevaOrdenItem(item);
                     }
-                    
-                    funciones.eliminarLibros(libroOrden);
-                    
+
+                    funciones.eliminarLibros(ordenLibros);
+
                     controlItem.close();
                     JOptionPane.showMessageDialog(this, "Orden De Compra Almacenada", "Informacion", 1, null);
                     this.setVisible(false);
@@ -526,26 +547,38 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MC_OrdenItem controlOrdenItem = new MC_OrdenItem();
-        List<Ordenitem> itemsAux = controlOrdenItem.buscarOrdenItemNumeroOrden(1);
+        List<Ordenitem> itemsAux = controlOrdenItem.buscarTodasOrdenItem();
         //Actualiza la  lista de orden de item para modificar 
         mostraItem(itemsAux);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        String cantidadTotal = entCantidadTotal.getText();
+        String precioTotal = entPrecioTotal.getText();
+        int precioT = 0;
+        int cantidadT = 0;
         if (isbn != 0) {
-
             for (int i = 0; i < ordenLibros.size(); i++) {
-                
                 if (ordenLibros.get(i).getIsbn() == isbn) {
                     ordenLibros.remove(i);
+                    precioT = Integer.parseInt(modeloTablaItem.getValueAt(numeroFila, 4).toString());
+                    cantidadT = Integer.parseInt(modeloTablaItem.getValueAt(numeroFila, 3).toString());
                     modeloTablaItem.removeRow(numeroFila);
                 }
             }
-
+            if (cantidadTotal != null && !cantidadTotal.isEmpty()){
+                int cantidad = Integer.parseInt(cantidadTotal) - cantidadT;
+                String nuevaCantidad = String.valueOf(cantidad);
+                entCantidadTotal.setText(nuevaCantidad);
+            }
+            if (precioTotal != null && !precioTotal.isEmpty()){
+                int precio = Integer.parseInt(precioTotal) - precioT;
+                String nuevoPrecio = String.valueOf(precio);
+                entPrecioTotal.setText(nuevoPrecio);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No Se Ha Selecionado Nada", "Informacion", 1, null);
         }
-
         isbn = 0;
         entIsbn.setText("Isbn");
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -553,8 +586,56 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     private void tablaOrdenCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaOrdenCompraMouseClicked
         isbn = Integer.parseInt(modeloTablaItem.getValueAt(tablaOrdenCompra.getSelectedRow(), 0).toString());
         numeroFila = tablaOrdenCompra.getSelectedRow();
-        entIsbn.setText(""+isbn);
+        entIsbn.setText("" + isbn);
     }//GEN-LAST:event_tablaOrdenCompraMouseClicked
+    
+    public  void limpiarTabla () {
+        while (modeloTablaItem.getRowCount() > 0) {
+            modeloTablaItem.removeRow(modeloTablaItem.getRowCount() -1);
+        }
+    }
+    
+    private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
+        String opcion = JOptionPane.showInputDialog(this, "Ingresar Libro Por "
+                + "\n1) Isbn"
+                + "\n2) Varios Libros", "Tipo De Acion", 3);
+        switch (opcion) {
+            case "1":
+                do {
+                    String isbnLibro = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Isbn Del Libro", "Buscar Libro Por Isbn", 3);
+                    if (isbnLibro != null && !isbnLibro.isEmpty()) {
+                        int id = Integer.parseInt(isbnLibro);
+                        MC_Libro controlLibro = new MC_Libro();
+                        Libro libro = controlLibro.buscarLibro(id);
+                        if (libro != null && libro.getIsbn() != null && libro.getIsbn() > 0) {
+                            String nombre = "Sin Nombre";
+                            if (libro.getTitulo() != null && !libro.getTitulo().isEmpty())
+                                nombre = libro.getTitulo();
+                            if (JOptionPane.showConfirmDialog(this, "Agregar Libro: " + nombre, "Alerta", 1, 3, null) == 0) {
+                                libroOrden.add(libro);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Libro No Agregado", "Informacion", 1, null);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No Se Encontro El Libro", "Informacion", 1, null);
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+                    }
+                } while (JOptionPane.showConfirmDialog(this, "Agregar Mas Libros", "Pregunta", 1, 3, null) == 0);
+                if (libroOrden != null && !libroOrden.isEmpty()) {
+                    mostraLibro(libroOrden);
+                }
+                break;
+            case "2":
+                ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+                ventana.btnEditar.setEnabled(false);
+                ventana.btnInsertar.setEnabled(false);
+                ventana.setVisible(true);
+                break;
+        }
+    }//GEN-LAST:event_btnAgregarLibroActionPerformed
 
     public void numeroOrden() {
         int numeroOrden;
@@ -577,6 +658,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     }
 
     public void mostraLibro(List<Libro> libros) {
+        limpiarTabla();
         int cantidadTotal = 0;
         int precioTotal = 0;
 
@@ -587,10 +669,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             int precio = 0;
             int cantidad = 1;
 
-            if (!libro.getTitulo().isEmpty()) {
+            if (libro.getTitulo() != null && !libro.getTitulo().isEmpty()) {
                 titulo = libro.getTitulo();
             }
-            if (libro.getPrecio() > 0) {
+            if (libro.getPrecio() != null && libro.getPrecio() > 0) {
                 precio = libro.getPrecio();
             }
 
@@ -605,30 +687,24 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                     if (JOptionPane.showConfirmDialog(this, "Solo Tenemos " + Integer.parseInt(libro.getEstadolibro()) + " Desea Llevarlos",
                             "Informacion", 1, 3, null) == 0) {
                         cantidad = Integer.parseInt(libro.getEstadolibro());
-                        precioTotalLibro = cantidad * precio;
-                        Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
-                        ordenItem.add(ordenI);
-                        modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
-                        cantidadTotal += cantidad;
-                        precioTotal += precioTotalLibro;
                         libro.setEstadolibro("0");
                         ordenLibros.add(libro);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Libro Cancelado: "+titulo, "Informacion", 1, null);
+                        JOptionPane.showMessageDialog(this, "Libro Cancelado: " + titulo, "Informacion", 1, null);
                     }
                 } else {
-                    precioTotalLibro = cantidad * precio;
-                    Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
-                    ordenItem.add(ordenI);
-                    modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
-                    cantidadTotal += cantidad;
-                    precioTotal += precioTotalLibro;
                     cantidad = Integer.parseInt(libro.getEstadolibro()) - cantidad;
                     libro.setEstadolibro(String.valueOf(cantidad));
                     ordenLibros.add(libro);
                 }
+                precioTotalLibro = cantidad * precio;
+                Ordenitem ordenI = new Ordenitem(cantidad, precioTotalLibro, libro);
+                ordenItem.add(ordenI);
+                modeloTablaItem.addRow(new Object[]{isbn, titulo, precio, cantidad, precioTotalLibro});
+                cantidadTotal += cantidad;
+                precioTotal += precioTotalLibro;
             } else {
-                JOptionPane.showMessageDialog(this, "No hay Ejemplares Del Libro "+titulo, "Informacion", 1, null);
+                JOptionPane.showMessageDialog(this, "No hay Ejemplares Del Libro " + titulo, "Informacion", 1, null);
             }
         }
         entCantidadTotal.setText(String.valueOf(cantidadTotal));
@@ -738,9 +814,10 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAgregarLibro;
     public javax.swing.JButton btnBuscarCliente;
     public javax.swing.JButton btnBuscarEmpleado;
-    private javax.swing.JButton btnCancelar;
+    public javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JTextField entApellidoCliente;

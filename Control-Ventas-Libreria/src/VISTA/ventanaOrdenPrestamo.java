@@ -39,11 +39,11 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     private Empleado empleado;
     private Cliente cliente;
     private Ordenprestamo ordenPrestamo;
-    private List<Ordenitemprestamo> ordenItemPrestamo = new ArrayList<>();
-    private List<Libro> librosOrden = new ArrayList<>();
+    List<Ordenitemprestamo> ordenItemPrestamo = new ArrayList<>();
+    List<Libro> librosOrden = new ArrayList<>();
     private int isbn;
     private int numeroFila;
-    private DefaultTableModel modelo;
+    DefaultTableModel modelo;
 
     public ventanaOrdenPrestamo(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -127,6 +127,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         cajaEstadoOrden = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         entIsbn = new javax.swing.JTextField();
+        btnAgregarLibro = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         entNumeroOrden = new javax.swing.JTextField();
@@ -195,6 +196,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         entApellidoEmpleado.setBounds(309, 20, 180, 30);
 
         btnBuscarEmpleado.setText("Busca");
+        btnBuscarEmpleado.setToolTipText("Buscar Empleados");
         btnBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarEmpleadoActionPerformed(evt);
@@ -247,6 +249,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         entApellidoCliente.setBounds(309, 20, 180, 30);
 
         btnBuscarCliente.setText("Busca");
+        btnBuscarCliente.setToolTipText("Buscar Cliente");
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarClienteActionPerformed(evt);
@@ -323,7 +326,9 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         jPanel5.add(jLabel4);
         jLabel4.setBounds(210, 225, 90, 30);
 
+        btnGuardar.setMnemonic('G');
         btnGuardar.setText("guar");
+        btnGuardar.setToolTipText("Guardar Informacion De La Orden");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -332,7 +337,9 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         jPanel5.add(btnGuardar);
         btnGuardar.setBounds(490, 190, 70, 70);
 
+        btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
+        btnEditar.setToolTipText("Editar Informacion De La Orden");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -350,20 +357,33 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
         jPanel5.add(cajaEstadoOrden);
         cajaEstadoOrden.setBounds(90, 225, 115, 30);
 
+        btnCancelar.setMnemonic('-');
         btnCancelar.setText("Canc");
+        btnCancelar.setToolTipText("Quitar Libro De La Orden");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
         jPanel5.add(btnCancelar);
-        btnCancelar.setBounds(490, 40, 70, 70);
+        btnCancelar.setBounds(490, 75, 70, 35);
 
         entIsbn.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         entIsbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         entIsbn.setText("Isbn");
         jPanel5.add(entIsbn);
         entIsbn.setBounds(490, 5, 70, 30);
+
+        btnAgregarLibro.setMnemonic('+');
+        btnAgregarLibro.setText("+");
+        btnAgregarLibro.setToolTipText("Agerar Libro A La Orden");
+        btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLibroActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnAgregarLibro);
+        btnAgregarLibro.setBounds(490, 40, 70, 35);
 
         jPanel1.add(jPanel5);
         jPanel5.setBounds(5, 275, 564, 265);
@@ -634,22 +654,67 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
 
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        if (isbn != 0) {
-            
+        String cantidadTotal = entCantidadTotal.getText();
+        if (isbn != 0) {  
             for (int i = 0; i < librosOrden.size(); i++) {
                 if (librosOrden.get(i).getIsbn() == isbn) {
                     librosOrden.remove(i);
                     modelo.removeRow(numeroFila);
                 }
             }
-            
+            if (cantidadTotal != null && !cantidadTotal.isEmpty()){
+                int cantidad = Integer.parseInt(cantidadTotal) - 1;
+                entCantidadTotal.setText(""+cantidad);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No Se Ha Selecionado Nada", "Informacion", 1, null);
         }
-        
         isbn = 0;
         entIsbn.setText("Isbn");
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
+        List<Libro> libroOrden = new ArrayList<>();
+        String opcion = JOptionPane.showInputDialog(this, "Ingresar Libro Por "
+                + "\n1) Isbn"
+                + "\n2) Varios Libros", "Tipo De Acion", 3);
+        switch (opcion) {
+            case "1":
+                do {
+                    String isbnLibro = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Isbn Del Libro", "Buscar Libro Por Isbn", 3);
+                    if (isbnLibro != null && !isbnLibro.isEmpty()) {
+                        int id = Integer.parseInt(isbnLibro);
+                        MC_Libro controlLibro = new MC_Libro();
+                        Libro libro = controlLibro.buscarLibro(id);
+                        if (libro != null && libro.getIsbn() != null && libro.getIsbn() > 0) {
+                            String nombre = "Sin Nombre";
+                            if (libro.getTitulo() != null && !libro.getTitulo().isEmpty())
+                                nombre = libro.getTitulo();
+                            if (JOptionPane.showConfirmDialog(this, "Agregar Libro: " + nombre, "Alerta", 1, 3, null) == 0) {
+                                libroOrden.add(libro);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Libro No Agregado", "Informacion", 1, null);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No Se Encontro El Libro", "Informacion", 1, null);
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+                    }
+                } while (JOptionPane.showConfirmDialog(this, "Agregar Mas Libros", "Pregunta", 1, 3, null) == 0);
+                if (!libroOrden.isEmpty()) {
+                    mostraLibro(libroOrden);
+                }
+                break;
+            case "2":
+                ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+                ventana.btnEditar.setEnabled(false);
+                ventana.btnInsertar.setEnabled(false);
+                ventana.setVisible(true);
+                break;
+        }
+    }//GEN-LAST:event_btnAgregarLibroActionPerformed
 
     public Ordenprestamo getOrdenPrestamo() {
         return ordenPrestamo;
@@ -702,9 +767,10 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAgregarLibro;
     public javax.swing.JButton btnBuscarCliente;
     public javax.swing.JButton btnBuscarEmpleado;
-    private javax.swing.JButton btnCancelar;
+    public javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cajaEstadoOrden;
