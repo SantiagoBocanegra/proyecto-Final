@@ -11,6 +11,7 @@ import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.funciones;
 import MODELO_CONTROLADOR.img_tabla;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,8 +27,11 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     /**
      * Creates new form ventanaVerLibro
      */
+    List<Libro> compraLibros = new ArrayList<>();
     private final String nombreTabla = "Libro";
     DefaultTableModel modelo;
+    ventanaOrdenCompra ventana;
+    ventanaOrdenPrestamo ventanaP;
     private int isbn;
     Permisos permiso;
 
@@ -54,7 +58,12 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        AgregarLibro = new javax.swing.JPopupMenu();
+        AgregarAlCarroDeCompra = new javax.swing.JMenuItem();
+        FinalizarCompra = new javax.swing.JMenuItem();
+        FinalizarPrestamo = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
+        entCarro = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaLibro = new javax.swing.JTable();
@@ -66,6 +75,37 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         btnInsertar = new javax.swing.JButton();
         entId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+
+        AgregarAlCarroDeCompra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        AgregarAlCarroDeCompra.setMnemonic('A');
+        AgregarAlCarroDeCompra.setText("Agregar Al Carro");
+        AgregarAlCarroDeCompra.setToolTipText("");
+        AgregarAlCarroDeCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarAlCarroDeCompraActionPerformed(evt);
+            }
+        });
+        AgregarLibro.add(AgregarAlCarroDeCompra);
+
+        FinalizarCompra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        FinalizarCompra.setMnemonic('F');
+        FinalizarCompra.setText("Finalizar Compra");
+        FinalizarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinalizarCompraActionPerformed(evt);
+            }
+        });
+        AgregarLibro.add(FinalizarCompra);
+
+        FinalizarPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        FinalizarPrestamo.setText("Finalizar Prestamo");
+        FinalizarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinalizarPrestamoActionPerformed(evt);
+            }
+        });
+        AgregarLibro.add(FinalizarPrestamo);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -73,6 +113,12 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
+
+        entCarro.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        entCarro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        entCarro.setText("0");
+        jPanel1.add(entCarro);
+        entCarro.setBounds(760, 60, 70, 30);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -89,6 +135,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
                 "portada", "Isbn", "Titulo", "Autor", "Inventario", "Precio"
             }
         ));
+        tablaLibro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaLibroMouseClicked(evt);
@@ -106,7 +153,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(5, 5, 830, 90);
+        jPanel3.setBounds(5, 5, 747, 90);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -171,6 +218,12 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel1.add(jPanel4);
         jPanel4.setBounds(757, 100, 80, 410);
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Carro");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(760, 10, 65, 40);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(5, 5, 842, 515);
 
@@ -182,9 +235,18 @@ public class ventanaVerLibro extends javax.swing.JDialog {
             modelo.removeRow(modelo.getRowCount() - 1);
         }
     }
+
     private void tablaLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLibroMouseClicked
-        isbn = Integer.parseInt(modelo.getValueAt(tablaLibro.getSelectedRow(), 1).toString());
-        entId.setText(String.valueOf(isbn));
+        if (evt.isMetaDown()) {
+            if (isbn > 0) {
+                AgregarLibro.show(tablaLibro, evt.getX(), evt.getY());
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Ha Seleccionado Nada", "Advertencia", 2, null);
+            }
+        } else {
+            isbn = Integer.parseInt(modelo.getValueAt(tablaLibro.getSelectedRow(), 1).toString());
+            entId.setText(String.valueOf(isbn));
+        }
     }//GEN-LAST:event_tablaLibroMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
@@ -275,6 +337,74 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    private void AgregarAlCarroDeCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAlCarroDeCompraActionPerformed
+        int cantidad = Integer.parseInt(entCarro.getText());
+        String nombre = modelo.getValueAt(tablaLibro.getSelectedRow(), 2).toString();
+        if (isbn > 0) {
+            if (JOptionPane.showConfirmDialog(this, "Agregar Libro: " + nombre + " Al Carro De Compra.", "Escudo", 1, 3, null) == 0) {
+                MC_Libro controlLibro = new MC_Libro();
+                Libro seleccionLibro = controlLibro.buscarLibro(isbn);
+                compraLibros.add(seleccionLibro);
+                cantidad++;
+                entCarro.setText(String.valueOf(cantidad));
+            }
+        }
+    }//GEN-LAST:event_AgregarAlCarroDeCompraActionPerformed
+
+    private void FinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarCompraActionPerformed
+        boolean estado = true;
+        if (ventana == null) {
+            ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
+            estado = false;
+        }
+        ventana.mostraLibro(compraLibros);
+        ventana.btnAgregarLibro.setEnabled(false);
+        ventana.btnEditar.setEnabled(false);
+        ventana.numeroOrden();
+        entCarro.setText("0");
+        compraLibros = new ArrayList<>();
+        if (estado) {
+            this.setVisible(false);
+        } else {
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_FinalizarCompraActionPerformed
+
+    private void FinalizarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarPrestamoActionPerformed
+        boolean estado = true;
+        if (ventanaP == null) {
+            ventanaP = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+            estado = false;
+        }
+        ventanaP.mostraLibro(compraLibros);
+        ventanaP.btnAgregarLibro.setEnabled(false);
+        ventanaP.btnEditar.setEnabled(false);
+        ventanaP.numeroOrden();
+        entCarro.setText("0");
+        compraLibros = new ArrayList<>();
+        if (estado) {
+            this.setVisible(false);
+        } else {
+            ventanaP.setVisible(true);
+        }
+    }//GEN-LAST:event_FinalizarPrestamoActionPerformed
+
+    public ventanaOrdenPrestamo getVentanaP() {
+        return ventanaP;
+    }
+
+    public void setVentanaP(ventanaOrdenPrestamo ventanaP) {
+        this.ventanaP = ventanaP;
+    }
+
+    public ventanaOrdenCompra getVentana() {
+        return ventana;
+    }
+
+    public void setVentana(ventanaOrdenCompra ventana) {
+        this.ventana = ventana;
+    }
+
     public Permisos getPermiso() {
         return permiso;
     }
@@ -326,12 +456,18 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AgregarAlCarroDeCompra;
+    private javax.swing.JPopupMenu AgregarLibro;
+    private javax.swing.JMenuItem FinalizarCompra;
+    private javax.swing.JMenuItem FinalizarPrestamo;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnInsertar;
     public javax.swing.JButton btnVer;
     public javax.swing.JButton btnVerTodo;
+    private javax.swing.JTextField entCarro;
     private javax.swing.JTextField entId;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -1,10 +1,10 @@
-
 package MODELO_CONTROLADOR;
 
-
+import MODELO.Empleado;
 import MODELO.Libro;
 import MODELO.Permisos;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -21,18 +21,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
- *                              funciones de esta clase
- * 1 fecha -> retorna la fecha actual del sistema 
- * 2 jpg_bytes -> Convertir una imagen en un arreglo de bytes
- * 3 bytes -> jpg -> Convertir un arreglo de bytes en imagen 
- * 4 cargarImagen -> Cargar una imagen de el pc
- * 5 sumarRestarFecha -> sumar o restar dias de la fecha actual
- * 6 eliminarLibro -> editar cantidad de lisbros 
- * 7 permisosRol -> obtener los permisos de un rol especifico 
- * 8 getHast -> encriptar un String con md5
+ * funciones de esta clase 1 fecha -> retorna la fecha actual del sistema 2
+ * jpg_bytes -> Convertir una imagen en un arreglo de bytes 3 bytes -> jpg ->
+ * Convertir un arreglo de bytes en imagen 4 cargarImagen -> Cargar una imagen
+ * de el pc 5 sumarRestarFecha -> sumar o restar dias de la fecha actual 6
+ * eliminarLibro -> editar cantidad de lisbros 7 permisosRol -> obtener los
+ * permisos de un rol especifico 8 getHast -> encriptar un String con md5
  */
 public class funciones {
-    
+
     //Funciones Numero 1
     public static Date fecha() {
         Date fecha = new Date();
@@ -45,7 +42,7 @@ public class funciones {
         }
         return fecha;
     }
-    
+
     //Funciones Numero 2
     public static byte[] jpg_bytes(FileInputStream imagen) {
         byte[] arreglo = null;
@@ -58,22 +55,22 @@ public class funciones {
         }
         return arreglo;
     }
-    
+
     //Funciones Numero 3
     public static Image byte_jpg(byte[] arreglo) {
         Image imagen = null;
         try {
             BufferedImage bufer = ImageIO.read(new ByteArrayInputStream(arreglo));
             ImageIcon imagenI = new ImageIcon(bufer);
-            imagen = imagenI.getImage(); 
+            imagen = imagenI.getImage();
         } catch (Exception e) {
             System.out.println("ERROR funciones.byte_jpg: " + e.getMessage());
         }
         return imagen;
     }
-    
+
     //Funciones Numero 4
-    public static  FileInputStream cargarImagen (JLabel cuadro) {
+    public static FileInputStream cargarImagen(JLabel cuadro) {
         FileInputStream imagenCargada = null;
         JFileChooser seleccionar = new JFileChooser();
         seleccionar.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -85,30 +82,55 @@ public class funciones {
                 cuadro.setIcon(new ImageIcon(icon));
                 cuadro.updateUI();
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null,"ERROR funciones.cargarImagen: \n" + e.getMessage(),"Error",0,null);
+                JOptionPane.showMessageDialog(null, "ERROR funciones.cargarImagen: \n" + e.getMessage(), "Error", 0, null);
             }
         }
         return imagenCargada;
     }
-    
+
     //Funciones numero 5
-    public static Date sumarRestaFecha( int año, int mes, int dia) {
+    public static Date sumarRestaFecha(int año, int mes, int dia) {
         Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, dia);
-            cal.add(Calendar.MONTH, mes);
-            cal.add(Calendar.YEAR, año);
+        cal.add(Calendar.DATE, dia);
+        cal.add(Calendar.MONTH, mes);
+        cal.add(Calendar.YEAR, año);
         return cal.getTime();
     }
+
     //Funcion numero 6
-    public static void eliminarLibros ( List<Libro> libros ) {
-        MC_Libro controlLibro =  new MC_Libro(); 
-        for ( Libro libro : libros ) {
+    public static void eliminarLibros(List<Libro> libros) {
+        MC_Libro controlLibro = new MC_Libro();
+        for (Libro libro : libros) {
+            String nombre = "Sin Nombre";
+            Image imagen = null;
+            if (libro.getTitulo() != null && !libro.getTitulo().isEmpty()) {
+                nombre = libro.getTitulo();
+            }
+            if (libro.getPortada() != null) {
+                imagen = byte_jpg(libro.getPortada()).getScaledInstance(98, 98, Image.SCALE_DEFAULT);
+            }
+            int cantidad = Integer.parseInt(libro.getEstadolibro());
             controlLibro.editarLibro(libro);
+            if (cantidad < 5) {
+                JOptionPane.showMessageDialog(null, "El Libro \n"
+                        + "Isbn: " + libro.getIsbn()
+                        + "\nNombre: " + nombre
+                        + "\nTiene Pocos Ejemplares Informar Al Administrador", " Informacion", 1, new ImageIcon(imagen));
+                MC_Empleado control = new MC_Empleado();
+                List<Empleado> empleados = control.buscarEmpleadoCargo("administrador");
+                for (Empleado empleado : empleados) {
+                    Mail enviar = new Mail();
+                    enviar.enviarEmail("bocanegrasantiago18@gmail.com", "santiagobocanegra1998",
+                            empleado.getCorreo(), "Escaseando Ejemplares De Libreria !Yo Si Compro Libros¡",
+                            "El Libro \nIsbn: " + libro.getIsbn() + " \nNombre: " + nombre + " \nTiene Pocos Ejemplares", false);
+                }
+            }
         }
         controlLibro.close();
     }
+
     //Funcion numero 7
-    public static Permisos permisosRol ( int idRol, String nombreTabla ) {
+    public static Permisos permisosRol(int idRol, String nombreTabla) {
         MC_Permisos controlPermisos = new MC_Permisos();
         List<Permisos> permisosAux = controlPermisos.buscarPermisosRolId(idRol);
         Permisos permiso = new Permisos();
@@ -120,7 +142,7 @@ public class funciones {
         }
         return permiso;
     }
-    
+
     //Funcion numero 8
     public static String getHash(String txt) {
         try {
@@ -132,18 +154,18 @@ public class funciones {
             }
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
-            System.out.println("Error funciones.getHash(): "+e.getMessage());
+            System.out.println("Error funciones.getHash(): " + e.getMessage());
         }
         return null;
     }
-    
+
     //Fucion numero 9
-    public static void validarDigito (java.awt.event.KeyEvent evt) {
+    public static void validarDigito(java.awt.event.KeyEvent evt) {
         char entrada = evt.getKeyChar();
-        if (!Character.isDigit(entrada)){
+        if (!Character.isDigit(entrada)) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Este Campo Solo Recibe Digitos Del 1 Al 9", "Error", 0, null);
         }
     }
-    
+
 }

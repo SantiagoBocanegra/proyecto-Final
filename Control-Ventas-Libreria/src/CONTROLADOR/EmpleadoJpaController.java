@@ -21,6 +21,7 @@ import MODELO.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 /**
@@ -309,24 +310,42 @@ public class EmpleadoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     //consultas propias
-    public Empleado buscarEmpleadoCc (String empleadoCc) {
+    public Empleado buscarEmpleadoCc(String empleadoCc) {
         EntityManager em = getEntityManager();
-        Empleado empleado = new Empleado ();
+        Empleado empleado = new Empleado();
         try {
             em.getTransaction().begin();
             TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByCedula", Empleado.class);
-            q.setParameter("cedula",  empleadoCc);
+            q.setParameter("cedula", empleadoCc);
             empleado = q.getSingleResult();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("Error EmpleadoJpaController.buscarEmpleadoCc(): "+e.getMessage());
+            System.out.println("Error EmpleadoJpaController.buscarEmpleadoCc(): " + e.getMessage());
         } finally {
             em.close();
         }
         return empleado;
     }
-    
+
+    public List<Empleado> buscarEmpladoCargo(String cargo) {
+        List<Empleado> empleados = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByAllCargo", Empleado.class);
+            q.setParameter("cargo", cargo);
+            empleados = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error EmpleadoJpaController.buscarEmpladoCargo(): " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return empleados;
+    }
 }

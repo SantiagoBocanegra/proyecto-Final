@@ -709,6 +709,7 @@ public class ventanaOrdenPrestamo extends javax.swing.JDialog {
                 break;
             case "2":
                 ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+                ventana.setVentanaP(this);
                 ventana.btnEditar.setEnabled(false);
                 ventana.btnInsertar.setEnabled(false);
                 ventana.setVisible(true);

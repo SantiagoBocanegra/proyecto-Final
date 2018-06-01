@@ -630,6 +630,7 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                 break;
             case "2":
                 ventanaVerLibro ventana = new ventanaVerLibro(new javax.swing.JDialog(), true);
+                ventana.setVentana(this);
                 ventana.btnEditar.setEnabled(false);
                 ventana.btnInsertar.setEnabled(false);
                 ventana.setVisible(true);
@@ -675,12 +676,12 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             if (libro.getPrecio() != null && libro.getPrecio() > 0) {
                 precio = libro.getPrecio();
             }
-
-            String entrada = JOptionPane.showInputDialog("Cuantos Libros Desea Comprar \nTitulo Del Libro: " + titulo);
-
+            String entrada = JOptionPane.showInputDialog(null,"Cuantos Libros Desea Comprar \nTitulo Del Libro: "+titulo,"Cantidad Del Libro",1);
+            System.out.println("Cantidad de libros: "+entrada);
             if (!entrada.isEmpty()) {
                 cantidad = Integer.parseInt(entrada);
             }
+            
             int precioTotalLibro = 0;
             if (Integer.parseInt(libro.getEstadolibro()) > 0) {
                 if (cantidad > Integer.parseInt(libro.getEstadolibro())) {
@@ -693,8 +694,8 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "Libro Cancelado: " + titulo, "Informacion", 1, null);
                     }
                 } else {
-                    cantidad = Integer.parseInt(libro.getEstadolibro()) - cantidad;
-                    libro.setEstadolibro(String.valueOf(cantidad));
+                    int cantidadAux = Integer.parseInt(libro.getEstadolibro()) - cantidad;
+                    libro.setEstadolibro(String.valueOf(cantidadAux));
                     ordenLibros.add(libro);
                 }
                 precioTotalLibro = cantidad * precio;

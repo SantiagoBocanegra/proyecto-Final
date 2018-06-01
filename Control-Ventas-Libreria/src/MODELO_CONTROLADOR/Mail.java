@@ -68,7 +68,7 @@ public class Mail {
                 JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
             }
         } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null, "Mail.enviarEmail(): "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Mail.enviarEmail(): "+e.getMessage());
             }
     }
     
@@ -122,10 +122,10 @@ public class Mail {
                 JOptionPane.showMessageDialog(null, "Su mensaje ha sido enviado");
             }
         } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null, "Mail.enviarEmail(): "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Mail.enviarEmail(): "+e.getMessage());
             }
     }
-
+    
     public static void main(String[] args) {
       try {
             Mail mensaje = new Mail();

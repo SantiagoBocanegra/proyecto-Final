@@ -139,6 +139,9 @@ public class ventanaLogin extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 entCcEmpleadoKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entCcEmpleadoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 entCcEmpleadoKeyTyped(evt);
             }
@@ -327,29 +330,31 @@ public class ventanaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaRolMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        Image imagen = funciones.byte_jpg(empleado.getFoto()).getScaledInstance(ventana.fotoUsuario.getWidth(), ventana.fotoUsuario.getHeight(), Image.SCALE_SMOOTH);
         buscarRolSeleccion(id);
         MC_Permisos controlPermisos = new MC_Permisos();
         List<Permisos> permisos = controlPermisos.buscarPermisosRolId(rolSeleccionado.getId());
-        ventana.fotoUsuario.setIcon(new ImageIcon(imagen));
+        if (empleado.getFoto() != null ) {
+            Image imagen = funciones.byte_jpg(empleado.getFoto()).getScaledInstance(ventana.fotoUsuario.getWidth(), ventana.fotoUsuario.getHeight(), Image.SCALE_SMOOTH);
+           ventana.fotoUsuario.setIcon(new ImageIcon(imagen));
+        }
         ventana.setRol(rolSeleccionado);
         ventana.setPermisosRol(permisos);
         ventana.PerfilUsuario.setToolTipText("Rol Activo: "+rolSeleccionado.getNombrerol());
         ventana.Desconectar.setEnabled(true);
         ventana.Conectar.setEnabled(false);
         this.setVisible(false);
-        //ventana.setVisible(true);
-        
         
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void entCcEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyTyped
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
-        }else {
+        
+    }//GEN-LAST:event_entCcEmpleadoKeyTyped
+
+    private void entCcEmpleadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyReleased
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
             funciones.validarDigito(evt);
         }
-    }//GEN-LAST:event_entCcEmpleadoKeyTyped
+    }//GEN-LAST:event_entCcEmpleadoKeyReleased
 
     public void buscarUsuarioSeleccion(int id) {
         if (!usuarios.isEmpty()) {

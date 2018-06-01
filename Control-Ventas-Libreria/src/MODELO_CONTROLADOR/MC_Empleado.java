@@ -126,4 +126,23 @@ public class MC_Empleado {
         }
         return empleado;
     }
+    
+    //Funciones Numero 3.3
+    public List<Empleado> buscarEmpleadoCargo (String cargo) {
+        EmpleadoJpaController control = new EmpleadoJpaController(emf);
+        List<Empleado> empleados = new ArrayList<>();
+        try {
+            emt.begin();
+            empleados = control.buscarEmpladoCargo(cargo);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Empleado "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Empleado.buscarEmpleadoCargo(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return empleados;
+    }
 }
