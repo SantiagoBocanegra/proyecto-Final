@@ -11,6 +11,7 @@ package MODELO_CONTROLADOR;
 import CONTROLADOR.ClienteJpaController;
 import MODELO.Cliente;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -100,6 +101,82 @@ public class MC_Cliente {
             emt.rollback();
             JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
             System.err.print("ERROR MC_Cliente.buscarTodosClientes(): "+e.getMessage() );
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+     // FUNCION NUMERO 3.2
+    public List<Cliente> buscarClienteNombre (String nombre) {
+        ClienteJpaController servicio = new ClienteJpaController(emf);
+        List<Cliente> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarClienteNombre(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_Cliente.buscarClienteNombre(): "+e.getMessage() );
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+    // FUNCION NUMERO 3.3
+    public List<Cliente> buscarClienteApellido (String apellido) {
+        ClienteJpaController servicio = new ClienteJpaController(emf);
+        List<Cliente> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarClienteApellido(apellido);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_Cliente.buscarClienteApellido(): "+e.getMessage() );
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+    // FUNCION NUMERO 3.4
+    public List<Cliente> buscarClienteCedula (String cedula) {
+        ClienteJpaController servicio = new ClienteJpaController(emf);
+        List<Cliente> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarClienteCedula(cedula);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_Cliente.buscarClienteCedula(): "+e.getMessage() );
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+    // FUNCION NUMERO 3.2
+    public List<Cliente> buscarClienteRangoFecha (Date fi, Date ff) {
+        ClienteJpaController servicio = new ClienteJpaController(emf);
+        List<Cliente> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarRangoFecha(fi,ff);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Cliente: "+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_Cliente.buscarClienteRangoFecha(): "+e.getMessage() );
         } finally {
             em.close();
             emf.close();

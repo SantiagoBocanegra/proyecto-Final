@@ -11,6 +11,7 @@ package MODELO_CONTROLADOR;
 import CONTROLADOR.EmpleadoJpaController;
 import MODELO.Empleado;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -144,5 +145,62 @@ public class MC_Empleado {
             emf.close();
         }
         return empleados;
+    }
+    
+    // FUNCION NUMERO 3.4
+    public List<Empleado> buscarEmpleadoNombre (String nombre) {
+        EmpleadoJpaController servicio = new EmpleadoJpaController(emf);
+        List<Empleado> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarEmpleadoNombre(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Empleado "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Empleado.buscarEmpleadoCargo(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+    // FUNCION NUMERO 3.5
+    public List<Empleado> buscarEmpleadoApellidoP (String apellido) {
+        EmpleadoJpaController servicio = new EmpleadoJpaController(emf);
+        List<Empleado> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarEmpleadoApellido(apellido);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Empleado "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Empleado.buscarEmpleadoCargo(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
+    }
+    
+    // FUNCION NUMERO 3.6
+    public List<Empleado> buscarEmpleadoRangoFecha (Date fi, Date ff) {
+        EmpleadoJpaController servicio = new EmpleadoJpaController(emf);
+        List<Empleado> clientes  = new ArrayList<>();
+        try {
+            emt.begin();
+            clientes = servicio.buscarRangoFecha(fi,ff);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Empleado "+e.getMessage(), "Error", 0, null);
+            System.out.println("Error MC_Empleado.buscarEmpleadoCargo(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return clientes;
     }
 }

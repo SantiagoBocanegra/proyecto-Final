@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,10 +35,12 @@ public class ventanaMenu extends javax.swing.JDialog {
     RolUsuario rol = new RolUsuario();
     Permisos permiso = new Permisos();
     List<Permisos> permisosRol = new ArrayList<>();
+    DefaultTableModel modelo;
 
     public ventanaMenu(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        modelo = (DefaultTableModel)tablaLibros.getModel();
         this.setTitle("Libreria ¡Yo Si Compro Libros!");
         this.setSize(1015, 529);
         this.setMaximumSize(new Dimension(1015, 529));
@@ -154,10 +157,10 @@ public class ventanaMenu extends javax.swing.JDialog {
         fotoUsuario = new com.bolivia.label.CLabel();
         btnUsuario = new javax.swing.JButton();
         btnGenero = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        panelGrafica = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaLibros = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
 
         PerfilUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -182,6 +185,11 @@ public class ventanaMenu extends javax.swing.JDialog {
         Desconectar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         Desconectar.setMnemonic('D');
         Desconectar.setText("Desconectar");
+        Desconectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesconectarActionPerformed(evt);
+            }
+        });
         MenuSesion.add(Desconectar);
         MenuSesion.add(jSeparator13);
 
@@ -727,34 +735,37 @@ public class ventanaMenu extends javax.swing.JDialog {
         jPanel1.add(menu);
         menu.setBounds(2, 2, 986, 40);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Grafica Ventas Empleado", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(null);
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(200, 260, 787, 214);
+        panelGrafica.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelGrafica.setOpaque(false);
+        panelGrafica.setLayout(null);
+        jPanel1.add(panelGrafica);
+        panelGrafica.setBounds(200, 184, 787, 290);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Libros Vendidos Reciente Mente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ventas De La Semana Del Empleado", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
         jPanel2.setOpaque(false);
         jPanel2.setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Isbn", "Titulo", "Autor", "Precio"
+                "numero Orden", "Fecha", "Cantidad", "Precio Venta"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(80);
+        jScrollPane1.setViewportView(tablaLibros);
+        if (tablaLibros.getColumnModel().getColumnCount() > 0) {
+            tablaLibros.getColumnModel().getColumn(0).setResizable(false);
+            tablaLibros.getColumnModel().getColumn(1).setResizable(false);
+            tablaLibros.getColumnModel().getColumn(2).setResizable(false);
+            tablaLibros.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(5, 20, 777, 188);
+        jScrollPane1.setBounds(5, 20, 777, 110);
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(200, 44, 787, 214);
+        jPanel2.setBounds(200, 44, 787, 135);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setOpaque(false);
@@ -1187,6 +1198,31 @@ public class ventanaMenu extends javax.swing.JDialog {
         ventana.setVisible(true);
     }//GEN-LAST:event_verGenerosActionPerformed
 
+    private void DesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesconectarActionPerformed
+        fotoUsuario.setIcon(null);
+        permisosRol = new ArrayList<>();
+        
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(modelo.getRowCount() - 1);
+        }
+        System.out.println("compo "+panelGrafica.getComponentCount());
+        if (panelGrafica.getComponentCount() != 0) {
+            panelGrafica.remove(0);
+            panelGrafica.repaint();
+        }
+        
+        Desconectar.setEnabled(false);
+        Conectar.setEnabled(true);
+    }//GEN-LAST:event_DesconectarActionPerformed
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
     public RolUsuario getRol() {
         return rol;
     }
@@ -1288,7 +1324,6 @@ public class ventanaMenu extends javax.swing.JDialog {
     public com.bolivia.label.CLabel fotoUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -1318,7 +1353,6 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel menu;
     private javax.swing.JPopupMenu menuClientes;
     private javax.swing.JPopupMenu menuEmpleados;
@@ -1335,6 +1369,8 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JMenuItem nuevoPrestamo;
     private javax.swing.JMenuItem nuevoRol;
     private javax.swing.JMenuItem nuevoUsuario;
+    public javax.swing.JPanel panelGrafica;
+    public javax.swing.JTable tablaLibros;
     private javax.swing.JMenuItem verClientes;
     private javax.swing.JMenuItem verEmpleados;
     private javax.swing.JMenuItem verGeneros;

@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -278,5 +280,62 @@ public class OrdenprestamoJpaController implements Serializable {
             em.close();
         }
         return ordenEntrega;
+    }
+    
+    public List<Ordenprestamo> buscarOrdenprestamoNombreE (String nombre) {
+        List<Ordenprestamo> Ordenprestamos = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordenprestamo> q = em.createNamedQuery("Ordenprestamo.findByNombreELike", Ordenprestamo.class);
+            q.setParameter("nombreE", nombre);
+            Ordenprestamos = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error OrdenprestamoJpaController.buscarOrdenprestamoNombreE() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Ordenprestamos;
+    }
+    
+    public List<Ordenprestamo> buscarOrdenprestamoNombreC (String nombre) {
+        List<Ordenprestamo> Ordenprestamos = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordenprestamo> q = em.createNamedQuery("Ordenprestamo.findByNombreCLike", Ordenprestamo.class);
+            q.setParameter("nombreC", nombre);
+            Ordenprestamos = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error OrdenprestamoJpaController.buscarOrdenprestamoNombreA() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Ordenprestamos;
+    }
+    public List<Ordenprestamo> buscarRangoFecha (Date fechaInicial, Date fechaFinal) {
+        List<Ordenprestamo> Ordenprestamos = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordenprestamo> q = em.createNamedQuery("Ordenprestamo.findByRangoFechas", Ordenprestamo.class);
+            q.setParameter("fechaentregaI", fechaInicial,TemporalType.DATE);
+            q.setParameter("fechaentregaF", fechaFinal,TemporalType.DATE);
+            Ordenprestamos = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Erro OrdenprestamoJpaController.buscarRangoFecha() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Ordenprestamos;
     }
 }

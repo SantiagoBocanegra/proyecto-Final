@@ -251,4 +251,61 @@ public class UsuarioJpaController implements Serializable {
         }
         return empleados;
     }
+    
+    public List<Usuario> buscarUsuarioNombreE (String nombre) {
+        List<Usuario> Usuarios = new ArrayList<>();
+        EntityManager em = getEntityManager();
+         EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNombreELike", Usuario.class);
+            q.setParameter("nombre", nombre);
+            Usuarios = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error UsuarioJpaController.buscarUsuarioNombreE() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Usuarios;
+    }
+    
+    public List<Usuario> buscarUsuarioNombreU (String nombre) {
+        List<Usuario> Usuarios = new ArrayList<>();
+        EntityManager em = getEntityManager();
+         EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNombreUsuarioLike", Usuario.class);
+            q.setParameter("usuario", nombre);
+            Usuarios = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error UsuarioJpaController.buscarUsuarioNombreU() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Usuarios;
+    }
+    
+    public List<Usuario> buscarUsuarioEstado (boolean estado) {
+        List<Usuario> Usuarios = new ArrayList<>();
+        EntityManager em = getEntityManager();
+         EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByEstado", Usuario.class);
+            q.setParameter("estado", estado);
+            Usuarios = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error UsuarioJpaController.buscarUsuarioEstado() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Usuarios;
+    }
 }

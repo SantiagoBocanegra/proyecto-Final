@@ -18,9 +18,13 @@ import MODELO.Ordencompra;
 import MODELO.Ordenitem;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -257,6 +261,82 @@ public class OrdencompraJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Ordencompra> buscarOrdenCompraEmpleadoId (int empleadoId) {
+        List<Ordencompra> ordenesCompra = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordencompra> q = em.createNamedQuery("Ordencompra.findByEmpleadoId", Ordencompra.class);
+            q.setParameter("empleadoId", empleadoId);
+            ordenesCompra = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error OrdencompraJpaController.buscarOrdenCompraEmpleadoId() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return ordenesCompra;
+    }
+    
+    public List<Ordencompra> buscarOrdencompraNombreE (String nombre) {
+        List<Ordencompra> Ordencompras = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordencompra> q = em.createNamedQuery("Ordencompra.findByNombreELike", Ordencompra.class);
+            q.setParameter("nombreE", nombre);
+            Ordencompras = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error OrdencompraJpaController.buscarOrdencompraNombreE() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Ordencompras;
+    }
+    
+    public List<Ordencompra> buscarOrdencompraNombreC (String nombre) {
+        List<Ordencompra> Ordencompras = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordencompra> q = em.createNamedQuery("Ordencompra.findByNombreCLike", Ordencompra.class);
+            q.setParameter("nombreC", nombre);
+            Ordencompras = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error OrdencompraJpaController.buscarOrdencompraNombreA() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Ordencompras;
+    }
+    public List<Ordencompra> buscarRangoFecha (Date fechaInicial, Date fechaFinal) {
+        List<Ordencompra> Ordencompras = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Ordencompra> q = em.createNamedQuery("Ordencompra.findByRangoFechas", Ordencompra.class);
+            q.setParameter("fechaordenI", fechaInicial,TemporalType.DATE);
+            q.setParameter("fechaordenF", fechaFinal,TemporalType.DATE);
+            Ordencompras = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Erro EmpleadoJpaController.buscarRangoFecha() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Ordencompras;
     }
     
 }

@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 /**
@@ -248,6 +249,44 @@ public class RolUsuarioJpaController implements Serializable {
             em.close();
         }
         return rolUsuario;
+    }
+    
+     public List<RolUsuario> buscarRolUsuarioNombreUsuario (String nombre) {
+        List<RolUsuario> RolUsuarios = new ArrayList<>();
+        EntityManager em = getEntityManager();
+         EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<RolUsuario> q = em.createNamedQuery("RolUsuario.findByUsuarioLike", RolUsuario.class);
+            q.setParameter("nombre", nombre);
+            RolUsuarios = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error RolUsuarioJpaController.buscarRolUsuarioNombreUsuario() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return RolUsuarios;
+    }
+     
+     public List<RolUsuario> buscarRolUsuarioNombreRol (String nombre) {
+        List<RolUsuario> RolUsuarios = new ArrayList<>();
+        EntityManager em = getEntityManager();
+         EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<RolUsuario> q = em.createNamedQuery("RolUsuario.findByNombreRolLike", RolUsuario.class);
+            q.setParameter("nombrerol", nombre);
+            RolUsuarios = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error RolUsuarioJpaController.buscarRolUsuarioNombreRol() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return RolUsuarios;
     }
     
 }

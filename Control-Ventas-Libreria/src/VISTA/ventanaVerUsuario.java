@@ -11,6 +11,8 @@ import MODELO.Usuario;
 import MODELO_CONTROLADOR.procesosSegundario;
 import MODELO_CONTROLADOR.MC_Empleado;
 import MODELO_CONTROLADOR.MC_Usuario;
+import MODELO_CONTROLADOR.funciones;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -37,7 +39,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         id = 0;
         
         pro = new procesosSegundario();
-        
+        rbEstadoA.setVisible(false);
         modelo = (DefaultTableModel) tablaUsuario.getModel();
     }
 
@@ -50,11 +52,19 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaUsuario = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
+        rbNombreEmpleado = new javax.swing.JRadioButton();
+        rbId = new javax.swing.JRadioButton();
+        rbNombreUsuario = new javax.swing.JRadioButton();
+        rbEstado = new javax.swing.JRadioButton();
+        btnBuscar = new javax.swing.JButton();
+        entParametro = new javax.swing.JTextField();
+        rbEstadoA = new javax.swing.JRadioButton();
         jPanel10 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -120,8 +130,82 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel9.setLayout(null);
+
+        rbNombreEmpleado.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombreEmpleado);
+        rbNombreEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombreEmpleado.setText("Nombre Empleado");
+        rbNombreEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreEmpleadoMouseClicked(evt);
+            }
+        });
+        jPanel9.add(rbNombreEmpleado);
+        rbNombreEmpleado.setBounds(210, 10, 170, 30);
+
+        rbId.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbId);
+        rbId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbId.setText("Id");
+        rbId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbIdMouseClicked(evt);
+            }
+        });
+        jPanel9.add(rbId);
+        rbId.setBounds(160, 10, 50, 30);
+
+        rbNombreUsuario.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombreUsuario);
+        rbNombreUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombreUsuario.setText("Usuario");
+        rbNombreUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreUsuarioMouseClicked(evt);
+            }
+        });
+        jPanel9.add(rbNombreUsuario);
+        rbNombreUsuario.setBounds(380, 10, 90, 30);
+
+        rbEstado.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbEstado);
+        rbEstado.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbEstado.setText("Estado");
+        rbEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbEstadoMouseClicked(evt);
+            }
+        });
+        jPanel9.add(rbEstado);
+        rbEstado.setBounds(470, 10, 80, 30);
+
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btnBuscar);
+        btnBuscar.setBounds(660, 20, 60, 60);
+
+        entParametro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entParametro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        entParametro.setToolTipText("");
+        entParametro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entParametroKeyReleased(evt);
+            }
+        });
+        jPanel9.add(entParametro);
+        entParametro.setBounds(40, 40, 610, 30);
+
+        rbEstadoA.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbEstadoA.setText("Activo");
+        jPanel9.add(rbEstadoA);
+        rbEstadoA.setBounds(550, 40, 73, 30);
+
         jPanel7.add(jPanel9);
-        jPanel9.setBounds(5, 5, 830, 90);
+        jPanel9.setBounds(5, 5, 747, 90);
 
         jPanel10.setBackground(new java.awt.Color(204, 204, 204));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -188,7 +272,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         jLabel2.setBounds(19, 35, 50, 30);
 
         jPanel7.add(jPanel10);
-        jPanel10.setBounds(757, 100, 80, 410);
+        jPanel10.setBounds(757, 5, 80, 505);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -318,6 +402,98 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    private void rbNombreEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreEmpleadoMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+        entParametro.setVisible(true);
+        rbEstadoA.setVisible(false);
+    }//GEN-LAST:event_rbNombreEmpleadoMouseClicked
+
+    private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        entParametro.selectAll();
+        entParametro.requestFocus();
+        rbEstadoA.setVisible(false);
+    }//GEN-LAST:event_rbIdMouseClicked
+
+    private void rbNombreUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreUsuarioMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        entParametro.selectAll();
+        entParametro.requestFocus();
+        rbEstadoA.setVisible(false);
+    }//GEN-LAST:event_rbNombreUsuarioMouseClicked
+
+    private void rbEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbEstadoMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        entParametro.setVisible(false);
+        rbEstadoA.setSelected(true);
+        rbEstadoA.setVisible(true);
+    }//GEN-LAST:event_rbEstadoMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String parametro = entParametro.getText();
+        List<Usuario> clientes = new ArrayList<>();
+        if (parametro != null && !parametro.isEmpty() || rbEstado.isSelected()) {
+            if (rbId.isSelected()) {
+                MC_Usuario controlUsuario = new MC_Usuario();
+                int idC = Integer.parseInt(parametro);
+                Usuario cli = controlUsuario.buscarUsuario(idC);
+                if (cli != null && cli.getId() != null) {
+                    clientes.add(cli);
+                }
+            }
+            if (rbNombreEmpleado.isSelected()) {
+                MC_Usuario controlUsuario = new MC_Usuario();
+                clientes = controlUsuario.buscarUsuarioNombreE(parametro);
+            }
+            if (rbNombreUsuario.isSelected()) {
+                MC_Usuario controlUsuario = new MC_Usuario();
+                clientes = controlUsuario.buscarUsuarioNombreU(parametro);
+            }
+            if (rbEstado.isSelected()) {
+                MC_Usuario controlUsuario = new MC_Usuario();
+                clientes = controlUsuario.buscarUsuarioEstado(rbEstadoA.isSelected());
+            }
+            mostrarElementos(clientes);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void mostrarElementos (List<Usuario> usuarios) {
+        limpiarTabla();
+        if (!usuarios.isEmpty()) {
+            for (Usuario usuario : usuarios) {
+                int id = usuario.getId();
+                String primerNombre = "Sin Nombre";
+                if (usuario.getEmpleadoId().getNombre() != null && !usuario.getEmpleadoId().getNombre().isEmpty()) {
+                    primerNombre = usuario.getEmpleadoId().getNombre();
+                }
+                String ApellidoMaterno = "Sin Apellido";
+                if (usuario.getEmpleadoId().getApellidoMaterno() != null && !usuario.getEmpleadoId().getApellidoMaterno().isEmpty()) {
+                    ApellidoMaterno = usuario.getEmpleadoId().getApellidoMaterno();
+                }
+                String usuarioEmpleado = "Sin Usuario";
+                if (usuario.getUsuario() != null && !usuario.getUsuario().isEmpty()) {
+                    usuarioEmpleado = usuario.getUsuario();
+                }
+                boolean estado = usuario.getEstado();
+
+                modelo.addRow(new Object[]{id, primerNombre, ApellidoMaterno, usuarioEmpleado, estado});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Empleados", "Informacion", 1, null);
+        }
+    }
+    private void entParametroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entParametroKeyReleased
+        if (rbId.isSelected()) {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entParametroKeyReleased
+
     public Permisos getPermiso() {
         return permiso;
     }
@@ -369,11 +545,14 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnInsertar;
     public javax.swing.JButton btnVer;
     public javax.swing.JButton btnVerTodo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField entId;
+    private javax.swing.JTextField entParametro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel10;
@@ -381,6 +560,11 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JRadioButton rbEstado;
+    private javax.swing.JRadioButton rbEstadoA;
+    private javax.swing.JRadioButton rbId;
+    private javax.swing.JRadioButton rbNombreEmpleado;
+    private javax.swing.JRadioButton rbNombreUsuario;
     private javax.swing.JTable tablaUsuario;
     // End of variables declaration//GEN-END:variables
 }

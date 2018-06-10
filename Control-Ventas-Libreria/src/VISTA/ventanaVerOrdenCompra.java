@@ -9,8 +9,13 @@ import MODELO.Ordencompra;
 import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.funciones;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,16 +28,21 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     /**
      * Creates new form ventanaVerOrdenCompra
      */
+    List<Ordencompra> ordenGrafica = new ArrayList<>();
     private final String nombreTabla = "OrdenCompra";
     DefaultTableModel modelo;
     int numeroOrden;
     Permisos permiso;
-    
+
     public ventanaVerOrdenCompra(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         numeroOrden = 0;
         this.setSize(868, 564);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
         modelo = (DefaultTableModel) tablaNumeroOrden.getModel();
     }
 
@@ -45,11 +55,24 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        Grafica2DBarra = new javax.swing.JMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaNumeroOrden = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        rbNumeroOrden = new javax.swing.JRadioButton();
+        rbNombreC = new javax.swing.JRadioButton();
+        rbNombreE = new javax.swing.JRadioButton();
+        rbRangoFecha = new javax.swing.JRadioButton();
+        entFi = new com.toedter.calendar.JDateChooser();
+        entFf = new com.toedter.calendar.JDateChooser();
+        btnBuscar = new javax.swing.JButton();
+        Hasta = new javax.swing.JLabel();
+        Desde = new javax.swing.JLabel();
+        entParametro = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -57,6 +80,15 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         btnInsertar = new javax.swing.JButton();
         entNumeroOrden = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+
+        Grafica2DBarra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        Grafica2DBarra.setText("Graficacantida de ventas");
+        Grafica2DBarra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Grafica2DBarraActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(Grafica2DBarra);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -80,6 +112,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
                 "Fecha Orden", "Numero Orden", "Nombre Empleado", "Nombre Cliente", "Cantidad", "Precio"
             }
         ));
+        tablaNumeroOrden.setComponentPopupMenu(jPopupMenu1);
         tablaNumeroOrden.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaNumeroOrdenMouseClicked(evt);
@@ -96,8 +129,91 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
+
+        rbNumeroOrden.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNumeroOrden);
+        rbNumeroOrden.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNumeroOrden.setText("Numero Orden");
+        rbNumeroOrden.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNumeroOrdenMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbNumeroOrden);
+        rbNumeroOrden.setBounds(60, 10, 140, 30);
+
+        rbNombreC.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombreC);
+        rbNombreC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombreC.setText("Nombre C");
+        rbNombreC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreCMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbNombreC);
+        rbNombreC.setBounds(200, 10, 110, 30);
+
+        rbNombreE.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombreE);
+        rbNombreE.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombreE.setText("Nombre E");
+        rbNombreE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreEMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbNombreE);
+        rbNombreE.setBounds(310, 10, 110, 30);
+
+        rbRangoFecha.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbRangoFecha);
+        rbRangoFecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbRangoFecha.setText("Fecha De Orden Compra");
+        rbRangoFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbRangoFechaMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbRangoFecha);
+        rbRangoFecha.setBounds(420, 10, 210, 30);
+        jPanel3.add(entFi);
+        entFi.setBounds(170, 40, 200, 30);
+        jPanel3.add(entFf);
+        entFf.setBounds(430, 40, 180, 30);
+
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscar);
+        btnBuscar.setBounds(660, 20, 60, 60);
+
+        Hasta.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Hasta.setText("Hasta");
+        jPanel3.add(Hasta);
+        Hasta.setBounds(380, 40, 50, 30);
+
+        Desde.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Desde.setText("Desde");
+        jPanel3.add(Desde);
+        Desde.setBounds(110, 40, 50, 30);
+
+        entParametro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entParametro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        entParametro.setToolTipText("");
+        entParametro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entParametroKeyReleased(evt);
+            }
+        });
+        jPanel3.add(entParametro);
+        entParametro.setBounds(40, 40, 610, 30);
+
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(5, 5, 830, 90);
+        jPanel3.setBounds(5, 5, 747, 90);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -160,7 +276,7 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jLabel1.setBounds(5, 5, 70, 30);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(757, 100, 80, 410);
+        jPanel4.setBounds(757, 5, 80, 505);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(5, 5, 842, 515);
@@ -174,8 +290,10 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         }
     }
     private void tablaNumeroOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaNumeroOrdenMouseClicked
-        numeroOrden = Integer.parseInt(modelo.getValueAt(tablaNumeroOrden.getSelectedRow(), 1).toString());
-        entNumeroOrden.setText(String.valueOf(numeroOrden));
+        if (evt.isMetaDown()) {
+            numeroOrden = Integer.parseInt(modelo.getValueAt(tablaNumeroOrden.getSelectedRow(), 1).toString());
+            entNumeroOrden.setText(String.valueOf(numeroOrden));
+        }
     }//GEN-LAST:event_tablaNumeroOrdenMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
@@ -200,14 +318,16 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         numeroOrden = 0;
         entNumeroOrden.setText("# Orden");
         List<Ordencompra> OrdenCompra;
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
         MC_OrdenCompra controlOrdenC = new MC_OrdenCompra();
         OrdenCompra = controlOrdenC.buscarTodasOrdenesCompra();
         if (!OrdenCompra.isEmpty()) {
+            ordenGrafica = OrdenCompra;
             for (Ordencompra ordenCompra : OrdenCompra) {
                 int id = ordenCompra.getNumeroorden();
-                Date fechaOrden = funciones.fecha();
+                String fechaOrden = "sin fecha";
                 if (ordenCompra.getFechaorden() != null) {
-                    fechaOrden = ordenCompra.getFechaorden();
+                    fechaOrden = formato.format(ordenCompra.getFechaorden());
                 }
                 String nombreEmpleado = "Sin Nombre";
                 if (ordenCompra.getEmpleadoId().getNombre() != null && !ordenCompra.getEmpleadoId().getNombre().isEmpty()) {
@@ -271,6 +391,151 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    private void Grafica2DBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Grafica2DBarraActionPerformed
+        if (!ordenGrafica.isEmpty()) {
+            List<Ordencompra> aux = ordenCompraOrdenadaFecha(ordenGrafica);
+            ventanaVerGraficas grafica = new ventanaVerGraficas(new javax.swing.JDialog(), true);
+            grafica.graficaOrdenCompra(aux);
+            grafica.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Hay Elementos", "Error", 0, null);
+        }
+    }//GEN-LAST:event_Grafica2DBarraActionPerformed
+
+    private void rbNumeroOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNumeroOrdenMouseClicked
+        limpiarTabla();
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+        entParametro.setVisible(true);
+    }//GEN-LAST:event_rbNumeroOrdenMouseClicked
+
+    private void rbNombreCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreCMouseClicked
+        limpiarTabla();
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+        entParametro.setVisible(true);
+    }//GEN-LAST:event_rbNombreCMouseClicked
+
+    private void rbNombreEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreEMouseClicked
+        limpiarTabla();
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+        entParametro.setVisible(true);
+    }//GEN-LAST:event_rbNombreEMouseClicked
+
+    private void rbRangoFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoFechaMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(false);
+        Desde.setVisible(true);
+        Hasta.setVisible(true);
+        entFi.setVisible(true);
+        entFi.requestFocus();
+        entFf.setVisible(true);
+    }//GEN-LAST:event_rbRangoFechaMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String parametro = entParametro.getText();
+        Date fechaI = entFi.getDate();
+        Date feachaF = entFf.getDate();
+        List<Ordencompra> Ordencompras = new ArrayList<>();
+        if (parametro != null && !parametro.isEmpty() || rbRangoFecha.isSelected()) {
+            if (rbNumeroOrden.isSelected()) {
+                MC_OrdenCompra controlCliente = new MC_OrdenCompra();
+                int idC = Integer.parseInt(parametro);
+                Ordencompra cli = controlCliente.buscarOrdenCompra(idC);
+                if (cli != null && cli.getNumeroorden() != null) {
+                    Ordencompras.add(cli);
+                }
+            }
+            if (rbNombreC.isSelected()) {
+                MC_OrdenCompra controlCliente = new MC_OrdenCompra();
+                Ordencompras = controlCliente.buscarOrdencompraNombreC(parametro);
+            }
+            if (rbNombreE.isSelected()) {
+                MC_OrdenCompra controlCliente = new MC_OrdenCompra();
+                Ordencompras = controlCliente.buscarOrdencompraNombreE(parametro);
+            }
+            if (rbRangoFecha.isSelected()) {
+                MC_OrdenCompra controlCliente = new MC_OrdenCompra();
+                Ordencompras = controlCliente.buscarOrdencompraRangoFecha(fechaI, feachaF);
+            }
+            ordenGrafica = Ordencompras;
+            mostrarElementos(Ordencompras);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void mostrarElementos(List<Ordencompra> OrdenCompra) {
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
+        if (!OrdenCompra.isEmpty()) {
+            ordenGrafica = OrdenCompra;
+            for (Ordencompra ordenCompra : OrdenCompra) {
+                int id = ordenCompra.getNumeroorden();
+                String fechaOrden = "sin fecha";
+                if (ordenCompra.getFechaorden() != null) {
+                    fechaOrden = formato.format(ordenCompra.getFechaorden());
+                }
+                String nombreEmpleado = "Sin Nombre";
+                if (ordenCompra.getEmpleadoId().getNombre() != null && !ordenCompra.getEmpleadoId().getNombre().isEmpty()) {
+                    nombreEmpleado = ordenCompra.getEmpleadoId().getNombre();
+                }
+                String nombreCliente = "Sin Nombre ";
+                if (ordenCompra.getClienteId().getNombre() != null && !ordenCompra.getClienteId().getNombre().isEmpty()) {
+                    nombreCliente = ordenCompra.getClienteId().getNombre();
+                }
+                String cantidad = "Sin Cantidad";
+                if (ordenCompra.getCantidadtotal() != null && ordenCompra.getCantidadtotal() > 0) {
+                    cantidad = String.valueOf(ordenCompra.getCantidadtotal());
+                }
+                String precio = "0";
+                if (ordenCompra.getPreciototal() != null && ordenCompra.getPreciototal() > 0) {
+                    precio = String.valueOf(ordenCompra.getPreciototal());
+                }
+                modelo.addRow(new Object[]{fechaOrden, id, nombreEmpleado, nombreCliente, cantidad, precio});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Ordenes De Compra", "Informacion", 1, null);
+        }
+    }
+
+    private void entParametroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entParametroKeyReleased
+        if (rbNumeroOrden.isSelected()) {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entParametroKeyReleased
+
+    public List<Ordencompra> ordenCompraOrdenadaFecha(List<Ordencompra> lista) {
+        List<Ordencompra> nuevaList = new ArrayList<>();
+        Map<Date, Ordencompra> mapOrden = new HashMap<Date, Ordencompra>();
+        for (Ordencompra orden : lista) {
+            mapOrden.put(orden.getFechaorden(), orden);
+        }
+        for (Entry<Date, Ordencompra> o : mapOrden.entrySet()) {
+            Ordencompra aux = o.getValue();
+//            aux.setCantidadtotal(0);
+//            aux.setPreciototal(0);
+            for (Ordencompra orden : lista) {
+                if (orden.getFechaorden().equals(aux.getFechaorden())) {
+                    aux.setCantidadtotal(aux.getCantidadtotal() + orden.getCantidadtotal());
+                    aux.setPreciototal(aux.getPreciototal() + orden.getPreciototal());
+                }
+            }
+            nuevaList.add(aux);
+        }
+        return nuevaList;
+    }
+
     public Permisos getPermiso() {
         return permiso;
     }
@@ -322,17 +587,30 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Desde;
+    private javax.swing.JMenuItem Grafica2DBarra;
+    private javax.swing.JLabel Hasta;
+    private javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnInsertar;
     public javax.swing.JButton btnVer;
     public javax.swing.JButton btnVerTodo;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser entFf;
+    private com.toedter.calendar.JDateChooser entFi;
     private javax.swing.JTextField entNumeroOrden;
+    private javax.swing.JTextField entParametro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaNumeroOrden;
+    private javax.swing.JRadioButton rbNombreC;
+    private javax.swing.JRadioButton rbNombreE;
+    private javax.swing.JRadioButton rbNumeroOrden;
+    private javax.swing.JRadioButton rbRangoFecha;
+    public javax.swing.JTable tablaNumeroOrden;
     // End of variables declaration//GEN-END:variables
 }

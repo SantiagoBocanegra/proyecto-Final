@@ -105,6 +105,63 @@ public class MC_Libro {
         return libros;
     }
     
+    // FUNCION NUMERO 3.2
+    public List<Libro> buscarLibroTitulo (String titulo) {
+       LibroJpaController servicio = new LibroJpaController(emf);
+        List<Libro> Libros  = new ArrayList<>();
+        try {
+            emt.begin();
+            Libros = servicio.buscarLibroTitulo(titulo);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR: MC_Libro.buscarLibroTitulo(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Libros;
+    }
+    
+    // FUNCION NUMERO 3.3
+    public List<Libro> buscarEmpleadoAutor (String autor) {
+       LibroJpaController servicio = new LibroJpaController(emf);
+        List<Libro> Libros  = new ArrayList<>();
+        try {
+            emt.begin();
+            Libros = servicio.buscarLibroAutor(autor);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR: MC_Libro.buscarEmpleadoAutor(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Libros;
+    }
+    
+    // FUNCION NUMERO 3.4
+    public List<Libro> buscarLibroRangoPrecio (int pi, int pf) {
+       LibroJpaController servicio = new LibroJpaController(emf);
+        List<Libro> Libros  = new ArrayList<>();
+        try {
+            emt.begin();
+            Libros = servicio.buscarRangoPrecio(pi,pf);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Libro: \n"+e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR: MC_Libro.buscarLibroRangoPrecio (): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Libros;
+    }
+    
     public void close () {
         em.close();
         emf.close();

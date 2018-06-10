@@ -117,12 +117,66 @@ public class MC_Usuario {
             emt.commit();
         } catch (Exception e) {
             emt.rollback();
-            JOptionPane.showMessageDialog(null, "Error Buscando Usuarios "+e.getMessage(), "Error", 0, null);
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario "+e.getMessage(), "Error", 0, null);
             System.out.println("Error MC_Usuario.buscarUsuarioEmpleadoId(): "+e.getMessage());
         } finally {
             em.close();
             emf.close();
         }
         return usuarios;
+    }
+    
+    public List<Usuario> buscarUsuarioNombreU (String nombre) {
+        UsuarioJpaController servicio = new UsuarioJpaController(emf);
+        List<Usuario> Usuario = new ArrayList<>();
+        try {
+            emt.begin();
+            Usuario = servicio.buscarUsuarioNombreU(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarUsuarioNombreU(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Usuario;
+    }
+    
+    public List<Usuario> buscarUsuarioNombreE (String nombre) {
+        UsuarioJpaController servicio = new UsuarioJpaController(emf);
+        List<Usuario> Usuario = new ArrayList<>();
+        try {
+            emt.begin();
+            Usuario = servicio.buscarUsuarioNombreE(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarUsuarioNombreE(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Usuario;
+    }
+    
+    public List<Usuario> buscarUsuarioEstado (boolean estado) {
+        UsuarioJpaController servicio = new UsuarioJpaController(emf);
+        List<Usuario> Usuario = new ArrayList<>();
+        try {
+            emt.begin();
+            Usuario = servicio.buscarUsuarioEstado(estado);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Usuario: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarUsuarioEstado(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Usuario;
     }
 }

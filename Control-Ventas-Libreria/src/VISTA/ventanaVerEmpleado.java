@@ -8,7 +8,10 @@ package VISTA;
 import MODELO.Empleado;
 import MODELO.Permisos;
 import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.funciones;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +35,10 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         initComponents();
         modelo = (DefaultTableModel) tablaEmpleado.getModel();
         this.setSize(868, 564);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
         id = 0;
     }
 
@@ -44,11 +51,23 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpleado = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        rbCedula = new javax.swing.JRadioButton();
+        rbId = new javax.swing.JRadioButton();
+        rbNombre = new javax.swing.JRadioButton();
+        rbApellido = new javax.swing.JRadioButton();
+        rbRangoFecha = new javax.swing.JRadioButton();
+        entFi = new com.toedter.calendar.JDateChooser();
+        entFf = new com.toedter.calendar.JDateChooser();
+        btnBuscar = new javax.swing.JButton();
+        Hasta = new javax.swing.JLabel();
+        Desde = new javax.swing.JLabel();
+        entParametro = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -76,7 +95,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Cargo", "Primer Nombre", "Apellido Paterno", "cedula", "telefono", "Fecha Contrato"
+                "Id", "Cargo", "Primer Nombre", "Apellido Materno", "cedula", "telefono", "Fecha Contrato"
             }
         ));
         tablaEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,8 +114,103 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
+
+        rbCedula.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbCedula);
+        rbCedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbCedula.setText("Cedula");
+        rbCedula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbCedulaMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbCedula);
+        rbCedula.setBounds(180, 10, 80, 30);
+
+        rbId.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbId);
+        rbId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbId.setText("Id");
+        rbId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbIdMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbId);
+        rbId.setBounds(130, 10, 50, 30);
+
+        rbNombre.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombre);
+        rbNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombre.setText("Nombre");
+        rbNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbNombre);
+        rbNombre.setBounds(260, 10, 90, 30);
+
+        rbApellido.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbApellido);
+        rbApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbApellido.setText("Apellido Paterno");
+        rbApellido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbApellidoMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbApellido);
+        rbApellido.setBounds(350, 10, 150, 30);
+
+        rbRangoFecha.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbRangoFecha);
+        rbRangoFecha.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbRangoFecha.setText("Fecha Contraro");
+        rbRangoFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbRangoFechaMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbRangoFecha);
+        rbRangoFecha.setBounds(500, 10, 137, 30);
+        jPanel3.add(entFi);
+        entFi.setBounds(170, 40, 200, 30);
+        jPanel3.add(entFf);
+        entFf.setBounds(430, 40, 180, 30);
+
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscar);
+        btnBuscar.setBounds(660, 20, 60, 60);
+
+        Hasta.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Hasta.setText("Hasta");
+        jPanel3.add(Hasta);
+        Hasta.setBounds(380, 40, 50, 30);
+
+        Desde.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Desde.setText("Desde");
+        jPanel3.add(Desde);
+        Desde.setBounds(110, 40, 50, 30);
+
+        entParametro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entParametro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        entParametro.setToolTipText("");
+        entParametro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entParametroKeyReleased(evt);
+            }
+        });
+        jPanel3.add(entParametro);
+        entParametro.setBounds(40, 40, 610, 30);
+
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(5, 5, 830, 90);
+        jPanel3.setBounds(5, 5, 747, 90);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -111,7 +225,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnVer);
-        btnVer.setBounds(5, 110, 70, 70);
+        btnVer.setBounds(5, 150, 70, 70);
 
         btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
@@ -122,7 +236,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnVerTodo);
-        btnVerTodo.setBounds(5, 335, 70, 70);
+        btnVerTodo.setBounds(5, 380, 70, 70);
 
         btnEditar.setMnemonic('E');
         btnEditar.setText("Edit");
@@ -133,7 +247,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnEditar);
-        btnEditar.setBounds(5, 260, 70, 70);
+        btnEditar.setBounds(5, 305, 70, 70);
 
         btnInsertar.setMnemonic('I');
         btnInsertar.setText("Insert");
@@ -144,7 +258,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnInsertar);
-        btnInsertar.setBounds(5, 185, 70, 70);
+        btnInsertar.setBounds(5, 230, 70, 70);
 
         entId.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -163,7 +277,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         jLabel2.setBounds(13, 20, 60, 30);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(757, 100, 80, 410);
+        jPanel4.setBounds(757, 5, 80, 505);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -290,6 +404,133 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    private void rbCedulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbCedulaMouseClicked
+        Desde.setVisible(false);
+        entParametro.setVisible(true);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbCedulaMouseClicked
+
+    private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbIdMouseClicked
+
+    private void rbNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbNombreMouseClicked
+
+    private void rbApellidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbApellidoMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbApellidoMouseClicked
+
+    private void rbRangoFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoFechaMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(false);
+        Desde.setVisible(true);
+        Hasta.setVisible(true);
+        entFi.setVisible(true);
+        entFi.requestFocus();
+        entFf.setVisible(true);
+    }//GEN-LAST:event_rbRangoFechaMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String parametro = entParametro.getText();
+        Date fechaI = entFi.getDate();
+        Date feachaF = entFf.getDate();
+        List<Empleado> clientes = new ArrayList<>();
+        if (parametro != null && !parametro.isEmpty() || rbRangoFecha.isSelected()) {
+            if (rbId.isSelected()) {
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                int idC = Integer.parseInt(parametro);
+                Empleado cli = controlEmpleado.buscarEmpleado(idC);
+                if (cli != null && cli.getId() != null) {
+                    clientes.add(cli);
+                }
+            }
+            if (rbCedula.isSelected()) {
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                Empleado cli = controlEmpleado.buscarEmpleadoCc(parametro);
+                clientes.add(cli);
+            }
+            if (rbNombre.isSelected()) {
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                clientes = controlEmpleado.buscarEmpleadoNombre(parametro);
+            }
+            if (rbApellido.isSelected()) {
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                clientes = controlEmpleado.buscarEmpleadoApellidoP(parametro);
+            }
+            if (rbRangoFecha.isSelected()) {
+                MC_Empleado controlEmpleado = new MC_Empleado();
+                clientes = controlEmpleado.buscarEmpleadoRangoFecha(fechaI, feachaF);
+            }
+            mostrarEmpleados(clientes);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void mostrarEmpleados(List<Empleado> empleados) {
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
+        if (!empleados.isEmpty()) {
+            limpiarTabla();
+            for (Empleado empleado : empleados) {
+                int id = empleado.getId();
+                String cargo = "Sin Cargo";
+                if (empleado.getCargo() != null && !empleado.getCargo().isEmpty()) {
+                    cargo = empleado.getCargo();
+                }
+                String primerNombre = "Sin Nombre";
+                if (empleado.getNombre() != null && !empleado.getNombre().isEmpty()) {
+                    primerNombre = empleado.getNombre();
+                }
+                String ApellidoMaterno = "Sin Apellido";
+                if (empleado.getApellidoMaterno() != null && !empleado.getApellidoMaterno().isEmpty()) {
+                    ApellidoMaterno = empleado.getApellidoMaterno();
+                }
+                String cedula = empleado.getCedula();
+                String telefono = "Sin Telefono";
+                if (empleado.getTelefono() != null && !empleado.getTelefono().isEmpty()) {
+                    telefono = empleado.getTelefono();
+                }
+                String fecha = "Sin Fecha";
+                if (empleado.getFechaContrato() != null) {
+                    fecha = formato.format(empleado.getFechaContrato());
+                }
+                modelo.addRow(new Object[]{id, cargo, primerNombre, ApellidoMaterno, cedula, telefono, fecha});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Empleados", "Informacion", 1, null);
+        }
+    }
+    private void entParametroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entParametroKeyReleased
+        if (rbId.isSelected() || rbCedula.isSelected()) {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entParametroKeyReleased
+
     public Permisos getPermiso() {
         return permiso;
     }
@@ -341,11 +582,18 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Desde;
+    private javax.swing.JLabel Hasta;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnVer;
     private javax.swing.JButton btnVerTodo;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser entFf;
+    private com.toedter.calendar.JDateChooser entFi;
     private javax.swing.JTextField entId;
+    private javax.swing.JTextField entParametro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -353,6 +601,11 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rbApellido;
+    private javax.swing.JRadioButton rbCedula;
+    private javax.swing.JRadioButton rbId;
+    private javax.swing.JRadioButton rbNombre;
+    private javax.swing.JRadioButton rbRangoFecha;
     private javax.swing.JTable tablaEmpleado;
     // End of variables declaration//GEN-END:variables
 }

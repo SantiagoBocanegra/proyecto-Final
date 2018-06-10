@@ -108,6 +108,43 @@ public class MC_RolUsuario {
         return rolesUsuario;
     }
     
+     //FUNCION NUMERO 3.2
+    public List<RolUsuario> buscarRolUsuarioNombreUsuario (String nombre) {
+        RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);
+        List<RolUsuario> rolesUsuario = new ArrayList<>();
+        try {
+            emt.begin();
+            rolesUsuario = servicio.buscarRolUsuarioNombreUsuario(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarRolUsuarioNombreUsuario(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return rolesUsuario;
+    }
+    //FUNCION NUMERO 3.3
+    public List<RolUsuario> buscarRolUsuarioNombreRol (String nombre) {
+        RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);
+        List<RolUsuario> rolesUsuario = new ArrayList<>();
+        try {
+            emt.begin();
+            rolesUsuario = servicio.buscarRolUsuarioNombreRol(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar El Rol: \n"+e.getMessage(), "Error", 0,null);
+            System.err.print("ERROR MC_RolUsuario.buscarRolUsuarioNombreRol(): "+e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return rolesUsuario;
+    }
+    
     //Funcion numero 4
     public boolean  borrarRolUsuario ( int idRol) {
         RolUsuarioJpaController servicio = new RolUsuarioJpaController(emf);

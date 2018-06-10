@@ -36,12 +36,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Libro.findAll", query = "SELECT l FROM Libro l")
     , @NamedQuery(name = "Libro.findByIsbn", query = "SELECT l FROM Libro l WHERE l.isbn = :isbn")
     , @NamedQuery(name = "Libro.findByTitulo", query = "SELECT l FROM Libro l WHERE l.titulo = :titulo")
+    , @NamedQuery(name = "Libro.findByTituloLike", query = "SELECT c FROM Libro c WHERE LOWER(c.titulo) LIKE CONCAT(:titulo,'%')")
     , @NamedQuery(name = "Libro.findBySipnosis", query = "SELECT l FROM Libro l WHERE l.sipnosis = :sipnosis")
     , @NamedQuery(name = "Libro.findByAutor", query = "SELECT l FROM Libro l WHERE l.autor = :autor")
+    , @NamedQuery(name = "Libro.findByAutorLike", query = "SELECT c FROM Libro c WHERE LOWER(c.autor) LIKE CONCAT(:autor,'%')")
     , @NamedQuery(name = "Libro.findByEditorial", query = "SELECT l FROM Libro l WHERE l.editorial = :editorial")
     , @NamedQuery(name = "Libro.findByFechaPublicacion", query = "SELECT l FROM Libro l WHERE l.fechaPublicacion = :fechaPublicacion")
     , @NamedQuery(name = "Libro.findByEstadolibro", query = "SELECT l FROM Libro l WHERE l.estadolibro = :estadolibro")
-    , @NamedQuery(name = "Libro.findByPrecio", query = "SELECT l FROM Libro l WHERE l.precio = :precio")})
+    , @NamedQuery(name = "Libro.findByPrecio", query = "SELECT l FROM Libro l WHERE l.precio = :precio")
+    , @NamedQuery(name = "Libro.findByRangoPrecio", query = "SELECT a FROM Libro a WHERE a.precio BETWEEN :precioI AND :precioF")})
 public class Libro implements Serializable {
 
     private static final long serialVersionUID = 1L;

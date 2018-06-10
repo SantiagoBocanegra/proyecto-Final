@@ -21,6 +21,8 @@ import MODELO.Libro;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -305,4 +307,60 @@ public class LibroJpaController implements Serializable {
         }
     }
     
+    public List<Libro> buscarLibroTitulo (String titulo) {
+        List<Libro> Libros = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Libro> q = em.createNamedQuery("Libro.findByTituloLike", Libro.class);
+            q.setParameter("titulo", titulo);
+            Libros = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error LibroJpaController.buscarLibroTitulo() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Libros;
+    }
+    
+    public List<Libro> buscarLibroAutor (String autor) {
+        List<Libro> Libros = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Libro> q = em.createNamedQuery("Libro.findByAutorLike", Libro.class);
+            q.setParameter("autor", autor);
+            Libros = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error LibroJpaController.buscarLibroAutor() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return Libros;
+    }
+    public List<Libro> buscarRangoPrecio (int precioI, int precioF) {
+        List<Libro> Libros = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Libro> q = em.createNamedQuery("Libro.findByRangoPrecio", Libro.class);
+            q.setParameter("precioI", precioI);
+            q.setParameter("precioF", precioF);
+            Libros = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Erro LibroJpaController.buscarRangoPrecio() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return Libros;
+    }
 }

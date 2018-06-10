@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import MODELO.Ordenprestamo;
 import MODELO.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -347,5 +349,62 @@ public class EmpleadoJpaController implements Serializable {
             em.close();
         }
         return empleados;
+    }
+    
+    public List<Empleado> buscarEmpleadoNombre (String nombre) {
+        List<Empleado> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByNombreLike", Empleado.class);
+            q.setParameter("nombre", nombre);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error EmpleadoJpaController.buscarEmpleadoNombre() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
+    
+    public List<Empleado> buscarEmpleadoApellido (String apellido) {
+        List<Empleado> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByApellidoMaternoLike", Empleado.class);
+            q.setParameter("apellidoPaterno", apellido);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error EmpleadoJpaController.buscarEmpleadoApellido() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
+    public List<Empleado> buscarRangoFecha (Date fechaInicial, Date fechaFinal) {
+        List<Empleado> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Empleado> q = em.createNamedQuery("Empleado.findByRangoFechas", Empleado.class);
+            q.setParameter("fechaContratoI", fechaInicial,TemporalType.DATE);
+            q.setParameter("fechaContratoF", fechaFinal,TemporalType.DATE);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Erro EmpleadoJpaController.buscarRangoFecha() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return clientes;
     }
 }

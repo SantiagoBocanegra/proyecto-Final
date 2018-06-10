@@ -161,10 +161,12 @@ public class funciones {
 
     //Fucion numero 9
     public static void validarDigito(java.awt.event.KeyEvent evt) {
-        char entrada = evt.getKeyChar();
-        if (!Character.isDigit(entrada)) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Este Campo Solo Recibe Digitos Del 1 Al 9", "Error", 0, null);
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            char entrada = evt.getKeyChar();
+            if (!Character.isDigit(entrada)) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Este Campo Solo Recibe Digitos Del 1 Al 9 ", "Alerta", 2, null);
+            }
         }
     }
 

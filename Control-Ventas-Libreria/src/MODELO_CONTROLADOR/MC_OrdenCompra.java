@@ -11,6 +11,7 @@ package MODELO_CONTROLADOR;
 import CONTROLADOR.OrdencompraJpaController;
 import MODELO.Ordencompra;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -106,6 +107,82 @@ public class MC_OrdenCompra {
             emf.close();
         }
         return ordenesCompra;
+    }
+    
+    //FUNCION NUMERO 3.2
+    public List<Ordencompra> buscarOrdeneCompraEmpleadoId(int empledoId) {
+        OrdencompraJpaController servicio = new OrdencompraJpaController(emf);
+        List<Ordencompra> ordenesCompra = new ArrayList<>();
+        try {
+            emt.begin();
+            ordenesCompra = servicio.buscarOrdenCompraEmpleadoId(empledoId);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdeneCompraEmpleadoId(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return ordenesCompra;
+    }
+    
+     // FUNCION NUMERO 3.3
+    public List<Ordencompra> buscarOrdencompraNombreE (String nombre) {
+        OrdencompraJpaController servicio = new OrdencompraJpaController(emf);
+        List<Ordencompra> Ordencompras  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordencompras = servicio.buscarOrdencompraNombreE(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdencompraNombreE(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordencompras;
+    }
+    
+    // FUNCION NUMERO 3.4
+    public List<Ordencompra> buscarOrdencompraNombreC (String nombre) {
+        OrdencompraJpaController servicio = new OrdencompraJpaController(emf);
+        List<Ordencompra> Ordencompras  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordencompras = servicio.buscarOrdencompraNombreC(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdencompraNombreC(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordencompras;
+    }
+    
+    // FUNCION NUMERO 3.5
+    public List<Ordencompra> buscarOrdencompraRangoFecha (Date fi, Date ff) {
+        OrdencompraJpaController servicio = new OrdencompraJpaController(emf);
+        List<Ordencompra> Ordencompras  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordencompras = servicio.buscarRangoFecha(fi,ff);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdencompraRangoFecha(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordencompras;
     }
 
     //FUNCION NUMERO 4

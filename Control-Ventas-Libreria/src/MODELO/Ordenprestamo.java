@@ -36,8 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ordenprestamo.findAll", query = "SELECT o FROM Ordenprestamo o")
     , @NamedQuery(name = "Ordenprestamo.findByNumeroorden", query = "SELECT o FROM Ordenprestamo o WHERE o.numeroorden = :numeroorden")
+    , @NamedQuery(name = "Ordenprestamo.findByNombreELike", query = "SELECT e FROM Ordenprestamo e WHERE LOWER(e.empleadoId.nombre) LIKE CONCAT(:nombreE,'%')")
+    , @NamedQuery(name = "Ordenprestamo.findByNombreCLike", query = "SELECT e FROM Ordenprestamo e WHERE LOWER(e.clienteId.nombre) LIKE CONCAT(:nombreC,'%')") 
     , @NamedQuery(name = "Ordenprestamo.findByFechaorden", query = "SELECT o FROM Ordenprestamo o WHERE o.fechaorden = :fechaorden")
     , @NamedQuery(name = "Ordenprestamo.findByFechaentrega", query = "SELECT o FROM Ordenprestamo o WHERE o.fechaentrega = :fechaentrega")
+    , @NamedQuery(name = "Ordenprestamo.findByRangoFechas", query = "SELECT a FROM Ordenprestamo a WHERE a.fechaentrega BETWEEN :fechaentregaI AND :fechaentregaF")
     , @NamedQuery(name = "Ordenprestamo.findByCantidadtotal", query = "SELECT o FROM Ordenprestamo o WHERE o.cantidadtotal = :cantidadtotal")
     , @NamedQuery(name = "Ordenprestamo.findByEstadoorden", query = "SELECT o FROM Ordenprestamo o WHERE o.estadoorden = :estadoorden")})
 public class Ordenprestamo implements Serializable {

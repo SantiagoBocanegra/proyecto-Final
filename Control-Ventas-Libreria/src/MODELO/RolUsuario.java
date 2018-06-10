@@ -37,7 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "RolUsuario.findAll", query = "SELECT r FROM RolUsuario r")
     , @NamedQuery(name = "RolUsuario.findById", query = "SELECT r FROM RolUsuario r WHERE r.id = :id")
     , @NamedQuery(name =  "RolUsuario.findByUsuarioId", query ="SELECT r FROM RolUsuario r where r.usuarioId.id = :usuarioId")
+    , @NamedQuery(name = "RolUsuario.findByUsuarioLike", query = "SELECT c FROM RolUsuario c WHERE LOWER(c.usuarioId.usuario) LIKE CONCAT(:nombre,'%')")
     , @NamedQuery(name = "RolUsuario.findByNombrerol", query = "SELECT r FROM RolUsuario r WHERE r.nombrerol = :nombrerol")
+    , @NamedQuery(name = "RolUsuario.findByNombreRolLike", query = "SELECT c FROM RolUsuario c WHERE LOWER(c.nombrerol) LIKE CONCAT(:nombrerol,'%')")
     , @NamedQuery(name = "RolUsuario.findByFechacreacion", query = "SELECT r FROM RolUsuario r WHERE r.fechacreacion = :fechacreacion")})
 public class RolUsuario implements Serializable {
 

@@ -6,10 +6,12 @@
 package VISTA;
 
 import MODELO.Empleado;
+import MODELO.Ordencompra;
 import MODELO.Permisos;
 import MODELO.RolUsuario;
 import MODELO.Usuario;
 import MODELO_CONTROLADOR.MC_Empleado;
+import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.MC_Permisos;
 import MODELO_CONTROLADOR.MC_RolUsuario;
 import MODELO_CONTROLADOR.MC_Usuario;
@@ -17,8 +19,13 @@ import MODELO_CONTROLADOR.funciones;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +48,6 @@ public class ventanaLogin extends javax.swing.JDialog {
     List<Usuario> usuarios = new ArrayList<>();
     List<RolUsuario> roles = new ArrayList<>();
     ventanaMenu ventana;
-    
 
     public ventanaLogin(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -141,9 +147,6 @@ public class ventanaLogin extends javax.swing.JDialog {
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 entCcEmpleadoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entCcEmpleadoKeyTyped(evt);
             }
         });
         jPanel2.add(entCcEmpleado);
@@ -330,26 +333,74 @@ public class ventanaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_tablaRolMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        ventanaVerGraficas grafica = new ventanaVerGraficas(new javax.swing.JDialog(), true);
         buscarRolSeleccion(id);
         MC_Permisos controlPermisos = new MC_Permisos();
         List<Permisos> permisos = controlPermisos.buscarPermisosRolId(rolSeleccionado.getId());
-        if (empleado.getFoto() != null ) {
+        if (empleado.getFoto() != null) {
             Image imagen = funciones.byte_jpg(empleado.getFoto()).getScaledInstance(ventana.fotoUsuario.getWidth(), ventana.fotoUsuario.getHeight(), Image.SCALE_SMOOTH);
-           ventana.fotoUsuario.setIcon(new ImageIcon(imagen));
+            ventana.fotoUsuario.setIcon(new ImageIcon(imagen));
         }
+        mostrarOrdenes();
         ventana.setRol(rolSeleccionado);
         ventana.setPermisosRol(permisos);
-        ventana.PerfilUsuario.setToolTipText("Rol Activo: "+rolSeleccionado.getNombrerol());
+        ventana.PerfilUsuario.setToolTipText("Rol Activo: " + rolSeleccionado.getNombrerol());
         ventana.Desconectar.setEnabled(true);
+        grafica.setVentanaM(ventana);
+        grafica.graficaVentasSemana(ventana.panelGrafica, ventana.panelGrafica.getWidth() - 10, ventana.panelGrafica.getHeight() - 10);
         ventana.Conectar.setEnabled(false);
+        ventana.panelGrafica.repaint();
         this.setVisible(false);
-        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void entCcEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyTyped
-        
-    }//GEN-LAST:event_entCcEmpleadoKeyTyped
+    public void mostrarOrdenes() {
+        MC_OrdenCompra controlOrdenCompra = new MC_OrdenCompra();
+        List<Ordencompra> ventasEmpleado = controlOrdenCompra.buscarOrdeneCompraEmpleadoId(empleado.getId());
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
+        if (ventasEmpleado != null && !ventasEmpleado.isEmpty()) {
+            List<Ordencompra> aux = numerosCompraFecha(ventasEmpleado);
+            for (Ordencompra orden : aux) {
+                int numeroOrden = orden.getNumeroorden();
+                String fecha = "Sin Fecha";
+                if (orden.getFechaorden() != null) {
+                    fecha = formato.format(orden.getFechaorden());
+                }
+                int cantidad = 0;
+                if (orden.getCantidadtotal() != null) {
+                    cantidad = orden.getCantidadtotal();
+                }
+                int precio = 0;
+                if (orden.getPreciototal() != null) {
+                    precio = orden.getPreciototal();
+                }
+                ventana.getModelo().addRow(new Object[]{numeroOrden, fecha, cantidad, precio});
+            }
+        }
+    }
 
+    public List<Ordencompra> numerosCompraFecha(List<Ordencompra> lista) {
+        List<Ordencompra> nuevaList = new ArrayList<>();
+        Map<Date,Ordencompra> mapOrden = new HashMap<Date, Ordencompra>();
+        for (Ordencompra orden : lista) {
+            mapOrden.put(orden.getFechaorden(), orden);
+        }
+        int numeroO = 0;
+        for (Entry<Date,Ordencompra> o : mapOrden.entrySet()) {
+            Ordencompra aux = o.getValue();
+            aux.setNumeroorden(numeroO);
+//            aux.setCantidadtotal( 0);
+//            aux.setPreciototal(0);
+            for (Ordencompra orden : lista) {
+                if (orden.getFechaorden().equals(aux.getFechaorden())){
+                    aux.setCantidadtotal(aux.getCantidadtotal() + orden.getCantidadtotal());
+                    aux.setPreciototal(aux.getPreciototal() + orden.getPreciototal());
+                }
+            }
+            nuevaList.add(aux);
+            numeroO++;
+        }
+        return nuevaList;
+    }
     private void entCcEmpleadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyReleased
         if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
             funciones.validarDigito(evt);
@@ -365,7 +416,7 @@ public class ventanaLogin extends javax.swing.JDialog {
             }
         }
     }
-    
+
     public void buscarRolSeleccion(int id) {
         if (!roles.isEmpty()) {
             for (RolUsuario usuario : roles) {
@@ -433,16 +484,24 @@ public class ventanaLogin extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ventanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ventanaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ventanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ventanaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ventanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ventanaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ventanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ventanaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

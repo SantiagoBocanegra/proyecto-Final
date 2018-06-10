@@ -12,6 +12,7 @@ import MODELO_CONTROLADOR.funciones;
 import MODELO_CONTROLADOR.img_tabla;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -39,6 +40,10 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setSize(868, 564);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
         tablaLibro();
         isbn = 0;
     }
@@ -62,12 +67,24 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         AgregarAlCarroDeCompra = new javax.swing.JMenuItem();
         FinalizarCompra = new javax.swing.JMenuItem();
         FinalizarPrestamo = new javax.swing.JMenuItem();
+        GenerarGrafica2D = new javax.swing.JMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         entCarro = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaLibro = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        rbTitulo = new javax.swing.JRadioButton();
+        rbIsbn = new javax.swing.JRadioButton();
+        rbAutor = new javax.swing.JRadioButton();
+        rbRangoPrecion = new javax.swing.JRadioButton();
+        btnBuscar = new javax.swing.JButton();
+        Hasta = new javax.swing.JLabel();
+        Desde = new javax.swing.JLabel();
+        entParametro = new javax.swing.JTextField();
+        entFi = new javax.swing.JTextField();
+        entFf = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -106,6 +123,16 @@ public class ventanaVerLibro extends javax.swing.JDialog {
             }
         });
         AgregarLibro.add(FinalizarPrestamo);
+
+        GenerarGrafica2D.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        GenerarGrafica2D.setMnemonic('G');
+        GenerarGrafica2D.setText("Generar Grafica");
+        GenerarGrafica2D.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerarGrafica2DActionPerformed(evt);
+            }
+        });
+        AgregarLibro.add(GenerarGrafica2D);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -152,6 +179,93 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
+
+        rbTitulo.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbTitulo);
+        rbTitulo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbTitulo.setText("Titulo");
+        rbTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbTituloMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbTitulo);
+        rbTitulo.setBounds(270, 10, 80, 30);
+
+        rbIsbn.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbIsbn);
+        rbIsbn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbIsbn.setText("Isbn");
+        rbIsbn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbIsbnMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbIsbn);
+        rbIsbn.setBounds(210, 10, 60, 30);
+
+        rbAutor.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbAutor);
+        rbAutor.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbAutor.setText("Autor");
+        rbAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbAutorMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbAutor);
+        rbAutor.setBounds(350, 10, 70, 30);
+
+        rbRangoPrecion.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbRangoPrecion);
+        rbRangoPrecion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbRangoPrecion.setText("Rango De Precio");
+        rbRangoPrecion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbRangoPrecionMouseClicked(evt);
+            }
+        });
+        jPanel3.add(rbRangoPrecion);
+        rbRangoPrecion.setBounds(420, 10, 160, 30);
+
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscar);
+        btnBuscar.setBounds(660, 20, 60, 60);
+
+        Hasta.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Hasta.setText("Hasta");
+        jPanel3.add(Hasta);
+        Hasta.setBounds(380, 40, 50, 30);
+
+        Desde.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Desde.setText("Desde");
+        jPanel3.add(Desde);
+        Desde.setBounds(110, 40, 50, 30);
+
+        entParametro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entParametro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        entParametro.setToolTipText("");
+        entParametro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entParametroKeyReleased(evt);
+            }
+        });
+        jPanel3.add(entParametro);
+        entParametro.setBounds(40, 40, 610, 30);
+
+        entFi.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel3.add(entFi);
+        entFi.setBounds(170, 40, 180, 30);
+
+        entFf.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel3.add(entFf);
+        entFf.setBounds(430, 40, 170, 30);
+
         jPanel1.add(jPanel3);
         jPanel3.setBounds(5, 5, 747, 90);
 
@@ -389,6 +503,128 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_FinalizarPrestamoActionPerformed
 
+    private void GenerarGrafica2DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarGrafica2DActionPerformed
+        ventanaVerGraficas grafica = new ventanaVerGraficas(new javax.swing.JDialog(), true);
+        grafica.graficaInventarioLibro(this);
+        grafica.setVisible(true);
+    }//GEN-LAST:event_GenerarGrafica2DActionPerformed
+
+    private void rbTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbTituloMouseClicked
+        Desde.setVisible(false);
+        entParametro.setVisible(true);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbTituloMouseClicked
+
+    private void rbIsbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIsbnMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbIsbnMouseClicked
+
+    private void rbAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbAutorMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(true);
+        Desde.setVisible(false);
+        Hasta.setVisible(false);
+        entFi.setVisible(false);
+        entFf.setVisible(false);
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbAutorMouseClicked
+
+    private void rbRangoPrecionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoPrecionMouseClicked
+        limpiarTabla();
+        entParametro.setVisible(false);
+        Desde.setVisible(true);
+        Hasta.setVisible(true);
+        entFi.requestFocus();
+        entFi.setVisible(true);
+        entFf.setVisible(true);
+    }//GEN-LAST:event_rbRangoPrecionMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String parametro = entParametro.getText();
+        String preI = entFi.getText();
+        String preF = entFf.getText();
+        List<Libro> clientes = new ArrayList<>();
+        if (parametro != null && !parametro.isEmpty() || rbRangoPrecion.isSelected()) {
+            if (rbIsbn.isSelected()) {
+                MC_Libro controlLibro = new MC_Libro();
+                int idC = Integer.parseInt(parametro);
+                Libro cli = controlLibro.buscarLibro(idC);
+                if (cli != null && cli.getIsbn() != null) {
+                    clientes.add(cli);
+                }
+            }
+            if (rbTitulo.isSelected()) {
+                MC_Libro controlLibro = new MC_Libro();
+                clientes = controlLibro.buscarLibroTitulo(parametro);
+            }
+            if (rbAutor.isSelected()) {
+                MC_Libro controlLibro = new MC_Libro();
+                clientes = controlLibro.buscarEmpleadoAutor(parametro);
+            }
+            if (rbRangoPrecion.isSelected()) {
+                if (preI != null && !preI.isEmpty() && preF != null && !preF.isEmpty()) {
+                    int pI = Integer.parseInt(preI);
+                    int pF = Integer.parseInt(preF);
+                    MC_Libro controlLibro = new MC_Libro();
+                    clientes = controlLibro.buscarLibroRangoPrecio(pI, pF);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Los camopos del rango no pueden quedar vacios", "Informacion", 1, null);
+                }
+            }
+            mostrarLibros(clientes);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void mostrarLibros(List<Libro> libros) {
+        limpiarTabla();
+        if (!libros.isEmpty()) {
+            for (Libro libro : libros) {
+                int id = libro.getIsbn();
+                ImageIcon Icon = new ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png"));
+                ImageIcon portada = new ImageIcon(Icon.getImage().getScaledInstance(98, 98, Image.SCALE_DEFAULT));
+                if (libro.getPortada() != null && libro.getPortada().length > 0) {
+                    portada = new ImageIcon(funciones.byte_jpg(libro.getPortada()).getScaledInstance(98, 98, Image.SCALE_DEFAULT));
+                }
+                String titulo = "Sin Titulo";
+                if (libro.getTitulo() != null && !libro.getTitulo().isEmpty()) {
+                    titulo = libro.getTitulo();
+                }
+                String autor = "Sin Autor";
+                if (libro.getAutor() != null && !libro.getAutor().isEmpty()) {
+                    autor = libro.getAutor();
+                }
+                String inventario = "Sin Cantidad";
+                if (libro.getEstadolibro() != null && !libro.getEstadolibro().isEmpty()) {
+                    inventario = libro.getEstadolibro();
+                }
+                String precio = "0";
+                if (libro.getPrecio() != null && libro.getPrecio() > 0) {
+                    precio = String.valueOf(libro.getPrecio());
+                }
+                modelo.addRow(new Object[]{new JLabel(portada), id, titulo, autor, inventario, precio});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Libros", "Informacion", 1, null);
+        }
+    }
+    private void entParametroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entParametroKeyReleased
+        if (rbIsbn.isSelected()) {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entParametroKeyReleased
+
     public ventanaOrdenPrestamo getVentanaP() {
         return ventanaP;
     }
@@ -458,14 +694,22 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AgregarAlCarroDeCompra;
     private javax.swing.JPopupMenu AgregarLibro;
+    private javax.swing.JLabel Desde;
     private javax.swing.JMenuItem FinalizarCompra;
     private javax.swing.JMenuItem FinalizarPrestamo;
+    private javax.swing.JMenuItem GenerarGrafica2D;
+    private javax.swing.JLabel Hasta;
+    private javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnInsertar;
     public javax.swing.JButton btnVer;
     public javax.swing.JButton btnVerTodo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField entCarro;
+    private javax.swing.JTextField entFf;
+    private javax.swing.JTextField entFi;
     private javax.swing.JTextField entId;
+    private javax.swing.JTextField entParametro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -473,6 +717,10 @@ public class ventanaVerLibro extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaLibro;
+    private javax.swing.JRadioButton rbAutor;
+    private javax.swing.JRadioButton rbIsbn;
+    private javax.swing.JRadioButton rbRangoPrecion;
+    private javax.swing.JRadioButton rbTitulo;
+    public javax.swing.JTable tablaLibro;
     // End of variables declaration//GEN-END:variables
 }

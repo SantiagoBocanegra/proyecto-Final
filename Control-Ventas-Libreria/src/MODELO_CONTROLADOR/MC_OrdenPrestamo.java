@@ -107,6 +107,63 @@ public class MC_OrdenPrestamo {
         return ordenesPrestamo;
     }
 
+    // FUNCION NUMERO 3.2
+    public List<Ordenprestamo> buscarOrdenprestamoNombreE (String nombre) {
+        OrdenprestamoJpaController servicio = new OrdenprestamoJpaController(emf);
+        List<Ordenprestamo> Ordenprestamos  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordenprestamos = servicio.buscarOrdenprestamoNombreE(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdenprestamoNombreE(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordenprestamos;
+    }
+    
+    // FUNCION NUMERO 3.3
+    public List<Ordenprestamo> buscarOrdenprestamoNombreC (String nombre) {
+        OrdenprestamoJpaController servicio = new OrdenprestamoJpaController(emf);
+        List<Ordenprestamo> Ordenprestamos  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordenprestamos = servicio.buscarOrdenprestamoNombreC(nombre);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdenprestamoNombreC(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordenprestamos;
+    }
+    
+    // FUNCION NUMERO 3.4
+    public List<Ordenprestamo> buscarOrdenprestamoRangoFecha (Date fi, Date ff) {
+        OrdenprestamoJpaController servicio = new OrdenprestamoJpaController(emf);
+        List<Ordenprestamo> Ordenprestamos  = new ArrayList<>();
+        try {
+            emt.begin();
+            Ordenprestamos = servicio.buscarRangoFecha(fi,ff);
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            JOptionPane.showMessageDialog(null, "Error Al Buscar La Orden De Compra\n" + e.getMessage(), "Error", 0, null);
+            System.err.print("ERROR MC_OrdenCompra.buscarOrdenprestamoRangoFecha(): " + e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+        return Ordenprestamos;
+    }
+
     public List<Ordenprestamo> buscarOrdenPrestamoFechaEntrega(Date fechaEntrega) {
         OrdenprestamoJpaController servicio = new OrdenprestamoJpaController(emf);
         List<Ordenprestamo> ordenPrestamo = new ArrayList<>();

@@ -17,9 +17,13 @@ import MODELO.Ordencompra;
 import java.util.ArrayList;
 import java.util.Collection;
 import MODELO.Ordenprestamo;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -255,4 +259,78 @@ public class ClienteJpaController implements Serializable {
         }
     }
     
+    public List<Cliente> buscarClienteNombre (String nombre) {
+        List<Cliente> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Cliente> q = em.createNamedQuery("Cliente.findByNombreLike", Cliente.class);
+            q.setParameter("nombre", nombre);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error ClienteJpaController.buscarClienteNombre() "+e.getMessage());
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
+    
+    public List<Cliente> buscarClienteApellido (String apellido) {
+        List<Cliente> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Cliente> q = em.createNamedQuery("Cliente.findByApellidoMaternoLike", Cliente.class);
+            q.setParameter("apellidoMaterno", apellido);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+            System.out.println("Error ClienteJpaController.buscarClienteApellido() "+e.getMessage() );
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
+    
+    public List<Cliente> buscarClienteCedula (String cedula) {
+        List<Cliente> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Cliente> q = em.createNamedQuery("Cliente.findByCedula", Cliente.class);
+            q.setParameter("cedula", cedula);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
+    
+    public List<Cliente> buscarRangoFecha (Date fechaInicial, Date fechaFinal) {
+        List<Cliente> clientes = new ArrayList<>();
+        EntityManager em = getEntityManager();
+        EntityTransaction emt = em.getTransaction();
+        try {
+            emt.begin();
+            TypedQuery<Cliente> q = em.createNamedQuery("Cliente.findByRangoFechas", Cliente.class);
+            q.setParameter("fechaRegistroInicial", fechaInicial,TemporalType.DATE);
+            q.setParameter("fechaRegistroFinal", fechaFinal,TemporalType.DATE);
+            clientes = q.getResultList();
+            emt.commit();
+        } catch (Exception e) {
+            emt.rollback();
+        } finally {
+            em.close();
+        }
+        return clientes;
+    }
 }

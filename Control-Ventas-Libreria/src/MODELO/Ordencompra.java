@@ -34,9 +34,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ordencompra")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM Ordencompra o")
+      @NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM Ordencompra o")
     , @NamedQuery(name = "Ordencompra.findByNumeroorden", query = "SELECT o FROM Ordencompra o WHERE o.numeroorden = :numeroorden")
+    , @NamedQuery(name = "Ordencompra.findByEmpleadoId",query = "SELECT o FROM Ordencompra o WHERE o.empleadoId.id = :empleadoId")
+    , @NamedQuery(name = "Ordencompra.findByNombreELike", query = "SELECT e FROM Ordencompra e WHERE LOWER(e.empleadoId.nombre) LIKE CONCAT(:nombreE,'%')")
+    , @NamedQuery(name = "Ordencompra.findByNombreCLike", query = "SELECT e FROM Ordencompra e WHERE LOWER(e.clienteId.nombre) LIKE CONCAT(:nombreC,'%')")   
     , @NamedQuery(name = "Ordencompra.findByFechaorden", query = "SELECT o FROM Ordencompra o WHERE o.fechaorden = :fechaorden")
+    , @NamedQuery(name = "Ordencompra.findByRangoFechas", query = "SELECT a FROM Ordencompra a WHERE a.fechaorden BETWEEN :fechaordenI AND :fechaordenF")
     , @NamedQuery(name = "Ordencompra.findByCantidadtotal", query = "SELECT o FROM Ordencompra o WHERE o.cantidadtotal = :cantidadtotal")
     , @NamedQuery(name = "Ordencompra.findByPreciototal", query = "SELECT o FROM Ordencompra o WHERE o.preciototal = :preciototal")})
 public class Ordencompra implements Serializable {

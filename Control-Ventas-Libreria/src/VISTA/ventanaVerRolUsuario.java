@@ -10,6 +10,7 @@ import MODELO.RolUsuario;
 import MODELO_CONTROLADOR.MC_RolUsuario;
 import MODELO_CONTROLADOR.funciones;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +34,6 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         initComponents();
         id = 0;
         modelo = (DefaultTableModel) tablaRol.getModel();
-        permiso = funciones.permisosRol(9, "Rol");
     }
 
     /**
@@ -45,11 +45,17 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaRol = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
+        rbId = new javax.swing.JRadioButton();
+        btnBuscar = new javax.swing.JButton();
+        entParametro = new javax.swing.JTextField();
+        rbNombre = new javax.swing.JRadioButton();
+        rbRol = new javax.swing.JRadioButton();
         jPanel8 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
         btnVerTodo = new javax.swing.JButton();
@@ -95,8 +101,65 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel7.setLayout(null);
+
+        rbId.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbId);
+        rbId.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbId.setText("Id");
+        rbId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbIdMouseClicked(evt);
+            }
+        });
+        jPanel7.add(rbId);
+        rbId.setBounds(230, 10, 50, 30);
+
+        btnBuscar.setText("B");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnBuscar);
+        btnBuscar.setBounds(660, 20, 60, 60);
+
+        entParametro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entParametro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        entParametro.setToolTipText("");
+        entParametro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entParametroKeyReleased(evt);
+            }
+        });
+        jPanel7.add(entParametro);
+        entParametro.setBounds(40, 40, 610, 30);
+
+        rbNombre.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbNombre);
+        rbNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbNombre.setText("Nombre Usuario");
+        rbNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNombreMouseClicked(evt);
+            }
+        });
+        jPanel7.add(rbNombre);
+        rbNombre.setBounds(280, 10, 150, 30);
+
+        rbRol.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(rbRol);
+        rbRol.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rbRol.setText("Rol");
+        rbRol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbRolMouseClicked(evt);
+            }
+        });
+        jPanel7.add(rbRol);
+        rbRol.setBounds(430, 10, 60, 30);
+
         jPanel5.add(jPanel7);
-        jPanel7.setBounds(5, 5, 830, 90);
+        jPanel7.setBounds(5, 5, 747, 90);
 
         jPanel8.setBackground(new java.awt.Color(204, 204, 204));
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -159,7 +222,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         jLabel1.setBounds(5, 5, 70, 30);
 
         jPanel5.add(jPanel8);
-        jPanel8.setBounds(757, 100, 80, 410);
+        jPanel8.setBounds(757, 5, 80, 505);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,6 +357,81 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
+        limpiarTabla();
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbIdMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String parametro = entParametro.getText();
+        List<RolUsuario> clientes = new ArrayList<>();
+        if (parametro != null && !parametro.isEmpty()) {
+            if (rbId.isSelected()) {
+                MC_RolUsuario controlRolUsuario = new MC_RolUsuario();
+                int idC = Integer.parseInt(parametro);
+                RolUsuario cli = controlRolUsuario.buscarRolUsuario(idC);
+                if (cli != null && cli.getId() != null) {
+                    clientes.add(cli);
+                }
+            }
+            if (rbNombre.isSelected()) {
+                MC_RolUsuario controlRolUsuario = new MC_RolUsuario();
+                clientes = controlRolUsuario.buscarRolUsuarioNombreUsuario(parametro);
+            }
+            if (rbRol.isSelected()) {
+                MC_RolUsuario controlRolUsuario = new MC_RolUsuario();
+                clientes = controlRolUsuario.buscarRolUsuarioNombreRol(parametro);
+            }
+            mostrarElementos(clientes);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void mostrarElementos(List<RolUsuario> RolUsuario) {
+        limpiarTabla();
+        if (RolUsuario != null && !RolUsuario.isEmpty()) {
+            buscarRolActivo(RolUsuario);
+            for (RolUsuario rol : RolUsuario) {
+                int idRol = rol.getId();
+                SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
+
+                String nombreUsuario = "Sin Nombre";
+                if (rol.getUsuarioId().getUsuario() != null && !rol.getUsuarioId().getUsuario().isEmpty()) {
+                    nombreUsuario = rol.getUsuarioId().getUsuario();
+                }
+                String tipoRol = "Sin Nombre ";
+                if (rol.getNombrerol() != null && !rol.getNombrerol().isEmpty()) {
+                    tipoRol = rol.getNombrerol();
+                }
+
+                String fechaCreacion = "Sin Fecha";
+                if (rol.getFechacreacion() != null) {
+                    fechaCreacion = formato.format(rol.getFechacreacion());
+                }
+                modelo.addRow(new Object[]{idRol, nombreUsuario, tipoRol, fechaCreacion});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Roles", "Informacion", 1, null);
+        }
+    }
+    private void entParametroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entParametroKeyReleased
+        if (rbId.isSelected()) {
+            funciones.validarDigito(evt);
+        }
+    }//GEN-LAST:event_entParametroKeyReleased
+
+    private void rbNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreMouseClicked
+        limpiarTabla();
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbNombreMouseClicked
+
+    private void rbRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRolMouseClicked
+        limpiarTabla();
+        entParametro.requestFocus();
+        entParametro.selectAll();
+    }//GEN-LAST:event_rbRolMouseClicked
+
     public Permisos getPermiso() {
         return permiso;
     }
@@ -345,17 +483,23 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnInsertar;
     public javax.swing.JButton btnVer;
     public javax.swing.JButton btnVerTodo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField entNumeroOrden;
+    private javax.swing.JTextField entParametro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JRadioButton rbId;
+    private javax.swing.JRadioButton rbNombre;
+    private javax.swing.JRadioButton rbRol;
     private javax.swing.JTable tablaRol;
     // End of variables declaration//GEN-END:variables
 }
