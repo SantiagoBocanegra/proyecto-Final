@@ -12,7 +12,6 @@ import MODELO_CONTROLADOR.funciones;
 import MODELO_CONTROLADOR.img_tabla;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -44,6 +43,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         Hasta.setVisible(false);
         entFi.setVisible(false);
         entFf.setVisible(false);
+        rbIsbn.setSelected(true);
         tablaLibro();
         isbn = 0;
     }
@@ -354,7 +354,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Carro");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/carro70x50.png"))); // NOI18N
         jPanel1.add(jLabel2);
         jLabel2.setBounds(760, 5, 70, 50);
 
@@ -531,6 +531,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
 
     private void rbTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbTituloMouseClicked
         Desde.setVisible(false);
+        entId.setText("Isbn");
         entParametro.setVisible(true);
         Hasta.setVisible(false);
         entFi.setVisible(false);
@@ -541,6 +542,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
 
     private void rbIsbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIsbnMouseClicked
         limpiarTabla();
+        entId.setText("Isbn");
         entParametro.setVisible(true);
         Desde.setVisible(false);
         Hasta.setVisible(false);
@@ -552,6 +554,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
 
     private void rbAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbAutorMouseClicked
         limpiarTabla();
+        entId.setText("Isbn");
         entParametro.setVisible(true);
         Desde.setVisible(false);
         Hasta.setVisible(false);
@@ -563,6 +566,7 @@ public class ventanaVerLibro extends javax.swing.JDialog {
 
     private void rbRangoPrecionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoPrecionMouseClicked
         limpiarTabla();
+        entId.setText("Isbn");
         entParametro.setVisible(false);
         Desde.setVisible(true);
         Hasta.setVisible(true);

@@ -323,16 +323,16 @@
                 <Property name="text" type="java.lang.String" value="Editar Libro"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="buscarNumeroVentas">
+                <MenuItem class="javax.swing.JMenuItem" name="buscarVentaPorNumero">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Times New Roman" size="14" style="0"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="78"/>
-                    <Property name="text" type="java.lang.String" value="Bucar Libro Por Id"/>
+                    <Property name="text" type="java.lang.String" value="Bucar Venta Por Numero"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarNumeroVentasActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarVentaPorNumeroActionPerformed"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator16">
@@ -343,7 +343,7 @@
                       <Font name="Times New Roman" size="14" style="0"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="84"/>
-                    <Property name="text" type="java.lang.String" value="Buscar Todos Los Libros"/>
+                    <Property name="text" type="java.lang.String" value="Buscar Todos Las Ventas"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarTodosVentasActionPerformed"/>
@@ -468,14 +468,17 @@
             <Property name="text" type="java.lang.String" value="Editar Rol"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="buscarNombreRol">
+            <MenuItem class="javax.swing.JMenuItem" name="buscarIdRol">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="14" style="0"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="78"/>
-                <Property name="text" type="java.lang.String" value="Buscar Rol Por usuario"/>
+                <Property name="text" type="java.lang.String" value="Buscar Rol Por Id"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarIdRolActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator20">
             </MenuItem>
@@ -543,6 +546,9 @@
                 <Property name="mnemonic" type="int" value="73"/>
                 <Property name="text" type="java.lang.String" value="Buscar Usuario Por Id"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarIdUsuarioActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator23">
             </MenuItem>
@@ -610,6 +616,9 @@
                 <Property name="mnemonic" type="int" value="73"/>
                 <Property name="text" type="java.lang.String" value="Buscar Genero Por Id"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarIdGeneroActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator26">
             </MenuItem>

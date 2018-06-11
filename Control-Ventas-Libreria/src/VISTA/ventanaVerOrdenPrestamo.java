@@ -42,6 +42,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
         Hasta.setVisible(false);
         entFi.setVisible(false);
         entFf.setVisible(false);
+        rbNumeroOrden.setSelected(true);
         modelo = (DefaultTableModel) tablaNumeroOrdenPrestamo.getModel();
     }
 
@@ -328,10 +329,8 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
     }
 
     private void tablaNumeroOrdenPrestamoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaNumeroOrdenPrestamoMouseClicked
-        if (evt.isMetaDown()) {
-            numeroOrden = Integer.parseInt(modelo.getValueAt(tablaNumeroOrdenPrestamo.getSelectedRow(), 1).toString());
-            entNumeroOrden.setText(String.valueOf(numeroOrden));
-        }
+       numeroOrden = Integer.parseInt(modelo.getValueAt(tablaNumeroOrdenPrestamo.getSelectedRow(), 1).toString());
+       entNumeroOrden.setText(String.valueOf(numeroOrden));
     }//GEN-LAST:event_tablaNumeroOrdenPrestamoMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
@@ -428,6 +427,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
 
     private void rbNumeroOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNumeroOrdenMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         Desde.setVisible(false);
         Hasta.setVisible(false);
         entFi.setVisible(false);
@@ -439,6 +439,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
 
     private void rbNombreCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreCMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         Desde.setVisible(false);
         Hasta.setVisible(false);
         entFi.setVisible(false);
@@ -450,6 +451,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
 
     private void rbNombreEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreEMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         Desde.setVisible(false);
         Hasta.setVisible(false);
         entFi.setVisible(false);
@@ -461,6 +463,7 @@ public class ventanaVerOrdenPrestamo extends javax.swing.JDialog {
 
     private void rbRangoFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoFechaMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         entParametro.setVisible(false);
         Desde.setVisible(true);
         Hasta.setVisible(true);

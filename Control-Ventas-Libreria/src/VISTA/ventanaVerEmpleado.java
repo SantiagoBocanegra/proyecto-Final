@@ -427,7 +427,9 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void rbCedulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbCedulaMouseClicked
+        limpiarTabla();
         Desde.setVisible(false);
+        entId.setText("Id");
         entParametro.setVisible(true);
         Hasta.setVisible(false);
         entFi.setVisible(false);
@@ -438,6 +440,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
 
     private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         Desde.setVisible(false);
         Hasta.setVisible(false);
@@ -449,6 +452,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
 
     private void rbNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         Desde.setVisible(false);
         Hasta.setVisible(false);
@@ -460,6 +464,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
 
     private void rbApellidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbApellidoMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         Desde.setVisible(false);
         Hasta.setVisible(false);
@@ -471,6 +476,7 @@ public class ventanaVerEmpleado extends javax.swing.JDialog {
 
     private void rbRangoFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRangoFechaMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(false);
         Desde.setVisible(true);
         Hasta.setVisible(true);

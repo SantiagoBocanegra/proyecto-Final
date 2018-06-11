@@ -37,7 +37,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         id = 0;
-        
+        rbId.setSelected(true);
         pro = new procesosSegundario();
         rbEstadoA.setVisible(false);
         modelo = (DefaultTableModel) tablaUsuario.getModel();
@@ -424,6 +424,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
 
     private void rbNombreEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreEmpleadoMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         entParametro.requestFocus();
         entParametro.selectAll();
@@ -433,6 +434,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
 
     private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         entParametro.selectAll();
         entParametro.requestFocus();
@@ -441,6 +443,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
 
     private void rbNombreUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreUsuarioMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         entParametro.selectAll();
         entParametro.requestFocus();
@@ -449,6 +452,7 @@ public class ventanaVerUsuario extends javax.swing.JDialog {
 
     private void rbEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbEstadoMouseClicked
         limpiarTabla();
+        entId.setText("Id");
         entParametro.setVisible(true);
         entParametro.setVisible(false);
         rbEstadoA.setSelected(true);

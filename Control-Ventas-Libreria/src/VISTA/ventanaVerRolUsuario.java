@@ -33,6 +33,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         id = 0;
+        rbId.setSelected(true);
         modelo = (DefaultTableModel) tablaRol.getModel();
     }
 
@@ -379,6 +380,7 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
 
     private void rbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbIdMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         entParametro.requestFocus();
         entParametro.selectAll();
     }//GEN-LAST:event_rbIdMouseClicked
@@ -442,12 +444,14 @@ public class ventanaVerRolUsuario extends javax.swing.JDialog {
 
     private void rbNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNombreMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         entParametro.requestFocus();
         entParametro.selectAll();
     }//GEN-LAST:event_rbNombreMouseClicked
 
     private void rbRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbRolMouseClicked
         limpiarTabla();
+        entNumeroOrden.setText("# Orden");
         entParametro.requestFocus();
         entParametro.selectAll();
     }//GEN-LAST:event_rbRolMouseClicked

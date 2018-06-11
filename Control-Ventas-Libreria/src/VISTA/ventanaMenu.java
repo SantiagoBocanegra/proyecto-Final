@@ -12,11 +12,14 @@ import MODELO.Ordencompra;
 import MODELO.Ordenprestamo;
 import MODELO.Permisos;
 import MODELO.RolUsuario;
+import MODELO.Usuario;
 import MODELO_CONTROLADOR.MC_Cliente;
 import MODELO_CONTROLADOR.MC_Empleado;
 import MODELO_CONTROLADOR.MC_Libro;
 import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.MC_OrdenPrestamo;
+import MODELO_CONTROLADOR.MC_RolUsuario;
+import MODELO_CONTROLADOR.MC_Usuario;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ public class ventanaMenu extends javax.swing.JDialog {
     public ventanaMenu(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        modelo = (DefaultTableModel)tablaLibros.getModel();
+        modelo = (DefaultTableModel) tablaLibros.getModel();
         this.setTitle("Libreria ¡Yo Si Compro Libros!");
         this.setSize(1015, 529);
         this.setMaximumSize(new Dimension(1015, 529));
@@ -53,6 +56,8 @@ public class ventanaMenu extends javax.swing.JDialog {
         btnRol.setComponentPopupMenu(menuRol);
         btnUsuario.setComponentPopupMenu(menuUsuario);
         btnGenero.setComponentPopupMenu(menuGenero);
+        PerfilUsuario.setEnabled(false);
+        InformacionEmpleado.setEnabled(false);
         Desconectar.setEnabled(false);
     }
 
@@ -105,7 +110,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         nuevaVenta = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         editarVentas = new javax.swing.JMenu();
-        buscarNumeroVentas = new javax.swing.JMenuItem();
+        buscarVentaPorNumero = new javax.swing.JMenuItem();
         jSeparator16 = new javax.swing.JPopupMenu.Separator();
         buscarTodosVentas = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
@@ -123,7 +128,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         nuevoRol = new javax.swing.JMenuItem();
         jSeparator19 = new javax.swing.JPopupMenu.Separator();
         editarRol = new javax.swing.JMenu();
-        buscarNombreRol = new javax.swing.JMenuItem();
+        buscarIdRol = new javax.swing.JMenuItem();
         jSeparator20 = new javax.swing.JPopupMenu.Separator();
         buscarTodosRol = new javax.swing.JMenuItem();
         jSeparator21 = new javax.swing.JPopupMenu.Separator();
@@ -378,20 +383,20 @@ public class ventanaMenu extends javax.swing.JDialog {
         editarVentas.setMnemonic('E');
         editarVentas.setText("Editar Libro");
 
-        buscarNumeroVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        buscarNumeroVentas.setMnemonic('N');
-        buscarNumeroVentas.setText("Bucar Libro Por Id");
-        buscarNumeroVentas.addActionListener(new java.awt.event.ActionListener() {
+        buscarVentaPorNumero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarVentaPorNumero.setMnemonic('N');
+        buscarVentaPorNumero.setText("Bucar Venta Por Numero");
+        buscarVentaPorNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarNumeroVentasActionPerformed(evt);
+                buscarVentaPorNumeroActionPerformed(evt);
             }
         });
-        editarVentas.add(buscarNumeroVentas);
+        editarVentas.add(buscarVentaPorNumero);
         editarVentas.add(jSeparator16);
 
         buscarTodosVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         buscarTodosVentas.setMnemonic('T');
-        buscarTodosVentas.setText("Buscar Todos Los Libros");
+        buscarTodosVentas.setText("Buscar Todos Las Ventas");
         buscarTodosVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarTodosVentasActionPerformed(evt);
@@ -486,10 +491,15 @@ public class ventanaMenu extends javax.swing.JDialog {
         editarRol.setMnemonic('E');
         editarRol.setText("Editar Rol");
 
-        buscarNombreRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        buscarNombreRol.setMnemonic('N');
-        buscarNombreRol.setText("Buscar Rol Por usuario");
-        editarRol.add(buscarNombreRol);
+        buscarIdRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        buscarIdRol.setMnemonic('N');
+        buscarIdRol.setText("Buscar Rol Por Id");
+        buscarIdRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIdRolActionPerformed(evt);
+            }
+        });
+        editarRol.add(buscarIdRol);
         editarRol.add(jSeparator20);
 
         buscarTodosRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -532,6 +542,11 @@ public class ventanaMenu extends javax.swing.JDialog {
         buscarIdUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         buscarIdUsuario.setMnemonic('I');
         buscarIdUsuario.setText("Buscar Usuario Por Id");
+        buscarIdUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIdUsuarioActionPerformed(evt);
+            }
+        });
         editarUsuario.add(buscarIdUsuario);
         editarUsuario.add(jSeparator23);
 
@@ -575,6 +590,11 @@ public class ventanaMenu extends javax.swing.JDialog {
         buscarIdGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         buscarIdGenero.setMnemonic('I');
         buscarIdGenero.setText("Buscar Genero Por Id");
+        buscarIdGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarIdGeneroActionPerformed(evt);
+            }
+        });
         editarGenero.add(buscarIdGenero);
         editarGenero.add(jSeparator26);
 
@@ -1052,7 +1072,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         ventana.setVisible(true);
     }//GEN-LAST:event_verVentasActionPerformed
 
-    private void buscarNumeroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNumeroVentasActionPerformed
+    private void buscarVentaPorNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarVentaPorNumeroActionPerformed
         ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
         String numeroOrden = JOptionPane.showInputDialog(this, "Porfavor Ingrese El Numero De La Orden", "Buscar Orden Por Numero", 3);
         if (numeroOrden != null && !numeroOrden.isEmpty()) {
@@ -1072,7 +1092,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
         }
-    }//GEN-LAST:event_buscarNumeroVentasActionPerformed
+    }//GEN-LAST:event_buscarVentaPorNumeroActionPerformed
 
     private void buscarTodosVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosVentasActionPerformed
         ventanaVerOrdenCompra ventana = new ventanaVerOrdenCompra(new javax.swing.JDialog(), true);
@@ -1110,14 +1130,14 @@ public class ventanaMenu extends javax.swing.JDialog {
     }//GEN-LAST:event_buscarNumeroPrestamoActionPerformed
 
     private void buscarTodosPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTodosPrestamosActionPerformed
-        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(),true);
+        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(), true);
         ventana.btnInsertar.setEnabled(false);
         ventana.setPermiso(permiso);
         ventana.setVisible(true);
     }//GEN-LAST:event_buscarTodosPrestamosActionPerformed
 
     private void verPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verPrestamosActionPerformed
-        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(),true);
+        ventanaVerOrdenPrestamo ventana = new ventanaVerOrdenPrestamo(new javax.swing.JDialog(), true);
         ventana.setPermiso(permiso);
         ventana.setVisible(true);
     }//GEN-LAST:event_verPrestamosActionPerformed
@@ -1273,7 +1293,7 @@ public class ventanaMenu extends javax.swing.JDialog {
     }//GEN-LAST:event_verRolActionPerformed
 
     private void nuevoRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoRolActionPerformed
-        ventanaRoles ventana = new ventanaRoles (new javax.swing.JDialog(),true);
+        ventanaRoles ventana = new ventanaRoles(new javax.swing.JDialog(), true);
         ventana.btnEditar.setEnabled(false);
         ventana.setVisible(true);
     }//GEN-LAST:event_nuevoRolActionPerformed
@@ -1328,16 +1348,15 @@ public class ventanaMenu extends javax.swing.JDialog {
     private void DesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesconectarActionPerformed
         fotoUsuario.setIcon(null);
         permisosRol = new ArrayList<>();
-        
+
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(modelo.getRowCount() - 1);
         }
-        System.out.println("compo "+panelGrafica.getComponentCount());
+        System.out.println("compo " + panelGrafica.getComponentCount());
         if (panelGrafica.getComponentCount() != 0) {
             panelGrafica.remove(0);
             panelGrafica.repaint();
         }
-        
         InformacionEmpleado.setEnabled(false);
         PerfilUsuario.setEnabled(false);
         Desconectar.setEnabled(false);
@@ -1355,36 +1374,106 @@ public class ventanaMenu extends javax.swing.JDialog {
     }//GEN-LAST:event_InformacionEmpleadoActionPerformed
 
     private void btnNuevoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEmpleadoActionPerformed
-        ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
-        ventana.btnMensaje.setEnabled(false);
-        ventana.btnEditar.setEnabled(false);
-        ventana.setVisible(true);
+        permiso = buscarPermiso("Empleado");
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
+            ventana.btnMensaje.setEnabled(false);
+            ventana.btnEditar.setEnabled(false);
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El Usuario No Tiene Permiso Para Esta Accion", "Alerta", 1, null);
+        }
     }//GEN-LAST:event_btnNuevoEmpleadoActionPerformed
 
     private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
-        ventanaCliente ventana = new ventanaCliente(new javax.swing.JDialog(), true);
-        ventana.btnMensaje.setEnabled(false);
-        ventana.btnEditar.setEnabled(false);
-        ventana.setVisible(true);
+        permiso = buscarPermiso("Cliente");
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaCliente ventana = new ventanaCliente(new javax.swing.JDialog(), true);
+            ventana.btnMensaje.setEnabled(false);
+            ventana.btnEditar.setEnabled(false);
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El Usuario No Tiene Permiso Para Esta Accion", "Alerta", 1, null);
+        }
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnNuevoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoLibroActionPerformed
-        ventanaLibro ventana = new ventanaLibro(new javax.swing.JDialog(), true);
-        ventana.btnEditar.setEnabled(false);
-        ventana.setVisible(true);
+        permiso = buscarPermiso("Libro");
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaLibro ventana = new ventanaLibro(new javax.swing.JDialog(), true);
+            ventana.btnEditar.setEnabled(false);
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El Usuario No Tiene Permiso Para Esta Accion", "Alerta", 1, null);
+        }
     }//GEN-LAST:event_btnNuevoLibroActionPerformed
 
     private void btnNuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaVentaActionPerformed
-        ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
-        ventana.btnEditar.setEnabled(false);
-        ventana.setVisible(true);
+        permiso = buscarPermiso("OrdenCompra");
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
+            ventana.btnEditar.setEnabled(false);
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El Usuario No Tiene Permiso Para Esta Accion", "Alerta", 1, null);
+        }
     }//GEN-LAST:event_btnNuevaVentaActionPerformed
 
     private void btnNuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPrestamoActionPerformed
-        ventanaOrdenPrestamo ventana = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
-        ventana.btnEditar.setEnabled(false);
-        ventana.setVisible(true);
+        permiso = buscarPermiso("Empleado");
+        if (permiso.getIdpermisos() != null && permiso.getInsertar()) {
+            ventanaOrdenPrestamo ventana = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+            ventana.btnEditar.setEnabled(false);
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El Usuario No Tiene Permiso Para Esta Accion", "Alerta", 1, null);
+        }
     }//GEN-LAST:event_btnNuevoPrestamoActionPerformed
+
+    private void buscarIdRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIdRolActionPerformed
+        String id = JOptionPane.showInputDialog(this, "Porfavor Ingrese Id Del Rol", "Buscar Rol Por Id", 3);
+        if (id != null && !id.isEmpty()) {
+            int idR = Integer.parseInt(id);
+            MC_RolUsuario controlRol = new MC_RolUsuario();
+            RolUsuario RolUsuarioAux = controlRol.buscarRolUsuario(idR);
+            ventanaRoles ventanaRol = new ventanaRoles(new javax.swing.JDialog(), true);
+            if (RolUsuarioAux.getId() != null) {
+                ventanaRol.entFechaRegistro.setEnabled(false);
+                ventanaRol.btnGuardar.setVisible(false);
+                ventanaRol.setRolUsuario(RolUsuarioAux);
+                ventanaRol.mostrarElementos(RolUsuarioAux);
+                ventanaRol.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro Rol", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarIdRolActionPerformed
+
+    private void buscarIdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIdUsuarioActionPerformed
+        String id = JOptionPane.showInputDialog(this, "Porfavor Ingrese Id Del Usuario", "Buscar Usuario Por Id", 3);
+        if (id != null && !id.isEmpty()) {
+            int idR = Integer.parseInt(id);
+            ventanaUsuario ventanaUsu = new ventanaUsuario(new javax.swing.JDialog(), true);
+            MC_Usuario controlUsu = new MC_Usuario();
+            Usuario usuarioAux = controlUsu.buscarUsuario(idR);
+            if (usuarioAux.getId() != null) {
+                ventanaUsu.btnGuardar.setVisible(false);
+                ventanaUsu.setUsuario(usuarioAux);
+                ventanaUsu.mostrarElementos(usuarioAux);
+                ventanaUsu.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No Se Encontro Usuario", "Informacion", 1, null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Parametro Invalido", "Error", 0, null);
+        }
+    }//GEN-LAST:event_buscarIdUsuarioActionPerformed
+
+    private void buscarIdGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIdGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarIdGeneroActionPerformed
 
     public DefaultTableModel getModelo() {
         return modelo;
@@ -1476,11 +1565,10 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JMenuItem buscarIdCliente;
     private javax.swing.JMenuItem buscarIdEmpleado;
     private javax.swing.JMenuItem buscarIdGenero;
+    private javax.swing.JMenuItem buscarIdRol;
     private javax.swing.JMenuItem buscarIdUsuario;
     private javax.swing.JMenuItem buscarIsbnLibro;
-    private javax.swing.JMenuItem buscarNombreRol;
     private javax.swing.JMenuItem buscarNumeroPrestamo;
-    private javax.swing.JMenuItem buscarNumeroVentas;
     private javax.swing.JMenuItem buscarTodosClientes;
     private javax.swing.JMenuItem buscarTodosEmpleados;
     private javax.swing.JMenuItem buscarTodosGeneros;
@@ -1489,6 +1577,7 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JMenuItem buscarTodosRol;
     private javax.swing.JMenuItem buscarTodosUsuarios;
     private javax.swing.JMenuItem buscarTodosVentas;
+    private javax.swing.JMenuItem buscarVentaPorNumero;
     private javax.swing.JMenu editarCliente;
     private javax.swing.JMenu editarEmpleado;
     private javax.swing.JMenu editarGenero;
