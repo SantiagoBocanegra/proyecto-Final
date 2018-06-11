@@ -201,10 +201,11 @@ public class ventanaCliente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
 
-        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente165x215.png"))); // NOI18N
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(jLabel1);
         jLabel1.setBounds(4, 4, 165, 215);
 
@@ -337,9 +338,13 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 370, 400, 30);
 
+        btnGuargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuargar.setMnemonic('G');
-        btnGuargar.setText("GUAR");
         btnGuargar.setToolTipText("Guardar Informacion Del Cliente");
+        btnGuargar.setBorderPainted(false);
+        btnGuargar.setContentAreaFilled(false);
+        btnGuargar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuargar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuargarActionPerformed(evt);
@@ -348,9 +353,13 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(btnGuargar);
         btnGuargar.setBounds(495, 332, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Cliente");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -359,9 +368,14 @@ public class ventanaCliente extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(420, 332, 70, 70);
 
+        btnMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje27x27.png"))); // NOI18N
         btnMensaje.setMnemonic('M');
-        btnMensaje.setText("M");
         btnMensaje.setToolTipText("Enviar Imail Al Cliente");
+        btnMensaje.setBorderPainted(false);
+        btnMensaje.setContentAreaFilled(false);
+        btnMensaje.setDisabledSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje30x30.png"))); // NOI18N
+        btnMensaje.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje30x30.png"))); // NOI18N
+        btnMensaje.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje30x30.png"))); // NOI18N
         btnMensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMensajeActionPerformed(evt);

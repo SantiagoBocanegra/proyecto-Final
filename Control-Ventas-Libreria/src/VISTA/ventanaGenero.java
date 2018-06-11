@@ -110,9 +110,13 @@ public class ventanaGenero extends javax.swing.JDialog {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(20, 93, 532, 230);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("Guar");
         btnGuardar.setToolTipText("Guardar Informacion Del Genero");
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setDefaultCapable(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -121,9 +125,13 @@ public class ventanaGenero extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(480, 330, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Genero");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);

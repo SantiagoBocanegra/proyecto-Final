@@ -182,7 +182,11 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel3.add(entFf);
         entFf.setBounds(430, 40, 180, 30);
 
-        btnBuscar.setText("B");
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar55x55.png"))); // NOI18N
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.setContentAreaFilled(false);
+        btnBuscar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar60x60.png"))); // NOI18N
+        btnBuscar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar60x60.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -219,16 +223,20 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(null);
 
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver65x65.png"))); // NOI18N
         btnVer.setMnemonic('V');
-        btnVer.setText("Ver");
         btnVer.setToolTipText("Ver Informacion De Una Orden");
+        btnVer.setBorderPainted(false);
+        btnVer.setContentAreaFilled(false);
+        btnVer.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver70x70.png"))); // NOI18N
+        btnVer.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver70x70.png"))); // NOI18N
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
             }
         });
         jPanel4.add(btnVer);
-        btnVer.setBounds(5, 110, 70, 70);
+        btnVer.setBounds(5, 150, 70, 70);
 
         btnVerTodo.setMnemonic('T');
         btnVerTodo.setText("Ver To");
@@ -239,29 +247,37 @@ public class ventanaVerOrdenCompra extends javax.swing.JDialog {
             }
         });
         jPanel4.add(btnVerTodo);
-        btnVerTodo.setBounds(5, 335, 70, 70);
+        btnVerTodo.setBounds(5, 380, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Orden");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
         jPanel4.add(btnEditar);
-        btnEditar.setBounds(5, 260, 70, 70);
+        btnEditar.setBounds(5, 300, 70, 70);
 
+        btnInsertar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert65x65.png"))); // NOI18N
         btnInsertar.setMnemonic('I');
-        btnInsertar.setText("Insert");
         btnInsertar.setToolTipText("Registrar Una Nueva Orden ");
+        btnInsertar.setBorderPainted(false);
+        btnInsertar.setContentAreaFilled(false);
+        btnInsertar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert70x70.png"))); // NOI18N
+        btnInsertar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert70x70.png"))); // NOI18N
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
             }
         });
         jPanel4.add(btnInsertar);
-        btnInsertar.setBounds(5, 185, 70, 70);
+        btnInsertar.setBounds(5, 220, 70, 70);
 
         entNumeroOrden.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entNumeroOrden.setHorizontalAlignment(javax.swing.JTextField.CENTER);

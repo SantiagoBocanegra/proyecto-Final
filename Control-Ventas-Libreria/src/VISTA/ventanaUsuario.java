@@ -100,10 +100,11 @@ public class ventanaUsuario extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
 
-        fotoEmpleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fotoEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/usuario165x215.png"))); // NOI18N
+        fotoEmpleado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(fotoEmpleado);
         fotoEmpleado.setBounds(4, 4, 165, 215);
 
@@ -197,9 +198,13 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel11);
         jLabel11.setBounds(170, 50, 120, 30);
 
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver45x45.png"))); // NOI18N
         btnVer.setMnemonic('V');
-        btnVer.setText("Ver");
         btnVer.setToolTipText("Ver Informacion Del rol");
+        btnVer.setContentAreaFilled(false);
+        btnVer.setDefaultCapable(false);
+        btnVer.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver50x50.png"))); // NOI18N
+        btnVer.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver50x50.png"))); // NOI18N
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -208,9 +213,13 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(btnVer);
         btnVer.setBounds(530, 319, 50, 50);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("Guar");
         btnGuardar.setToolTipText("Guardar Informacion Del Usuario");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -219,9 +228,13 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(515, 374, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Usuario");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);

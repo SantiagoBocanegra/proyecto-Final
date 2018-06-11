@@ -105,10 +105,11 @@ public class ventanaLibro extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel1.setLayout(null);
 
-        portada.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        portada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro217x327.png"))); // NOI18N
+        portada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(portada);
         portada.setBounds(4, 4, 217, 327);
 
@@ -214,9 +215,13 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(entFechaPublicacion);
         entFechaPublicacion.setBounds(430, 336, 145, 30);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("Guar");
         btnGuardar.setToolTipText("Guardar Informacion Del Libro");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -225,9 +230,13 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(505, 406, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Libro");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -236,9 +245,13 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(425, 406, 70, 70);
 
+        btnSubir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir65x65.png"))); // NOI18N
         btnSubir.setMnemonic('S');
-        btnSubir.setText("Subir");
         btnSubir.setToolTipText("Subir Portada Del Libro");
+        btnSubir.setBorderPainted(false);
+        btnSubir.setContentAreaFilled(false);
+        btnSubir.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir70x70.png"))); // NOI18N
+        btnSubir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir70x70.png"))); // NOI18N
         btnSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubirActionPerformed(evt);

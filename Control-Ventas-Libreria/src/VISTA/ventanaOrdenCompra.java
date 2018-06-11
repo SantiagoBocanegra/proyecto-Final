@@ -89,7 +89,6 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -134,22 +133,13 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setText("Orden De Compra");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(5, 0, 150, 30);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(300, 10, 73, 23);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion Empleado", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -191,8 +181,12 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel2.add(entApellidoEmpleado);
         entApellidoEmpleado.setBounds(309, 20, 180, 30);
 
-        btnBuscarEmpleado.setText("Busca");
+        btnBuscarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar65x65.png"))); // NOI18N
         btnBuscarEmpleado.setToolTipText("Buscar Empleado ");
+        btnBuscarEmpleado.setBorderPainted(false);
+        btnBuscarEmpleado.setContentAreaFilled(false);
+        btnBuscarEmpleado.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar70x70.png"))); // NOI18N
+        btnBuscarEmpleado.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar70x70.png"))); // NOI18N
         btnBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarEmpleadoActionPerformed(evt);
@@ -244,8 +238,12 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel4.add(entApellidoCliente);
         entApellidoCliente.setBounds(309, 20, 180, 30);
 
-        btnBuscarCliente.setText("Busca");
+        btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar65x65.png"))); // NOI18N
         btnBuscarCliente.setToolTipText("Buscar Cliente");
+        btnBuscarCliente.setBorderPainted(false);
+        btnBuscarCliente.setContentAreaFilled(false);
+        btnBuscarCliente.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar70x70.png"))); // NOI18N
+        btnBuscarCliente.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar70x70.png"))); // NOI18N
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarClienteActionPerformed(evt);
@@ -327,9 +325,13 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(jLabel1);
         jLabel1.setBounds(254, 225, 80, 30);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Orden ");
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setDefaultCapable(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -338,9 +340,13 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
         jPanel5.add(btnEditar);
         btnEditar.setBounds(490, 115, 70, 70);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("guar");
         btnGuardar.setToolTipText("Guardar Orden");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -544,13 +550,6 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MC_OrdenItem controlOrdenItem = new MC_OrdenItem();
-        List<Ordenitem> itemsAux = controlOrdenItem.buscarTodasOrdenItem();
-        //Actualiza la  lista de orden de item para modificar 
-        mostraItem(itemsAux);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         String cantidadTotal = entCantidadTotal.getText();
@@ -834,7 +833,6 @@ public class ventanaOrdenCompra extends javax.swing.JDialog {
     private javax.swing.JTextField entPrecioTotal;
     private javax.swing.JTextField entTelefonoCliente;
     private javax.swing.JTextField entTelefonoEmpleado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

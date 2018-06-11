@@ -604,89 +604,113 @@ public class ventanaMenu extends javax.swing.JDialog {
 
         btnEmpleados.setBackground(new java.awt.Color(204, 204, 204));
         btnEmpleados.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado34x34.png"))); // NOI18N
         btnEmpleados.setMnemonic('E');
         btnEmpleados.setText("Empleado ");
         btnEmpleados.setToolTipText("Informacion De Los Empleados");
         btnEmpleados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnEmpleados.setBorderPainted(false);
         btnEmpleados.setContentAreaFilled(false);
-        btnEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnEmpleados.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado35x35.png"))); // NOI18N
+        btnEmpleados.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado35x35.png"))); // NOI18N
         btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEmpleadosActionPerformed(evt);
             }
         });
         menu.add(btnEmpleados);
-        btnEmpleados.setBounds(5, 2, 120, 36);
+        btnEmpleados.setBounds(5, 2, 100, 36);
 
         btnClientes.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente33x33.png"))); // NOI18N
         btnClientes.setMnemonic('C');
         btnClientes.setText("Cliente ");
         btnClientes.setToolTipText("Informacion De Los Clientes");
         btnClientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnClientes.setBorderPainted(false);
         btnClientes.setContentAreaFilled(false);
-        btnClientes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnClientes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnClientes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente35x35.png"))); // NOI18N
+        btnClientes.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente35x35.png"))); // NOI18N
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClientesActionPerformed(evt);
             }
         });
         menu.add(btnClientes);
-        btnClientes.setBounds(130, 2, 120, 36);
+        btnClientes.setBounds(110, 2, 90, 36);
 
         btnLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro33x33.png"))); // NOI18N
         btnLibro.setMnemonic('L');
         btnLibro.setText("Libro ");
         btnLibro.setToolTipText("Informacion De Libros");
         btnLibro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnLibro.setBorderPainted(false);
         btnLibro.setContentAreaFilled(false);
-        btnLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnLibro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLibro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLibro.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnLibro.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro35x35.png"))); // NOI18N
+        btnLibro.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro35x35.png"))); // NOI18N
         btnLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLibroActionPerformed(evt);
             }
         });
         menu.add(btnLibro);
-        btnLibro.setBounds(255, 2, 120, 36);
+        btnLibro.setBounds(205, 2, 80, 36);
 
         btnVentas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/venta33x33.png"))); // NOI18N
         btnVentas.setMnemonic('V');
         btnVentas.setText("Venta-Prestamos ");
         btnVentas.setToolTipText("Informacion De Las Ventas");
         btnVentas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnVentas.setBorderPainted(false);
         btnVentas.setContentAreaFilled(false);
-        btnVentas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVentas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnVentas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ventas35x35.png"))); // NOI18N
+        btnVentas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ventas35x35.png"))); // NOI18N
         btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentasActionPerformed(evt);
             }
         });
         menu.add(btnVentas);
-        btnVentas.setBounds(380, 2, 120, 36);
+        btnVentas.setBounds(290, 2, 145, 36);
 
         btnRol.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnRol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/rol33x33.png"))); // NOI18N
         btnRol.setMnemonic('R');
         btnRol.setText("Rol ");
         btnRol.setToolTipText("Informacion Del Rol");
         btnRol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnRol.setBorderPainted(false);
         btnRol.setContentAreaFilled(false);
-        btnRol.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnRol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRol.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRol.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/rol35x35.png"))); // NOI18N
+        btnRol.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/rol35x35.png"))); // NOI18N
         btnRol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRolActionPerformed(evt);
             }
         });
         menu.add(btnRol);
-        btnRol.setBounds(505, 2, 120, 36);
+        btnRol.setBounds(440, 2, 80, 36);
 
+        btnSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/abajo18x18.png"))); // NOI18N
         btnSesion.setMnemonic('S');
         btnSesion.setToolTipText("Informacion De Cuenta De Usuario");
         btnSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnSesion.setBorderPainted(false);
         btnSesion.setContentAreaFilled(false);
+        btnSesion.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/abajo20x20.png"))); // NOI18N
+        btnSesion.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/abajo20x20.png"))); // NOI18N
         btnSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSesionActionPerformed(evt);
@@ -695,26 +719,31 @@ public class ventanaMenu extends javax.swing.JDialog {
         menu.add(btnSesion);
         btnSesion.setBounds(960, 10, 20, 20);
 
+        fotoUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente33x33.png"))); // NOI18N
         fotoUsuario.setText("");
         fotoUsuario.setToolTipText("Foto Usuario");
         menu.add(fotoUsuario);
         fotoUsuario.setBounds(920, 2, 36, 36);
 
         btnUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/usuario33x33.png"))); // NOI18N
         btnUsuario.setMnemonic('U');
         btnUsuario.setText("Usuario ");
         btnUsuario.setToolTipText("Informacion De Usuario");
         btnUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnUsuario.setBorderPainted(false);
         btnUsuario.setContentAreaFilled(false);
-        btnUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnUsuario.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/usuario35x35.png"))); // NOI18N
+        btnUsuario.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/usuario35x35.png"))); // NOI18N
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsuarioActionPerformed(evt);
             }
         });
         menu.add(btnUsuario);
-        btnUsuario.setBounds(630, 2, 120, 36);
+        btnUsuario.setBounds(530, 2, 90, 36);
 
         btnGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnGenero.setMnemonic('G');
@@ -730,7 +759,7 @@ public class ventanaMenu extends javax.swing.JDialog {
             }
         });
         menu.add(btnGenero);
-        btnGenero.setBounds(755, 2, 120, 36);
+        btnGenero.setBounds(625, 2, 120, 36);
 
         jPanel1.add(menu);
         menu.setBounds(2, 2, 986, 40);

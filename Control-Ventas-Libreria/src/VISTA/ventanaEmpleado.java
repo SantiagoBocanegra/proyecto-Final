@@ -106,11 +106,11 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
 
-        foto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/fotoEmpleado.png"))); // NOI18N
-        foto.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        foto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado200x295.png"))); // NOI18N
+        foto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(foto);
         foto.setBounds(5, 5, 200, 295);
 
@@ -235,9 +235,13 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(entFechaContrato);
         entFechaContrato.setBounds(405, 340, 190, 30);
 
+        btnSubirFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir65x65.png"))); // NOI18N
         btnSubirFoto.setMnemonic('S');
-        btnSubirFoto.setText("Subir");
         btnSubirFoto.setToolTipText("Subir Imagen Del Empleado");
+        btnSubirFoto.setBorderPainted(false);
+        btnSubirFoto.setContentAreaFilled(false);
+        btnSubirFoto.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir70x70.png"))); // NOI18N
+        btnSubirFoto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/subir70x70.png"))); // NOI18N
         btnSubirFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubirFotoActionPerformed(evt);
@@ -284,9 +288,13 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(jSeparator6);
         jSeparator6.setBounds(510, 60, 95, 2);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("Guarda");
         btnGuardar.setToolTipText("Guardar Informacion Del Empleado");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -295,9 +303,13 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(530, 450, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Empleado");
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setDefaultCapable(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -308,9 +320,13 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(barraProgreso);
         barraProgreso.setBounds(10, 470, 440, 30);
 
+        btnMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje27x27.png"))); // NOI18N
         btnMensaje.setMnemonic('M');
-        btnMensaje.setText("M");
         btnMensaje.setToolTipText("Enviar Imail Al Cliente");
+        btnMensaje.setBorderPainted(false);
+        btnMensaje.setContentAreaFilled(false);
+        btnMensaje.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje30x30.png"))); // NOI18N
+        btnMensaje.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje30x30.png"))); // NOI18N
         btnMensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMensajeActionPerformed(evt);

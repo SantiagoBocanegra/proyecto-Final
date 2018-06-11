@@ -61,8 +61,6 @@ public class ventanaRoles extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         entUsuario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -127,26 +125,8 @@ public class ventanaRoles extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
-
-        jButton1.setText("Prueba");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(187, 135, 80, 23);
-
-        jButton2.setText("Prueba Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(280, 135, 140, 23);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel6.setText("Usuario");
@@ -177,11 +157,11 @@ public class ventanaRoles extends javax.swing.JDialog {
         entFechaRegistro.setBounds(300, 100, 145, 30);
 
         fondoPermisos.setBackground(new java.awt.Color(204, 204, 204));
-        fondoPermisos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)), "Permisos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 24))); // NOI18N
+        fondoPermisos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoPermisos.setLayout(null);
 
         fondoEmpleado.setBackground(new java.awt.Color(204, 204, 204));
-        fondoEmpleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoEmpleado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoEmpleado.setLayout(null);
 
         btnEmpleado.setBackground(new java.awt.Color(204, 204, 204));
@@ -214,7 +194,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoEmpleado.setBounds(10, 30, 120, 155);
 
         fondoCliente.setBackground(new java.awt.Color(204, 204, 204));
-        fondoCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoCliente.setLayout(null);
 
         btnCliente.setBackground(new java.awt.Color(204, 204, 204));
@@ -247,7 +227,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoCliente.setBounds(135, 30, 120, 155);
 
         fondoLibro.setBackground(new java.awt.Color(204, 204, 204));
-        fondoLibro.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoLibro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoLibro.setLayout(null);
 
         btnLibro.setBackground(new java.awt.Color(204, 204, 204));
@@ -280,7 +260,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoLibro.setBounds(260, 30, 90, 155);
 
         fondoOrdenPrestamo.setBackground(new java.awt.Color(204, 204, 204));
-        fondoOrdenPrestamo.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoOrdenPrestamo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoOrdenPrestamo.setLayout(null);
 
         btnOrdenPrestamo.setBackground(new java.awt.Color(204, 204, 204));
@@ -313,7 +293,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoOrdenPrestamo.setBounds(355, 30, 150, 155);
 
         fondoUsuario.setBackground(new java.awt.Color(204, 204, 204));
-        fondoUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoUsuario.setLayout(null);
 
         btnUsuario.setBackground(new java.awt.Color(204, 204, 204));
@@ -346,7 +326,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoUsuario.setBounds(10, 195, 120, 155);
 
         fondoRoles.setBackground(new java.awt.Color(204, 204, 204));
-        fondoRoles.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoRoles.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoRoles.setLayout(null);
 
         btnRoles.setBackground(new java.awt.Color(204, 204, 204));
@@ -379,7 +359,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoRoles.setBounds(135, 195, 120, 155);
 
         fondoGenero.setBackground(new java.awt.Color(204, 204, 204));
-        fondoGenero.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoGenero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoGenero.setLayout(null);
 
         btnGenero.setBackground(new java.awt.Color(204, 204, 204));
@@ -412,7 +392,7 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoGenero.setBounds(260, 195, 90, 155);
 
         fondoOrdenCompra.setBackground(new java.awt.Color(204, 204, 204));
-        fondoOrdenCompra.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        fondoOrdenCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fondoOrdenCompra.setLayout(null);
 
         btnOrdenCompra.setBackground(new java.awt.Color(204, 204, 204));
@@ -448,13 +428,18 @@ public class ventanaRoles extends javax.swing.JDialog {
         fondoPermisos.setBounds(10, 155, 515, 370);
 
         foto.setBackground(new java.awt.Color(153, 153, 153));
-        foto.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 255)));
+        foto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/rol175x140.png"))); // NOI18N
+        foto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(foto);
         foto.setBounds(10, 10, 175, 140);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del rol");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -463,9 +448,13 @@ public class ventanaRoles extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(450, 5, 70, 70);
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar65x65.png"))); // NOI18N
         btnGuardar.setMnemonic('G');
-        btnGuardar.setText("Guar");
         btnGuardar.setToolTipText("Guardar Informacion Del Rol ");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
+        btnGuardar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/guardar70x70.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -555,22 +544,6 @@ public class ventanaRoles extends javax.swing.JDialog {
                 break;
         }
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MC_Permisos co = new MC_Permisos();
-        List<Permisos> rolUsuario3 = co.buscarTodosPermisos();
-        co.close();
-        MC_RolUsuario controlRol = new MC_RolUsuario();
-        rolUsuario = controlRol.buscarRolUsuario(9);
-        permisosRol = rolUsuario3;
-        mostrarElementos(rolUsuario);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MC_Usuario con = new MC_Usuario();
-        usuario = con.buscarUsuario(1);
-        entUsuario.setText(usuario.getUsuario());
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     public Permisos buscarRol(List<Permisos> parametroRolesUsuario, String parametroNombreTabla) {
         Permisos rolU = null;
@@ -841,8 +814,6 @@ public class ventanaRoles extends javax.swing.JDialog {
     private javax.swing.JPanel fondoRoles;
     private javax.swing.JPanel fondoUsuario;
     private javax.swing.JLabel foto;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

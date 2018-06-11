@@ -111,9 +111,13 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(null);
 
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver65x65.png"))); // NOI18N
         btnVer.setMnemonic('V');
-        btnVer.setText("Ver");
         btnVer.setToolTipText("Ver Informacion De Un Genero");
+        btnVer.setBorderPainted(false);
+        btnVer.setContentAreaFilled(false);
+        btnVer.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver70x70.png"))); // NOI18N
+        btnVer.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/ver70x70.png"))); // NOI18N
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -122,9 +126,13 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnVer);
         btnVer.setBounds(5, 40, 70, 70);
 
+        btnInsertar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert65x65.png"))); // NOI18N
         btnInsertar.setMnemonic('I');
-        btnInsertar.setText("Inser");
         btnInsertar.setToolTipText("Registrar Nuevo Genero");
+        btnInsertar.setBorderPainted(false);
+        btnInsertar.setContentAreaFilled(false);
+        btnInsertar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert70x70.png"))); // NOI18N
+        btnInsertar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/insert70x70.png"))); // NOI18N
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarActionPerformed(evt);
@@ -133,9 +141,13 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnInsertar);
         btnInsertar.setBounds(5, 115, 70, 70);
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar65x65.png"))); // NOI18N
         btnEditar.setMnemonic('E');
-        btnEditar.setText("Edit");
         btnEditar.setToolTipText("Editar Informacion Del Genero ");
+        btnEditar.setBorderPainted(false);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
+        btnEditar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/editar70x70.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
