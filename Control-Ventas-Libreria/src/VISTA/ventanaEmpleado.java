@@ -574,7 +574,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnMensaje;
-    private javax.swing.JButton btnSubirFoto;
+    public javax.swing.JButton btnSubirFoto;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCargo;

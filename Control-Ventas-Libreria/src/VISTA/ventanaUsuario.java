@@ -492,7 +492,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnVer;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCedula;
-    private javax.swing.JPasswordField entConfirmarContraseña;
+    public javax.swing.JPasswordField entConfirmarContraseña;
     private javax.swing.JPasswordField entContraseña;
     private javax.swing.JRadioButton entEstadoUsuario;
     private javax.swing.JTextField entIdRol;

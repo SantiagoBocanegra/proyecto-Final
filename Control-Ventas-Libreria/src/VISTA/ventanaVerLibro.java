@@ -292,9 +292,13 @@ public class ventanaVerLibro extends javax.swing.JDialog {
         jPanel4.add(btnVer);
         btnVer.setBounds(5, 110, 70, 70);
 
+        btnVerTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo65x65.png"))); // NOI18N
         btnVerTodo.setMnemonic('T');
-        btnVerTodo.setText("Ver To");
         btnVerTodo.setToolTipText("Ver Todos Los Libros");
+        btnVerTodo.setContentAreaFilled(false);
+        btnVerTodo.setDefaultCapable(false);
+        btnVerTodo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo70x70.png"))); // NOI18N
+        btnVerTodo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo70x70.png"))); // NOI18N
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);

@@ -102,9 +102,13 @@ public class ventanaLogin extends javax.swing.JDialog {
         jPanel1.add(fotoUsuario);
         fotoUsuario.setBounds(125, 10, 190, 190);
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar65x65.png"))); // NOI18N
         btnCancelar.setMnemonic('C');
-        btnCancelar.setText("Cance");
         btnCancelar.setToolTipText("Cancelar Operacion");
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar70x70.png"))); // NOI18N
+        btnCancelar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar70x70.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -113,9 +117,13 @@ public class ventanaLogin extends javax.swing.JDialog {
         jPanel1.add(btnCancelar);
         btnCancelar.setBounds(280, 380, 70, 70);
 
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar65x65.png"))); // NOI18N
         btnAceptar.setMnemonic('A');
-        btnAceptar.setText("Acepta");
         btnAceptar.setToolTipText("Ingresar Al Sistema");
+        btnAceptar.setBorderPainted(false);
+        btnAceptar.setContentAreaFilled(false);
+        btnAceptar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar70x70.png"))); // NOI18N
+        btnAceptar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar70x70.png"))); // NOI18N
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -260,7 +268,16 @@ public class ventanaLogin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("tamaño: " + this.getSize());
+        entCcEmpleado.setText("");
+        while (modeloRol.getRowCount() > 0) {
+            modeloRol.removeRow(modeloRol.getRowCount() - 1);
+        }
+        while (modeloUsuario.getRowCount() > 0) {
+            modeloUsuario.removeRow(modeloUsuario.getRowCount() - 1);
+        }
+        entContraseña.setText("");
+        entCcEmpleado.setEditable(true);
+        entCcEmpleado.requestFocus();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void entCcEmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCcEmpleadoKeyPressed
@@ -345,6 +362,8 @@ public class ventanaLogin extends javax.swing.JDialog {
         ventana.setRol(rolSeleccionado);
         ventana.setPermisosRol(permisos);
         ventana.PerfilUsuario.setToolTipText("Rol Activo: " + rolSeleccionado.getNombrerol());
+        ventana.InformacionEmpleado.setEnabled(true);
+        ventana.PerfilUsuario.setEnabled(true);
         ventana.Desconectar.setEnabled(true);
         grafica.setVentanaM(ventana);
         grafica.graficaVentasSemana(ventana.panelGrafica, ventana.panelGrafica.getWidth() - 10, ventana.panelGrafica.getHeight() - 10);

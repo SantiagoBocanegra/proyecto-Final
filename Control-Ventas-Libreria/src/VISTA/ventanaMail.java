@@ -6,6 +6,7 @@
 package VISTA;
 
 import MODELO_CONTROLADOR.Mail;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,12 +20,13 @@ public class ventanaMail extends javax.swing.JDialog {
     String para = " ";
     String asunto = " ";
     String mensaje = " ";
+    File archivo;
     int caso;
 
     public ventanaMail(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        caso = 0;
         entDe.setEditable(false);
         entDe.setText(de);
     }
@@ -52,9 +54,10 @@ public class ventanaMail extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         btnMail = new javax.swing.JButton();
         btnCambiarCuenta = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        archivos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(null);
@@ -75,9 +78,9 @@ public class ventanaMail extends javax.swing.JDialog {
         jLabel3.setBounds(5, 40, 40, 30);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel4.setText("Asunto");
+        jLabel4.setText("Archivos:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(220, 70, 60, 30);
+        jLabel4.setBounds(10, 360, 80, 30);
 
         entAsunto.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(entAsunto);
@@ -98,9 +101,13 @@ public class ventanaMail extends javax.swing.JDialog {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 160, 490, 195);
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar65x65.png"))); // NOI18N
         btnCancelar.setMnemonic('C');
-        btnCancelar.setText("Cance");
         btnCancelar.setToolTipText("Cancelar Envia De Mensaje");
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar70x70.png"))); // NOI18N
+        btnCancelar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cancelar70x70.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -109,9 +116,13 @@ public class ventanaMail extends javax.swing.JDialog {
         jPanel1.add(btnCancelar);
         btnCancelar.setBounds(340, 360, 70, 70);
 
+        btnMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar65x65.png"))); // NOI18N
         btnMail.setMnemonic('E');
-        btnMail.setText("Envi");
         btnMail.setToolTipText("Envair Mensaje");
+        btnMail.setBorderPainted(false);
+        btnMail.setContentAreaFilled(false);
+        btnMail.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar70x70.png"))); // NOI18N
+        btnMail.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/aceptar70x70.png"))); // NOI18N
         btnMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMailActionPerformed(evt);
@@ -123,11 +134,39 @@ public class ventanaMail extends javax.swing.JDialog {
         btnCambiarCuenta.setMnemonic('E');
         btnCambiarCuenta.setText("C");
         btnCambiarCuenta.setToolTipText("Escoger Persona Que Envia El Mensaje");
+        btnCambiarCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarCuentaActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCambiarCuenta);
         btnCambiarCuenta.setBounds(445, 5, 40, 30);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(5, 5, 510, 440);
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel5.setText("Asunto");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(220, 70, 60, 30);
+
+        archivos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jPanel1.add(archivos);
+        archivos.setBounds(90, 360, 240, 30);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,12 +192,25 @@ public class ventanaMail extends javax.swing.JDialog {
             case 1:
                 JOptionPane.showMessageDialog(this, "No se Pueden Dejar Espacios En blanco", "Error", 0, null);
                 break;
+            case 2:
+                enviar.enviarEmail(de, contraseña, para, asunto, mensaje, archivo, archivos.getText(), true);
+                break;
         }
     }//GEN-LAST:event_btnMailActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCambiarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCuentaActionPerformed
+        ventanaEscogerCorreo ventana = new ventanaEscogerCorreo(new javax.swing.JDialog(), true);
+        ventana.setVentana(this);
+        if (ventana.mostrarElementos()) {
+            ventana.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Encontraron Empleados","Alerta",2,null);
+        }
+    }//GEN-LAST:event_btnCambiarCuentaActionPerformed
 
     public String getContraseña() {
         return contraseña;
@@ -174,6 +226,22 @@ public class ventanaMail extends javax.swing.JDialog {
 
     public void setPara(String para) {
         this.para = para;
+    }
+
+    public File getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(File archivo) {
+        this.archivo = archivo;
+    }
+
+    public int getCaso() {
+        return caso;
+    }
+
+    public void setCaso(int caso) {
+        this.caso = caso;
     }
 
     /**
@@ -219,17 +287,19 @@ public class ventanaMail extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel archivos;
     private javax.swing.JButton btnCambiarCuenta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMail;
-    private javax.swing.JTextField entAsunto;
-    private javax.swing.JTextField entDe;
+    public javax.swing.JTextField entAsunto;
+    public javax.swing.JTextField entDe;
     private javax.swing.JTextArea entMensaje;
     public javax.swing.JTextField entPara;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

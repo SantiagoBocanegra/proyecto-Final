@@ -7,12 +7,20 @@ package VISTA;
 
 import MODELO.Ordencompra;
 import MODELO.Ordenprestamo;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -28,6 +36,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
      * Creates new form ventanaVerGraficas
      */
     ventanaMenu ventanaM;
+    JFreeChart ch;
     int opcion = 0;
 
     public ventanaVerGraficas(javax.swing.JDialog parent, boolean modal) {
@@ -37,6 +46,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
         rb3D.setEnabled(false);
         rbBarra.setEnabled(false);
         rbCircular.setEnabled(false);
+        btnGraficar.setVisible(false);
     }
 
     /**
@@ -58,7 +68,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
         btnGraficar = new javax.swing.JButton();
         nombreGrafica = new javax.swing.JLabel();
         grafica = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnEnviarGrafica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,10 +122,15 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
         jPanel1.add(grafica);
         grafica.setBounds(10, 40, 780, 430);
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jButton1.setText("Enviar Grafica");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(650, 480, 137, 30);
+        btnEnviarGrafica.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnEnviarGrafica.setText("Enviar Grafica");
+        btnEnviarGrafica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarGraficaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEnviarGrafica);
+        btnEnviarGrafica.setBounds(650, 480, 137, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,7 +153,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
-        switch (opcion) {
+       /* switch (opcion) {
             case 1:
                 if (rb3D.isSelected() && rbBarra.isSelected()) {
                     DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
@@ -267,8 +282,30 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
                 break;
             default:
                 JOptionPane.showMessageDialog(rootPane, "Escoge Una Opción Valida");
-        }
+        }*/
     }//GEN-LAST:event_btnGraficarActionPerformed
+
+    private void btnEnviarGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarGraficaActionPerformed
+        try {
+        Calendar cal = Calendar.getInstance();
+            String nombre = nombreGrafica.getText()
+                    +" ("+"H "+cal.getTime().getHours()+" M "+cal.getTime().getMinutes()+" S "+cal.getTime().getSeconds()+")";
+            String ruta = "C:\\Users\\ayenni42\\Documents\\UNIVERSIDAD\\SEMESTRE 5\\DIU\\TRABAJOS\\PROYECTO FINAL\\Control-Ventas-Libreria\\Graficas\\"+nombre+".png";
+            OutputStream out = new FileOutputStream(ruta);
+            ChartUtilities.writeChartAsPNG(out, ch, grafica.getWidth(), grafica.getHeight());
+            
+            ventanaMail ventana = new ventanaMail(new javax.swing.JDialog(), true);
+            File archivo = new File(ruta);
+            ventana.setArchivo(archivo);
+            ventana.setCaso(2);
+            ventana.archivos.setText(nombre);
+            ventana.entAsunto.setText("Grafica De "+nombreGrafica.getText());
+            ventana.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Archivo Almacenado en: \n"+ruta, "Informacion", 1, null);
+        } catch ( IOException e) {
+            JOptionPane.showMessageDialog(this,"Error Al Exportar La Grafica: "+e.getMessage(), "Error",1,null);
+        }
+    }//GEN-LAST:event_btnEnviarGraficaActionPerformed
 
     public void graficaVentasSemana(JPanel panel, int w, int h) {
         DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
@@ -277,7 +314,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
                     ventanaM.tablaLibros.getValueAt(i, 1).toString(),
                     ventanaM.tablaLibros.getValueAt(i, 3).toString());
         }
-        JFreeChart ch = ChartFactory.createBarChart("Ventas De La Semana", "Fecha Venta", "Cantidad", dtsc, PlotOrientation.VERTICAL, true, true, false);
+        ch = ChartFactory.createBarChart("Ventas De La Semana", "Fecha Venta", "Cantidad", dtsc, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel cp = new ChartPanel(ch);
         cp.setBounds(5, 5, w, h);
         panel.add(cp);
@@ -286,44 +323,50 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
     public void graficaOrdenCompra(List<Ordencompra> lista) {
         rb2D.setSelected(true);
         rbBarra.setSelected(true);
+        nombreGrafica.setText("Cantidad De Compras Hechas Por Fecha");
         DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
         SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
         for (Ordencompra orden : lista) {
             dtsc.setValue(orden.getCantidadtotal(), orden.getPreciototal(), formato.format(orden.getFechaorden()));
         }
-        JFreeChart ch = ChartFactory.createBarChart("Grafica de barras 2D", "Fecha", "Cantidad De Ventas", dtsc, PlotOrientation.VERTICAL, true, true, false);
+        ch = ChartFactory.createBarChart("Grafica de barras 2D", "Fecha", "Cantidad De Ventas", dtsc, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel cp = new ChartPanel(ch);
         cp.setBounds(3, 3, 780 - 6, 430);
         grafica.add(cp);
+        grafica.repaint();
     }
 
     public void graficaOrdenPrestamo(List<Ordenprestamo> lista) {
         rb2D.setSelected(true);
         rbBarra.setSelected(true);
+        nombreGrafica.setText("Cantidad De Prestamos Hechos Por Fecha");
         DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
         SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyy");
         for (Ordenprestamo orden : lista) {
             dtsc.setValue(orden.getCantidadtotal(), orden.getCantidadtotal(), formato.format(orden.getFechaorden()));
         }
-        JFreeChart ch = ChartFactory.createBarChart("Grafica de barras 2D", "Fecha", "Cantidad De Ventas", dtsc, PlotOrientation.VERTICAL, true, true, false);
+        ch = ChartFactory.createBarChart("Grafica de barras 2D", "Fecha", "Cantidad De Ventas", dtsc, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel cp = new ChartPanel(ch);
         cp.setBounds(3, 3, 780 - 6, 430);
         grafica.add(cp);
+        grafica.repaint();
     }
     
     public void graficaInventarioLibro(ventanaVerLibro ventanaVL) {
         rb2D.setSelected(true);
         rbBarra.setSelected(true);
+        nombreGrafica.setText("Inventario De Libros");
         DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
         for (int i = 0; i < ventanaVL.tablaLibro.getRowCount(); i++) {
             dtsc.setValue(Integer.parseInt(ventanaVL.tablaLibro.getValueAt(i, 4).toString()),
                     ventanaVL.tablaLibro.getValueAt(i, 5).toString(),
                     ventanaVL.tablaLibro.getValueAt(i, 2).toString());
         }
-        JFreeChart ch = ChartFactory.createBarChart("Grafica de barras 2D", "Titulos", "Inventario", dtsc, PlotOrientation.HORIZONTAL, true, true, false);
+        ch = ChartFactory.createBarChart("Grafica de barras 2D", "Titulos", "Inventario", dtsc, PlotOrientation.HORIZONTAL, true, true, false);
         ChartPanel cp = new ChartPanel(ch);
         cp.setBounds(3, 3, 780 - 6, 430);
         grafica.add(cp);
+        grafica.repaint();
     }
 
     public int getOpcion() {
@@ -385,10 +428,10 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEnviarGrafica;
     private javax.swing.JButton btnGraficar;
     private javax.swing.ButtonGroup btnGraficas;
     private javax.swing.JPanel grafica;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JLabel nombreGrafica;
     private javax.swing.JRadioButton rb2D;

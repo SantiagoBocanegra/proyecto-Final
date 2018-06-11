@@ -162,6 +162,11 @@ public class ventanaMenu extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaLibros = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        btnNuevoPrestamo = new javax.swing.JButton();
+        btnNuevoEmpleado = new javax.swing.JButton();
+        btnNuevoCliente = new javax.swing.JButton();
+        btnNuevoLibro = new javax.swing.JButton();
+        btnNuevaVenta = new javax.swing.JButton();
 
         PerfilUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         PerfilUsuario.setMnemonic('P');
@@ -179,6 +184,11 @@ public class ventanaMenu extends javax.swing.JDialog {
         InformacionEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         InformacionEmpleado.setMnemonic('I');
         InformacionEmpleado.setText("Informacion Empleado");
+        InformacionEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InformacionEmpleadoActionPerformed(evt);
+            }
+        });
         MenuSesion.add(InformacionEmpleado);
         MenuSesion.add(jSeparator2);
 
@@ -598,7 +608,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(null);
 
-        menu.setBackground(new java.awt.Color(255, 255, 255));
+        menu.setBackground(new java.awt.Color(0, 51, 204));
         menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         menu.setLayout(null);
 
@@ -746,20 +756,24 @@ public class ventanaMenu extends javax.swing.JDialog {
         btnUsuario.setBounds(530, 2, 90, 36);
 
         btnGenero.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/genero33x33.png"))); // NOI18N
         btnGenero.setMnemonic('G');
         btnGenero.setText("Genero ");
         btnGenero.setToolTipText("Informacion De Genero");
         btnGenero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnGenero.setBorderPainted(false);
         btnGenero.setContentAreaFilled(false);
-        btnGenero.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnGenero.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGenero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnGenero.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnGenero.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/genero35x35.png"))); // NOI18N
+        btnGenero.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/genero35x35.png"))); // NOI18N
         btnGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGeneroActionPerformed(evt);
             }
         });
         menu.add(btnGenero);
-        btnGenero.setBounds(625, 2, 120, 36);
+        btnGenero.setBounds(625, 2, 90, 36);
 
         jPanel1.add(menu);
         menu.setBounds(2, 2, 986, 40);
@@ -779,7 +793,7 @@ public class ventanaMenu extends javax.swing.JDialog {
 
             },
             new String [] {
-                "numero Orden", "Fecha", "Cantidad", "Precio Venta"
+                "#", "Fecha", "Cantidad", "Precio Venta"
             }
         ));
         jScrollPane1.setViewportView(tablaLibros);
@@ -798,6 +812,84 @@ public class ventanaMenu extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setOpaque(false);
+        jPanel4.setLayout(null);
+
+        btnNuevoPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnNuevoPrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/prestamo45x55.png"))); // NOI18N
+        btnNuevoPrestamo.setText("Nuevo Prestamo");
+        btnNuevoPrestamo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnNuevoPrestamo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnNuevoPrestamo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/prestamo50x60.png"))); // NOI18N
+        btnNuevoPrestamo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/prestamo50x60.png"))); // NOI18N
+        btnNuevoPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoPrestamoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevoPrestamo);
+        btnNuevoPrestamo.setBounds(5, 320, 184, 60);
+
+        btnNuevoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnNuevoEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado45x55.png"))); // NOI18N
+        btnNuevoEmpleado.setText("Nuevo Empleado");
+        btnNuevoEmpleado.setHideActionText(true);
+        btnNuevoEmpleado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnNuevoEmpleado.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnNuevoEmpleado.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado50x60.png"))); // NOI18N
+        btnNuevoEmpleado.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/empleado50x60.png"))); // NOI18N
+        btnNuevoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevoEmpleado);
+        btnNuevoEmpleado.setBounds(5, 40, 184, 60);
+
+        btnNuevoCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente45x55.png"))); // NOI18N
+        btnNuevoCliente.setText("Nuevo Cliente");
+        btnNuevoCliente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnNuevoCliente.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnNuevoCliente.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente50x60.png"))); // NOI18N
+        btnNuevoCliente.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cliente50x60.png"))); // NOI18N
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevoCliente);
+        btnNuevoCliente.setBounds(5, 110, 184, 60);
+
+        btnNuevoLibro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnNuevoLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro45x55.png"))); // NOI18N
+        btnNuevoLibro.setText("Nuevo Libro");
+        btnNuevoLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnNuevoLibro.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnNuevoLibro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro50x60.png"))); // NOI18N
+        btnNuevoLibro.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/libro50x60.png"))); // NOI18N
+        btnNuevoLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoLibroActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevoLibro);
+        btnNuevoLibro.setBounds(5, 180, 184, 60);
+
+        btnNuevaVenta.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnNuevaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/venta45x55.png"))); // NOI18N
+        btnNuevaVenta.setText("Nueva Venta");
+        btnNuevaVenta.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnNuevaVenta.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnNuevaVenta.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/venta50x60.png"))); // NOI18N
+        btnNuevaVenta.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/venta50x60.png"))); // NOI18N
+        btnNuevaVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaVentaActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevaVenta);
+        btnNuevaVenta.setBounds(5, 250, 184, 60);
+
         jPanel1.add(jPanel4);
         jPanel4.setBounds(3, 44, 194, 432);
 
@@ -819,12 +911,18 @@ public class ventanaMenu extends javax.swing.JDialog {
         return per;
     }
     private void PerfilUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilUsuarioActionPerformed
-        System.out.println("tamaño: " + this.getSize());
+        ventanaUsuario ventana = new ventanaUsuario(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setVisible(false);
+        ventana.btnGuardar.setVisible(false);
+        ventana.mostrarElementos(rol.getUsuarioId());
+        ventana.entConfirmarContraseña.setEditable(false);
+        ventana.setVisible(true);
     }//GEN-LAST:event_PerfilUsuarioActionPerformed
 
     private void nuevoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoEmpleadoActionPerformed
         ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
         ventana.btnEditar.setEnabled(false);
+        ventana.btnMensaje.setEnabled(false);
         ventana.setVisible(true);
     }//GEN-LAST:event_nuevoEmpleadoActionPerformed
 
@@ -1240,9 +1338,53 @@ public class ventanaMenu extends javax.swing.JDialog {
             panelGrafica.repaint();
         }
         
+        InformacionEmpleado.setEnabled(false);
+        PerfilUsuario.setEnabled(false);
         Desconectar.setEnabled(false);
         Conectar.setEnabled(true);
     }//GEN-LAST:event_DesconectarActionPerformed
+
+    private void InformacionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformacionEmpleadoActionPerformed
+        ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setVisible(false);
+        ventana.btnGuardar.setVisible(false);
+        ventana.btnMensaje.setVisible(false);
+        ventana.btnSubirFoto.setEnabled(false);
+        ventana.mostrarElementos(rol.getUsuarioId().getEmpleadoId());
+        ventana.setVisible(true);
+    }//GEN-LAST:event_InformacionEmpleadoActionPerformed
+
+    private void btnNuevoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEmpleadoActionPerformed
+        ventanaEmpleado ventana = new ventanaEmpleado(new javax.swing.JDialog(), true);
+        ventana.btnMensaje.setEnabled(false);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnNuevoEmpleadoActionPerformed
+
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        ventanaCliente ventana = new ventanaCliente(new javax.swing.JDialog(), true);
+        ventana.btnMensaje.setEnabled(false);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+
+    private void btnNuevoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoLibroActionPerformed
+        ventanaLibro ventana = new ventanaLibro(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnNuevoLibroActionPerformed
+
+    private void btnNuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaVentaActionPerformed
+        ventanaOrdenCompra ventana = new ventanaOrdenCompra(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnNuevaVentaActionPerformed
+
+    private void btnNuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPrestamoActionPerformed
+        ventanaOrdenPrestamo ventana = new ventanaOrdenPrestamo(new javax.swing.JDialog(), true);
+        ventana.btnEditar.setEnabled(false);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnNuevoPrestamoActionPerformed
 
     public DefaultTableModel getModelo() {
         return modelo;
@@ -1313,7 +1455,7 @@ public class ventanaMenu extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem Conectar;
     public javax.swing.JMenuItem Desconectar;
-    private javax.swing.JMenuItem InformacionEmpleado;
+    public javax.swing.JMenuItem InformacionEmpleado;
     private javax.swing.JPopupMenu MenuSesion;
     public javax.swing.JMenuItem PerfilUsuario;
     private javax.swing.JMenu Prestamos;
@@ -1322,6 +1464,11 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnGenero;
     private javax.swing.JButton btnLibro;
+    private javax.swing.JButton btnNuevaVenta;
+    private javax.swing.JButton btnNuevoCliente;
+    private javax.swing.JButton btnNuevoEmpleado;
+    private javax.swing.JButton btnNuevoLibro;
+    private javax.swing.JButton btnNuevoPrestamo;
     private javax.swing.JButton btnRol;
     private javax.swing.JButton btnSesion;
     private javax.swing.JButton btnUsuario;

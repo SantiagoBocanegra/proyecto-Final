@@ -156,9 +156,13 @@ public class ventanaverGenero extends javax.swing.JDialog {
         jPanel3.add(btnEditar);
         btnEditar.setBounds(5, 190, 70, 70);
 
+        btnVerTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo65x65.png"))); // NOI18N
         btnVerTodo.setMnemonic('T');
-        btnVerTodo.setText("Ver To");
         btnVerTodo.setToolTipText("Ver Todos Los Generos");
+        btnVerTodo.setBorderPainted(false);
+        btnVerTodo.setContentAreaFilled(false);
+        btnVerTodo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo70x70.png"))); // NOI18N
+        btnVerTodo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/todo70x70.png"))); // NOI18N
         btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerTodoActionPerformed(evt);

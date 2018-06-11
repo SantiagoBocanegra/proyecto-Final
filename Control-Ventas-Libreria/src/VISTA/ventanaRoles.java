@@ -8,7 +8,6 @@ import MODELO.RolUsuario;
 import MODELO.Usuario;
 import MODELO_CONTROLADOR.MC_Permisos;
 import MODELO_CONTROLADOR.MC_RolUsuario;
-import MODELO_CONTROLADOR.MC_Usuario;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
 import java.util.ArrayList;

@@ -276,9 +276,13 @@ public class ventanaLibro extends javax.swing.JDialog {
         jLabel10.setBounds(10, 406, 70, 30);
 
         btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/g28x28.png"))); // NOI18N
         btnBuscar.setMnemonic('I');
-        btnBuscar.setText("B");
         btnBuscar.setToolTipText("Escoger Generos Del Libro");
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.setContentAreaFilled(false);
+        btnBuscar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/g30x30.png"))); // NOI18N
+        btnBuscar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/g30x30.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
