@@ -20,6 +20,7 @@ import MODELO_CONTROLADOR.MC_OrdenCompra;
 import MODELO_CONTROLADOR.MC_OrdenPrestamo;
 import MODELO_CONTROLADOR.MC_RolUsuario;
 import MODELO_CONTROLADOR.MC_Usuario;
+import MODELO_CONTROLADOR.procesosSegundario;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,7 @@ public class ventanaMenu extends javax.swing.JDialog {
         Desconectar = new javax.swing.JMenuItem();
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
         Conectar = new javax.swing.JMenuItem();
+        notificaciones = new javax.swing.JRadioButtonMenuItem();
         menuEmpleados = new javax.swing.JPopupMenu();
         nuevoEmpleado = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -217,6 +219,15 @@ public class ventanaMenu extends javax.swing.JDialog {
             }
         });
         MenuSesion.add(Conectar);
+
+        notificaciones.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        notificaciones.setText("Notificar Fecha Prestamos");
+        notificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notificacionesActionPerformed(evt);
+            }
+        });
+        MenuSesion.add(notificaciones);
 
         nuevoEmpleado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         nuevoEmpleado.setMnemonic('N');
@@ -1475,6 +1486,14 @@ public class ventanaMenu extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarIdGeneroActionPerformed
 
+    private void notificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificacionesActionPerformed
+        if (notificaciones.isSelected()) {
+            procesosSegundario validacion = new procesosSegundario();
+            validacion.start();
+            notificaciones.setEnabled(false);
+        }
+    }//GEN-LAST:event_notificacionesActionPerformed
+
     public DefaultTableModel getModelo() {
         return modelo;
     }
@@ -1626,6 +1645,7 @@ public class ventanaMenu extends javax.swing.JDialog {
     private javax.swing.JPopupMenu menuRol;
     private javax.swing.JPopupMenu menuUsuario;
     private javax.swing.JPopupMenu menuVentas;
+    private javax.swing.JRadioButtonMenuItem notificaciones;
     private javax.swing.JMenuItem nuevaVenta;
     private javax.swing.JMenuItem nuevoCliente;
     private javax.swing.JMenuItem nuevoEmpleado;

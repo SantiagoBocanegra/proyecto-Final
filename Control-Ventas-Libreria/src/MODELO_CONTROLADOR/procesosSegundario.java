@@ -25,7 +25,7 @@ public class procesosSegundario extends Thread {
 
     public procesosSegundario() {
         //fechaActual = Calendar.getInstance();
-        tiempo = 86400000; //30 minutos
+        tiempo = 86400000; //24 horas
         this.isDaemon();
     }
 
@@ -61,7 +61,7 @@ public class procesosSegundario extends Thread {
                 int multa = cantidadLibros * valorMulta + ordenes.getMulta();
                 ordenes.setMulta(multa);
                 controlOrden.editarOrdenPrestamo(ordenes);
-                
+
                 alertaMensajeCliente(ordenes);
             }
             controlOrden.close();
@@ -71,11 +71,13 @@ public class procesosSegundario extends Thread {
     public void alertaMensajeCliente(Ordenprestamo orden) {
         if (orden.getClienteId() != null && orden.getClienteId().getCorreo() != null && !orden.getClienteId().getCorreo().isEmpty()) {
             String asunto = "Notificacion De Retraso Numero De Orden: " + orden.getNumeroorden();
-            String mensajeEnviar = "Señor Usuario Usted Ha Cido Multado Por Demora En Entrega De Libros\n"
+            String mensajeEnviar = "Señor Usuario Usted Ha Cido Multado Por Demora En Entrega De Los Libros\n"
                     + "Valor De Multa : " + orden.getMulta();
             String correo = orden.getClienteId().getCorreo();
-            Mail mensaje = new Mail();
-            mensaje.enviarEmail("bocanegrasantiago18@gmail.com", "santiagobocanegra1998", correo, asunto, mensajeEnviar, false);
+            if (!correo.equals("Sin Correo")) {
+                Mail mensaje = new Mail();
+                mensaje.enviarEmail("bocanegrasantiago18@gmail.com", "santiagobocanegra1998", correo, asunto, mensajeEnviar, false);
+            }
         }
     }
 
