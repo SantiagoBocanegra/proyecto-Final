@@ -7,8 +7,6 @@ package VISTA;
 
 import MODELO.Ordencompra;
 import MODELO.Ordenprestamo;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -289,7 +287,7 @@ public class ventanaVerGraficas extends javax.swing.JDialog {
         try {
         Calendar cal = Calendar.getInstance();
             String nombre = nombreGrafica.getText()
-                    +" ("+"H "+cal.getTime().getHours()+" M "+cal.getTime().getMinutes()+" S "+cal.getTime().getSeconds()+")";
+                    +" ("+"H "+cal.getTime().getHours()+" M "+cal.getTime().getMinutes()+" S "+cal.getTime().getSeconds()+").png";
             String ruta = "C:\\Users\\ayenni42\\Documents\\UNIVERSIDAD\\SEMESTRE 5\\DIU\\TRABAJOS\\PROYECTO FINAL\\Control-Ventas-Libreria\\Graficas\\"+nombre+".png";
             OutputStream out = new FileOutputStream(ruta);
             ChartUtilities.writeChartAsPNG(out, ch, grafica.getWidth(), grafica.getHeight());

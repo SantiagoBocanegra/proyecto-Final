@@ -10,6 +10,7 @@ import MODELO_CONTROLADOR.MC_Genero;
 import MODELO_CONTROLADOR.funciones;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JOptionPane;
+import teclado.tecladoP;
 
 /**
  *
@@ -21,6 +22,7 @@ public class ventanaGenero extends javax.swing.JDialog {
      * Creates new form ventanaGenero
      */
     private Genero genero; 
+    private tecladoP teclado = new tecladoP(this, true);
 
     public ventanaGenero(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -57,6 +59,7 @@ public class ventanaGenero extends javax.swing.JDialog {
         entDescripcion = new javax.swing.JTextArea();
         btnGuardar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnTeclado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,6 +78,11 @@ public class ventanaGenero extends javax.swing.JDialog {
         jLabel2.setBounds(54, 58, 60, 30);
 
         entNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        entNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entNombreMouseClicked(evt);
+            }
+        });
         jPanel1.add(entNombre);
         entNombre.setBounds(119, 58, 400, 30);
 
@@ -102,6 +110,11 @@ public class ventanaGenero extends javax.swing.JDialog {
 
         entDescripcion.setColumns(20);
         entDescripcion.setRows(5);
+        entDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entDescripcionMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(entDescripcion);
 
         jPanel2.add(jScrollPane1);
@@ -139,6 +152,15 @@ public class ventanaGenero extends javax.swing.JDialog {
         });
         jPanel1.add(btnEditar);
         btnEditar.setBounds(400, 330, 70, 70);
+
+        btnTeclado.setText("Teclado");
+        btnTeclado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTecladoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTeclado);
+        btnTeclado.setBounds(320, 330, 70, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,6 +207,24 @@ public class ventanaGenero extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void entNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entNombreMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entNombre);
+    }//GEN-LAST:event_entNombreMouseClicked
+
+    private void entDescripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entDescripcionMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setArea(entDescripcion);
+    }//GEN-LAST:event_entDescripcionMouseClicked
+
+    private void btnTecladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTecladoActionPerformed
+        teclado.setVisible(true);
+    }//GEN-LAST:event_btnTecladoActionPerformed
 
     public void obtenerElementos() {
         genero.setNombre(entNombre.getText());
@@ -262,6 +302,7 @@ public class ventanaGenero extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnTeclado;
     private javax.swing.JTextArea entDescripcion;
     public com.toedter.calendar.JDateChooser entFechaCrecion;
     private javax.swing.JTextField entId;

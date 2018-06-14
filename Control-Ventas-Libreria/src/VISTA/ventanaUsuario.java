@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import teclado.tecladoP;
 
 /**
  * Funciones De La Clase ventanaUuario obtenerElementosVentana -> obtener los
@@ -40,6 +41,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
     private final String nombreTabla = "Usuario";
     private int idRol;
     DefaultTableModel modelo;
+    private tecladoP teclado = new tecladoP(this, true);
 
     public ventanaUsuario(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -94,6 +96,7 @@ public class ventanaUsuario extends javax.swing.JDialog {
         entContraseña = new javax.swing.JPasswordField();
         entIdRol = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        btnTeclado1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuario");
@@ -153,6 +156,11 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jLabel5.setBounds(205, 120, 60, 30);
 
         entUsuario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entUsuarioMouseClicked(evt);
+            }
+        });
         jPanel1.add(entUsuario);
         entUsuario.setBounds(295, 180, 285, 30);
 
@@ -262,6 +270,15 @@ public class ventanaUsuario extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(480, 310, 50, 30);
 
+        btnTeclado1.setText("Teclado");
+        btnTeclado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTeclado1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTeclado1);
+        btnTeclado1.setBounds(360, 374, 70, 70);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(3, 3, 599, 456);
 
@@ -341,6 +358,17 @@ public class ventanaUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No Ha Seleccionado Nada", "Informacion", 1, null);
         }
     }//GEN-LAST:event_btnVerActionPerformed
+
+    private void entUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entUsuarioMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entUsuario);
+    }//GEN-LAST:event_entUsuarioMouseClicked
+
+    private void btnTeclado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeclado1ActionPerformed
+        teclado.setVisible(true);
+    }//GEN-LAST:event_btnTeclado1ActionPerformed
 
     public void obtenerElementosVentana() {
         String Usuario = "";
@@ -489,6 +517,8 @@ public class ventanaUsuario extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnTeclado;
+    private javax.swing.JButton btnTeclado1;
     private javax.swing.JButton btnVer;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCedula;

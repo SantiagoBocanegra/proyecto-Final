@@ -8,6 +8,7 @@ package VISTA;
 import MODELO_CONTROLADOR.Mail;
 import java.io.File;
 import javax.swing.JOptionPane;
+import teclado.tecladoP;
 
 /**
  *
@@ -22,6 +23,7 @@ public class ventanaMail extends javax.swing.JDialog {
     String mensaje = " ";
     File archivo;
     int caso;
+    private tecladoP teclado = new tecladoP(this, true);
 
     public ventanaMail(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -56,6 +58,7 @@ public class ventanaMail extends javax.swing.JDialog {
         btnCambiarCuenta = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         archivos = new javax.swing.JLabel();
+        btnTeclado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,6 +86,11 @@ public class ventanaMail extends javax.swing.JDialog {
         jLabel4.setBounds(10, 360, 80, 30);
 
         entAsunto.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entAsunto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entAsuntoMouseClicked(evt);
+            }
+        });
         jPanel1.add(entAsunto);
         entAsunto.setBounds(10, 100, 490, 30);
 
@@ -91,11 +99,21 @@ public class ventanaMail extends javax.swing.JDialog {
         entDe.setBounds(50, 5, 380, 30);
 
         entPara.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entPara.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entParaMouseClicked(evt);
+            }
+        });
         jPanel1.add(entPara);
         entPara.setBounds(50, 40, 450, 30);
 
         entMensaje.setColumns(20);
         entMensaje.setRows(5);
+        entMensaje.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entMensajeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(entMensaje);
 
         jPanel1.add(jScrollPane1);
@@ -149,7 +167,16 @@ public class ventanaMail extends javax.swing.JDialog {
 
         archivos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(archivos);
-        archivos.setBounds(90, 360, 240, 30);
+        archivos.setBounds(90, 360, 150, 30);
+
+        btnTeclado.setText("Teclado");
+        btnTeclado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTecladoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTeclado);
+        btnTeclado.setBounds(260, 360, 70, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,6 +238,31 @@ public class ventanaMail extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No Se Encontraron Empleados","Alerta",2,null);
         }
     }//GEN-LAST:event_btnCambiarCuentaActionPerformed
+
+    private void entParaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entParaMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entPara);
+    }//GEN-LAST:event_entParaMouseClicked
+
+    private void entAsuntoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entAsuntoMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entAsunto);
+    }//GEN-LAST:event_entAsuntoMouseClicked
+
+    private void entMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entMensajeMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setArea(entMensaje);
+    }//GEN-LAST:event_entMensajeMouseClicked
+
+    private void btnTecladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTecladoActionPerformed
+        teclado.setVisible(true);
+    }//GEN-LAST:event_btnTecladoActionPerformed
 
     public String getContraseña() {
         return contraseña;
@@ -291,6 +343,7 @@ public class ventanaMail extends javax.swing.JDialog {
     private javax.swing.JButton btnCambiarCuenta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMail;
+    private javax.swing.JButton btnTeclado;
     public javax.swing.JTextField entAsunto;
     public javax.swing.JTextField entDe;
     private javax.swing.JTextArea entMensaje;

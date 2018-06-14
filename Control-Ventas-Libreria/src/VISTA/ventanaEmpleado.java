@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import teclado.tecladoP;
 
 /**
  *
@@ -36,6 +37,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     Empleado empleado;
     //estadoFoto -> usada para saber si el usuario subio una foto desde  funciones.cargarImagen() 
     boolean estadoFoto;
+    private tecladoP teclado = new tecladoP(this, true);
 
     public ventanaEmpleado(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -101,6 +103,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         barraProgreso = new javax.swing.JProgressBar();
         btnMensaje = new javax.swing.JButton();
+        btnTeclado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -180,52 +183,92 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         entId.setBounds(350, 50, 150, 30);
 
         entPrimerNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entPrimerNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entPrimerNombreMouseClicked(evt);
+            }
+        });
         jPanel1.add(entPrimerNombre);
         entPrimerNombre.setBounds(350, 85, 250, 30);
 
         entSegundoNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entSegundoNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entSegundoNombreMouseClicked(evt);
+            }
+        });
         jPanel1.add(entSegundoNombre);
         entSegundoNombre.setBounds(350, 120, 250, 30);
 
         entApellidoPaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoPaterno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entApellidoPaternoMouseClicked(evt);
+            }
+        });
         jPanel1.add(entApellidoPaterno);
         entApellidoPaterno.setBounds(350, 155, 250, 30);
 
         entApellidoMaterno.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entApellidoMaterno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entApellidoMaternoMouseClicked(evt);
+            }
+        });
         jPanel1.add(entApellidoMaterno);
         entApellidoMaterno.setBounds(350, 190, 250, 30);
 
         entCedula.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entCedula.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entCedulaKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entCedulaKeyReleased(evt);
             }
         });
         jPanel1.add(entCedula);
         entCedula.setBounds(350, 225, 250, 30);
 
         entDireccion.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entDireccionMouseClicked(evt);
+            }
+        });
         jPanel1.add(entDireccion);
         entDireccion.setBounds(355, 305, 245, 30);
 
         entTelefono.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entTelefonoKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entTelefonoKeyReleased(evt);
             }
         });
         jPanel1.add(entTelefono);
         entTelefono.setBounds(80, 340, 195, 30);
 
         entCorreo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entCorreoMouseClicked(evt);
+            }
+        });
         jPanel1.add(entCorreo);
         entCorreo.setBounds(80, 410, 460, 30);
 
         entCiudad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCiudad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entCiudadMouseClicked(evt);
+            }
+        });
         jPanel1.add(entCiudad);
         entCiudad.setBounds(80, 305, 200, 30);
 
         entPais.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entPaisMouseClicked(evt);
+            }
+        });
         jPanel1.add(entPais);
         entPais.setBounds(350, 270, 250, 30);
         jPanel1.add(jSeparator1);
@@ -257,14 +300,19 @@ public class ventanaEmpleado extends javax.swing.JDialog {
 
         entSalario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entSalario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entSalarioKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entSalarioKeyReleased(evt);
             }
         });
         jPanel1.add(entSalario);
         entSalario.setBounds(350, 375, 245, 30);
 
         entCargo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entCargo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entCargoMouseClicked(evt);
+            }
+        });
         jPanel1.add(entCargo);
         entCargo.setBounds(80, 375, 200, 30);
 
@@ -318,7 +366,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         jPanel1.add(btnEditar);
         btnEditar.setBounds(455, 450, 70, 70);
         jPanel1.add(barraProgreso);
-        barraProgreso.setBounds(10, 470, 440, 30);
+        barraProgreso.setBounds(10, 470, 360, 30);
 
         btnMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/mensaje27x27.png"))); // NOI18N
         btnMensaje.setMnemonic('M');
@@ -334,6 +382,15 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(btnMensaje);
         btnMensaje.setBounds(550, 410, 40, 30);
+
+        btnTeclado.setText("Teclado");
+        btnTeclado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTecladoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTeclado);
+        btnTeclado.setBounds(380, 450, 70, 70);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(4, 4, 610, 530);
@@ -489,18 +546,6 @@ public class ventanaEmpleado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void entCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCedulaKeyTyped
-        funciones.validarDigito(evt);
-    }//GEN-LAST:event_entCedulaKeyTyped
-
-    private void entTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entTelefonoKeyTyped
-        funciones.validarDigito(evt);
-    }//GEN-LAST:event_entTelefonoKeyTyped
-
-    private void entSalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entSalarioKeyTyped
-        funciones.validarDigito(evt);
-    }//GEN-LAST:event_entSalarioKeyTyped
-
     private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
         String correo = entCorreo.getText();
         if (correo != null && !correo.isEmpty()){
@@ -510,6 +555,85 @@ public class ventanaEmpleado extends javax.swing.JDialog {
             ventana.setVisible(true);
         }
     }//GEN-LAST:event_btnMensajeActionPerformed
+
+    private void entPrimerNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entPrimerNombreMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entPrimerNombre);
+    }//GEN-LAST:event_entPrimerNombreMouseClicked
+
+    private void entSegundoNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entSegundoNombreMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entSegundoNombre);
+    }//GEN-LAST:event_entSegundoNombreMouseClicked
+
+    private void entApellidoPaternoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entApellidoPaternoMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entApellidoPaterno);
+    }//GEN-LAST:event_entApellidoPaternoMouseClicked
+
+    private void entApellidoMaternoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entApellidoMaternoMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entApellidoMaterno);
+    }//GEN-LAST:event_entApellidoMaternoMouseClicked
+
+    private void entPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entPaisMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entPais);
+    }//GEN-LAST:event_entPaisMouseClicked
+
+    private void entDireccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entDireccionMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entDireccion);
+    }//GEN-LAST:event_entDireccionMouseClicked
+
+    private void entCiudadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entCiudadMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entCiudad);
+    }//GEN-LAST:event_entCiudadMouseClicked
+
+    private void entCargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entCargoMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entCargo);
+    }//GEN-LAST:event_entCargoMouseClicked
+
+    private void entCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entCorreoMouseClicked
+       teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entCorreo);
+    }//GEN-LAST:event_entCorreoMouseClicked
+
+    private void btnTecladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTecladoActionPerformed
+        teclado.setVisible(true);
+    }//GEN-LAST:event_btnTecladoActionPerformed
+
+    private void entCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCedulaKeyReleased
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entCedulaKeyReleased
+
+    private void entTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entTelefonoKeyReleased
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entTelefonoKeyReleased
+
+    private void entSalarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entSalarioKeyReleased
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entSalarioKeyReleased
 
     public Empleado getEmpleado() {
         return empleado;
@@ -575,6 +699,7 @@ public class ventanaEmpleado extends javax.swing.JDialog {
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnMensaje;
     public javax.swing.JButton btnSubirFoto;
+    private javax.swing.JButton btnTeclado;
     private javax.swing.JTextField entApellidoMaterno;
     private javax.swing.JTextField entApellidoPaterno;
     private javax.swing.JTextField entCargo;

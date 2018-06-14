@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import teclado.tecladoP;
 
 /**
  *
@@ -42,6 +43,8 @@ public class ventanaLibro extends javax.swing.JDialog {
     Libro libro;
     //Comprobar que el usuario si aya ingresado el isbn del libro 
     int caso = 0;
+    private tecladoP teclado = new tecladoP(this, true);
+    
     List<GeneroLibro> generosLibro = new ArrayList<>();
     List<GeneroLibro> EditargenerosLibro = new ArrayList<>();
     List<Integer> idGenero;
@@ -100,6 +103,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         entGeneros = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        btnTeclado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -166,29 +170,44 @@ public class ventanaLibro extends javax.swing.JDialog {
 
         entIsbn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entIsbn.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entIsbnKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entIsbnKeyReleased(evt);
             }
         });
         jPanel1.add(entIsbn);
         entIsbn.setBounds(335, 45, 150, 30);
 
         entTitulo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entTituloMouseClicked(evt);
+            }
+        });
         jPanel1.add(entTitulo);
         entTitulo.setBounds(285, 80, 295, 30);
 
         entAutor.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entAutorMouseClicked(evt);
+            }
+        });
         jPanel1.add(entAutor);
         entAutor.setBounds(360, 115, 220, 30);
 
         entEditorial.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        entEditorial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entEditorialMouseClicked(evt);
+            }
+        });
         jPanel1.add(entEditorial);
         entEditorial.setBounds(85, 336, 200, 30);
 
         entCantidadInventario.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entCantidadInventario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entCantidadInventarioKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entCantidadInventarioKeyReleased(evt);
             }
         });
         jPanel1.add(entCantidadInventario);
@@ -196,8 +215,8 @@ public class ventanaLibro extends javax.swing.JDialog {
 
         entPrecio.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                entPrecioKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                entPrecioKeyReleased(evt);
             }
         });
         jPanel1.add(entPrecio);
@@ -206,6 +225,11 @@ public class ventanaLibro extends javax.swing.JDialog {
         entSipnosis.setColumns(20);
         entSipnosis.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         entSipnosis.setRows(5);
+        entSipnosis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entSipnosisMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(entSipnosis);
 
         jPanel1.add(jScrollPane1);
@@ -260,7 +284,7 @@ public class ventanaLibro extends javax.swing.JDialog {
         jPanel1.add(btnSubir);
         btnSubir.setBounds(230, 115, 70, 70);
         jPanel1.add(barraProgreso);
-        barraProgreso.setBounds(10, 440, 410, 30);
+        barraProgreso.setBounds(10, 440, 310, 30);
         jPanel1.add(jSeparator4);
         jSeparator4.setBounds(305, 165, 65, 2);
         jPanel1.add(jSeparator5);
@@ -290,6 +314,15 @@ public class ventanaLibro extends javax.swing.JDialog {
         });
         jPanel1.add(btnBuscar);
         btnBuscar.setBounds(390, 405, 30, 30);
+
+        btnTeclado.setText("Teclado");
+        btnTeclado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTecladoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTeclado);
+        btnTeclado.setBounds(330, 440, 90, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(4, 4, 585, 480);
@@ -360,17 +393,49 @@ public class ventanaLibro extends javax.swing.JDialog {
         entGeneros.setText(NombreGenero);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void entIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entIsbnKeyTyped
-        funciones.validarDigito(evt);
-    }//GEN-LAST:event_entIsbnKeyTyped
+    private void entTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entTituloMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entTitulo);
+    }//GEN-LAST:event_entTituloMouseClicked
 
-    private void entCantidadInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCantidadInventarioKeyTyped
-        funciones.validarDigito(evt);
-    }//GEN-LAST:event_entCantidadInventarioKeyTyped
+    private void entAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entAutorMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entAutor);
+    }//GEN-LAST:event_entAutorMouseClicked
 
-    private void entPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entPrecioKeyTyped
+    private void entSipnosisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entSipnosisMouseClicked
+         teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setArea(entSipnosis);
+    }//GEN-LAST:event_entSipnosisMouseClicked
+ 
+    private void entEditorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entEditorialMouseClicked
+        teclado.setVisible(false);
+        teclado.setArea(null);
+        teclado.setCuadro(null);
+        teclado.setCuadro(entEditorial);
+    }//GEN-LAST:event_entEditorialMouseClicked
+
+    private void entCantidadInventarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entCantidadInventarioKeyReleased
         funciones.validarDigito(evt);
-    }//GEN-LAST:event_entPrecioKeyTyped
+    }//GEN-LAST:event_entCantidadInventarioKeyReleased
+
+    private void entPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entPrecioKeyReleased
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entPrecioKeyReleased
+
+    private void entIsbnKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entIsbnKeyReleased
+        funciones.validarDigito(evt);
+    }//GEN-LAST:event_entIsbnKeyReleased
+
+    private void btnTecladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTecladoActionPerformed
+        teclado.setVisible(true);
+    }//GEN-LAST:event_btnTecladoActionPerformed
     
     public void sacarGeneroLista (int id, List<GeneroLibro> librosAnteriores) {
         for (int i = 0; i < librosAnteriores.size(); i++) {
@@ -520,6 +585,7 @@ public class ventanaLibro extends javax.swing.JDialog {
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSubir;
+    private javax.swing.JButton btnTeclado;
     private javax.swing.JTextField entAutor;
     private javax.swing.JTextField entCantidadInventario;
     private javax.swing.JTextField entEditorial;
